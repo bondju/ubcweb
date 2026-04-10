@@ -187,7 +187,7 @@
     border: 1px solid #2d3a5e;
     border-radius: 48px;
     width: 90%;
-    max-width: 460px;
+    max-width: 480px;
     padding: 32px 28px;
     box-shadow: 0 30px 40px rgba(0,0,0,0.5);
     transform: scale(0.96);
@@ -573,7 +573,7 @@
     color: #60a5fa;
   }
 
-  /* CAPTCHA Styles */
+  /* Advanced CAPTCHA Styles */
   .captcha-container {
     background: #1e293b;
     border-radius: 16px;
@@ -582,34 +582,144 @@
     border: 1px solid #334155;
   }
   
-  .captcha-display {
+  .captcha-type-selector {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #334155;
+  }
+  
+  .captcha-type-btn {
+    flex: 1;
+    background: #0f172a;
+    border: 1px solid #334155;
+    padding: 8px 12px;
+    border-radius: 12px;
+    color: #94a3b8;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  
+  .captcha-type-btn.active {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: white;
+  }
+  
+  .captcha-type-btn:hover:not(.active) {
+    border-color: #3b82f6;
+    color: #3b82f6;
+  }
+  
+  /* Canvas CAPTCHA */
+  .canvas-captcha {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  
+  .captcha-canvas {
+    background: #0f172a;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 1px solid #334155;
+    width: 100%;
+    height: 80px;
+  }
+  
+  /* Math CAPTCHA */
+  .math-captcha {
     background: #0f172a;
     border-radius: 12px;
     padding: 16px;
     text-align: center;
     margin-bottom: 12px;
+    border: 1px solid #334155;
   }
   
-  .captcha-code {
-    font-family: 'Courier New', monospace;
-    font-size: 28px;
-    font-weight: 800;
-    letter-spacing: 8px;
+  .math-expression {
+    font-size: 24px;
+    font-weight: 700;
     color: #60a5fa;
-    background: #0a0f1c;
-    padding: 12px;
-    border-radius: 12px;
-    display: inline-block;
-    user-select: none;
+    font-family: monospace;
   }
   
-  .captcha-input {
+  /* Slider CAPTCHA */
+  .slider-captcha {
+    margin-bottom: 12px;
+  }
+  
+  .slider-container {
+    background: #0f172a;
+    border-radius: 40px;
+    padding: 4px;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid #334155;
+  }
+  
+  .slider-track {
+    background: #1e293b;
+    border-radius: 40px;
+    height: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .slider-fill {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+    height: 100%;
+    width: 0%;
+    transition: width 0.05s linear;
+    border-radius: 40px;
+  }
+  
+  .slider-thumb {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: white;
+    border-radius: 50%;
+    cursor: grab;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: left 0.05s linear;
+  }
+  
+  .slider-thumb:active {
+    cursor: grabbing;
+  }
+  
+  .slider-thumb i {
+    color: #3b82f6;
+    font-size: 20px;
+  }
+  
+  .slider-text {
+    text-align: center;
+    margin-top: 8px;
+    font-size: 0.7rem;
+    color: #94a3b8;
+  }
+  
+  .slider-success {
+    color: #4ade80;
+  }
+  
+  .captcha-input-group {
     display: flex;
     gap: 12px;
     align-items: center;
+    margin-top: 12px;
   }
   
-  .captcha-input input {
+  .captcha-input-group input {
     flex: 1;
     background: #0f172a;
     border: 1px solid #334155;
@@ -622,11 +732,12 @@
   .captcha-refresh {
     background: #334155;
     border: none;
-    padding: 10px 16px;
+    padding: 12px 16px;
     border-radius: 12px;
     color: white;
     cursor: pointer;
     transition: all 0.2s;
+    font-size: 1.2rem;
   }
   
   .captcha-refresh:hover {
@@ -716,7 +827,6 @@
     flex: 1;
   }
   
-  /* Main content sections */
   .main-content {
     display: block;
   }
@@ -801,7 +911,7 @@
     </div>
   </div>
 
-  <!-- Модальне вікно з капчею -->
+  <!-- Модальне вікно з CAPTCHA -->
   <div id="authModal" class="modal-overlay">
     <div class="modal">
       <span class="close-modal" id="closeModalBtn">&times;</span>
@@ -819,14 +929,40 @@
           <div id="formError" class="error-msg"></div>
         </div>
         
-        <!-- CAPTCHA -->
+        <!-- Advanced CAPTCHA Container -->
         <div class="captcha-container">
-          <div class="captcha-display">
-            <span class="captcha-code" id="captchaCode"></span>
+          <div class="captcha-type-selector">
+            <div class="captcha-type-btn active" data-type="canvas">🎨 Текст</div>
+            <div class="captcha-type-btn" data-type="math">🧮 Математика</div>
+            <div class="captcha-type-btn" data-type="slider">🎚️ Слайдер</div>
           </div>
-          <div class="captcha-input">
-            <input type="text" id="captchaInput" placeholder="Введіть код з картинки" autocomplete="off">
-            <button type="button" class="captcha-refresh" onclick="generateCaptcha()">⟳</button>
+          
+          <!-- Canvas CAPTCHA -->
+          <div id="canvasCaptcha" class="canvas-captcha">
+            <canvas id="captchaCanvas" class="captcha-canvas" width="400" height="80" style="width:100%; height:80px"></canvas>
+          </div>
+          
+          <!-- Math CAPTCHA -->
+          <div id="mathCaptcha" class="math-captcha" style="display: none;">
+            <div class="math-expression" id="mathExpression"></div>
+          </div>
+          
+          <!-- Slider CAPTCHA -->
+          <div id="sliderCaptcha" class="slider-captcha" style="display: none;">
+            <div class="slider-container" id="sliderContainer">
+              <div class="slider-track">
+                <div class="slider-fill" id="sliderFill"></div>
+              </div>
+              <div class="slider-thumb" id="sliderThumb">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#3b82f6"><path d="M5 3l3.057-3 3.057 3M5 3v18M5 3h14M5 21l3.057 3 3.057-3M5 21h14M19 3l3.057-3 3.057 3M19 3v18M19 21l3.057 3 3.057-3"/></svg>
+              </div>
+            </div>
+            <div class="slider-text" id="sliderText">👉 Пересуньте повзунок вправо</div>
+          </div>
+          
+          <div class="captcha-input-group">
+            <input type="text" id="captchaInput" placeholder="Введіть код або результат" autocomplete="off">
+            <button type="button" class="captcha-refresh" onclick="refreshCaptcha()">⟳</button>
           </div>
           <div id="captchaError" class="error-msg"></div>
         </div>
@@ -1010,20 +1146,243 @@
   const GOOGLE_CLIENT_ID = '992395032391-cojjbkgo7iaennech1ng6ephvr91n7t9.apps.googleusercontent.com';
   const DISCORD_CLIENT_ID = '1492162869909913740';
   
-  let currentCaptcha = '';
+  // CAPTCHA Variables
+  let currentCaptchaType = 'canvas';
+  let currentCanvasCode = '';
+  let currentMathAnswer = 0;
+  let currentMathExpression = '';
+  let sliderVerified = false;
+  let sliderDragging = false;
+  let sliderStartX = 0;
+  let sliderThumbLeft = 0;
   
-  // Generate random CAPTCHA
-  function generateCaptcha() {
+  // ============ CANVAS CAPTCHA (with distortion) ============
+  function generateCanvasCaptcha() {
+    const canvas = document.getElementById('captchaCanvas');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width = 400;
+    const height = canvas.height = 80;
+    
+    // Generate random code (6 characters, mix of letters and numbers)
     const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
-    let captcha = '';
+    let code = '';
     for (let i = 0; i < 6; i++) {
-      captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+      code += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-    currentCaptcha = captcha;
-    const captchaElement = document.getElementById('captchaCode');
-    if (captchaElement) {
-      captchaElement.textContent = captcha;
+    currentCanvasCode = code;
+    
+    // Fill background
+    ctx.fillStyle = '#0f172a';
+    ctx.fillRect(0, 0, width, height);
+    
+    // Draw noise lines
+    for (let i = 0; i < 8; i++) {
+      ctx.beginPath();
+      ctx.moveTo(Math.random() * width, Math.random() * height);
+      ctx.lineTo(Math.random() * width, Math.random() * height);
+      ctx.strokeStyle = `rgba(59, 130, 246, ${Math.random() * 0.5})`;
+      ctx.lineWidth = Math.random() * 2;
+      ctx.stroke();
     }
+    
+    // Draw random dots
+    for (let i = 0; i < 100; i++) {
+      ctx.fillStyle = `rgba(96, 165, 250, ${Math.random() * 0.5})`;
+      ctx.fillRect(Math.random() * width, Math.random() * height, 1, 1);
+    }
+    
+    // Draw the code with distortion
+    for (let i = 0; i < code.length; i++) {
+      const char = code[i];
+      const x = 40 + i * 55;
+      const y = 45 + Math.sin(i * 0.8) * 8;
+      const rotation = (Math.random() - 0.5) * 0.3;
+      
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(rotation);
+      ctx.font = `bold ${30 + Math.random() * 8}px "Courier New", monospace`;
+      ctx.fillStyle = `rgb(${100 + Math.random() * 155}, ${100 + Math.random() * 155}, 255)`;
+      ctx.fillText(char, 0, 0);
+      ctx.restore();
+    }
+    
+    // Draw more random lines over text
+    for (let i = 0; i < 5; i++) {
+      ctx.beginPath();
+      ctx.moveTo(Math.random() * width, Math.random() * height);
+      ctx.lineTo(Math.random() * width, Math.random() * height);
+      ctx.strokeStyle = `rgba(59, 130, 246, 0.3)`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+  }
+  
+  // ============ MATH CAPTCHA ============
+  function generateMathCaptcha() {
+    const operations = [
+      { op: '+', func: (a, b) => a + b },
+      { op: '-', func: (a, b) => a - b },
+      { op: '×', func: (a, b) => a * b }
+    ];
+    
+    const op = operations[Math.floor(Math.random() * operations.length)];
+    let a, b;
+    
+    if (op.op === '×') {
+      a = Math.floor(Math.random() * 10) + 1;
+      b = Math.floor(Math.random() * 10) + 1;
+    } else {
+      a = Math.floor(Math.random() * 50) + 10;
+      b = Math.floor(Math.random() * 30) + 1;
+      if (op.op === '-' && a < b) {
+        [a, b] = [b, a];
+      }
+    }
+    
+    currentMathAnswer = op.func(a, b);
+    currentMathExpression = `${a} ${op.op} ${b} = ?`;
+    document.getElementById('mathExpression').textContent = currentMathExpression;
+  }
+  
+  // ============ SLIDER CAPTCHA ============
+  let sliderContainer, sliderTrack, sliderFill, sliderThumb, sliderText;
+  
+  function initSliderCaptcha() {
+    sliderContainer = document.getElementById('sliderContainer');
+    sliderFill = document.getElementById('sliderFill');
+    sliderThumb = document.getElementById('sliderThumb');
+    sliderText = document.getElementById('sliderText');
+    
+    if (!sliderContainer) return;
+    
+    const resetSlider = () => {
+      sliderVerified = false;
+      sliderThumbLeft = 0;
+      if (sliderThumb) sliderThumb.style.left = '0px';
+      if (sliderFill) sliderFill.style.width = '0%';
+      if (sliderText) {
+        sliderText.innerHTML = '👉 Пересуньте повзунок вправо';
+        sliderText.classList.remove('slider-success');
+      }
+    };
+    
+    const onMouseMove = (e) => {
+      if (!sliderDragging) return;
+      const containerRect = sliderContainer.getBoundingClientRect();
+      const trackRect = sliderTrack.getBoundingClientRect();
+      let newLeft = (e.clientX - containerRect.left) - 20;
+      newLeft = Math.max(0, Math.min(newLeft, trackRect.width - 40));
+      
+      sliderThumbLeft = newLeft;
+      sliderThumb.style.left = newLeft + 'px';
+      
+      const percent = (newLeft / (trackRect.width - 40)) * 100;
+      sliderFill.style.width = percent + '%';
+      
+      if (percent >= 98) {
+        sliderVerified = true;
+        sliderText.innerHTML = '✅ Підтверджено!';
+        sliderText.classList.add('slider-success');
+        sliderDragging = false;
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+      }
+    };
+    
+    const onMouseUp = () => {
+      if (!sliderVerified && sliderDragging) {
+        resetSlider();
+      }
+      sliderDragging = false;
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+    
+    sliderThumb.addEventListener('mousedown', (e) => {
+      if (sliderVerified) return;
+      sliderDragging = true;
+      sliderStartX = e.clientX;
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+      e.preventDefault();
+    });
+    
+    resetSlider();
+  }
+  
+  function resetSlider() {
+    sliderVerified = false;
+    sliderThumbLeft = 0;
+    if (sliderThumb) sliderThumb.style.left = '0px';
+    if (sliderFill) sliderFill.style.width = '0%';
+    if (sliderText) {
+      sliderText.innerHTML = '👉 Пересуньте повзунок вправо';
+      sliderText.classList.remove('slider-success');
+    }
+  }
+  
+  // ============ CAPTCHA TYPE SWITCHER ============
+  function switchCaptchaType(type) {
+    currentCaptchaType = type;
+    
+    document.querySelectorAll('.captcha-type-btn').forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.dataset.type === type) btn.classList.add('active');
+    });
+    
+    document.getElementById('canvasCaptcha').style.display = type === 'canvas' ? 'block' : 'none';
+    document.getElementById('mathCaptcha').style.display = type === 'math' ? 'block' : 'none';
+    document.getElementById('sliderCaptcha').style.display = type === 'slider' ? 'block' : 'none';
+    
+    if (type === 'canvas') generateCanvasCaptcha();
+    if (type === 'math') generateMathCaptcha();
+    if (type === 'slider') resetSlider();
+    
+    document.getElementById('captchaInput').value = '';
+    document.getElementById('captchaError').innerText = '';
+  }
+  
+  function refreshCaptcha() {
+    if (currentCaptchaType === 'canvas') generateCanvasCaptcha();
+    if (currentCaptchaType === 'math') generateMathCaptcha();
+    if (currentCaptchaType === 'slider') resetSlider();
+    document.getElementById('captchaInput').value = '';
+    document.getElementById('captchaError').innerText = '';
+  }
+  
+  function validateCaptcha() {
+    const input = document.getElementById('captchaInput').value.trim();
+    
+    if (currentCaptchaType === 'slider') {
+      if (!sliderVerified) {
+        document.getElementById('captchaError').innerText = 'Будь ласка, підтвердіть слайдер';
+        return false;
+      }
+      return true;
+    }
+    
+    if (!input) {
+      document.getElementById('captchaError').innerText = 'Введіть код перевірки';
+      return false;
+    }
+    
+    let isValid = false;
+    if (currentCaptchaType === 'canvas') {
+      isValid = input.toLowerCase() === currentCanvasCode.toLowerCase();
+    } else if (currentCaptchaType === 'math') {
+      isValid = parseInt(input) === currentMathAnswer;
+    }
+    
+    if (!isValid) {
+      document.getElementById('captchaError').innerText = 'Невірний код перевірки';
+      refreshCaptcha();
+      return false;
+    }
+    
+    return true;
   }
   
   function showToast(message, isError = false) {
@@ -1040,7 +1399,7 @@
   function openModal(id) {
     const modal = document.getElementById(id);
     if (modal) modal.classList.add('active');
-    generateCaptcha();
+    refreshCaptcha();
   }
 
   function closeModal(id) {
@@ -1271,8 +1630,6 @@
   const emailInput = document.getElementById('emailInput');
   const passwordInput = document.getElementById('passwordInput');
   const formError = document.getElementById('formError');
-  const captchaInput = document.getElementById('captchaInput');
-  const captchaError = document.getElementById('captchaError');
   
   let isLoginMode = true;
   
@@ -1290,11 +1647,9 @@
       switchBtn.innerText = 'Вже маєте акаунт? Увійти';
     }
     formError.innerText = '';
-    captchaError.innerText = '';
     emailInput.value = '';
     passwordInput.value = '';
-    if (captchaInput) captchaInput.value = '';
-    generateCaptcha();
+    refreshCaptcha();
     modal.classList.add('active');
   }
   
@@ -1311,14 +1666,7 @@
   authForm?.addEventListener('submit', (e) => {
     e.preventDefault();
     
-    const captchaValue = captchaInput?.value.trim();
-    if (!captchaValue || captchaValue !== currentCaptcha) {
-      captchaError.innerText = 'Невірний код перевірки';
-      generateCaptcha();
-      if (captchaInput) captchaInput.value = '';
-      return;
-    }
-    captchaError.innerText = '';
+    if (!validateCaptcha()) return;
     
     const email = emailInput.value.trim();
     const password = passwordInput.value.trim();
@@ -1385,8 +1733,17 @@
     }
   });
   
+  // Initialize
+  document.querySelectorAll('.captcha-type-btn').forEach(btn => {
+    btn.addEventListener('click', () => switchCaptchaType(btn.dataset.type));
+  });
+  
   handleDiscordCallback();
   setTimeout(initGoogleSignIn, 100);
+  setTimeout(() => {
+    generateCanvasCaptcha();
+    initSliderCaptcha();
+  }, 100);
   
   document.getElementById('googleBtn')?.addEventListener('click', loginWithGoogle);
   document.getElementById('discordBtn')?.addEventListener('click', loginWithDiscord);
