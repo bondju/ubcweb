@@ -6,7 +6,7 @@
 <title>UBC — Сучасне кошторисне ПЗ для професіоналів</title>
 <link rel="icon" type="image/x-icon" href="logo_ubc_dark.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
   * {
     margin: 0;
@@ -570,6 +570,14 @@
     color: #60a5fa;
   }
 
+  /* Google One Tap styling */
+  .google-one-tap {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 1001;
+  }
+
   @media (max-width: 700px) {
     .container {
       padding: 0 20px;
@@ -625,6 +633,16 @@
 </head>
 <body>
 <div class="grid-overlay"></div>
+
+<!-- Google One Tap container -->
+<div id="g_id_onload"
+     data-client_id="1488509930485841961.apps.googleusercontent.com"
+     data-login_uri=""
+     data-auto_prompt="false"
+     data-callback="handleGoogleCredential">
+</div>
+<div class="google-one-tap" id="google-one-tap-container"></div>
+
 <div class="container">
 
   <div class="header">
@@ -668,11 +686,11 @@
       </div>
       
       <div class="social-buttons">
-        <button class="social-btn" id="googleAuthBtn">
+        <button class="social-btn" id="googleBtn">
           <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
           Google
         </button>
-        <button class="social-btn" id="discordAuthBtn">
+        <button class="social-btn" id="discordBtn">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.8 19.8 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.3 18.3 0 0 0-5.487 0c-.164-.386-.399-.875-.608-1.25a.077.077 0 0 0-.079-.037A19.8 19.8 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106a13.1 13.1 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128c.125-.094.252-.19.372-.287a.074.074 0 0 1 .076-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.247.194.372.287a.077.077 0 0 1-.006.128a13.1 13.1 0 0 1-1.873.892a.077.077 0 0 0-.041.106c.353.698.765 1.363 1.226 1.994a.076.076 0 0 0 .084.028 19.9 19.9 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.057c.5-5.177-.838-9.674-3.549-13.66a.06.06 0 0 0-.031-.027zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.42 2.157-2.42c1.21 0 2.176 1.096 2.157 2.42c0 1.334-.956 2.419-2.157 2.419zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.42 2.157-2.42c1.21 0 2.176 1.096 2.157 2.42c0 1.334-.946 2.419-2.157 2.419z"/></svg>
           Discord
         </button>
@@ -681,20 +699,6 @@
       <div class="switch-mode" id="switchModeText">
         <span id="switchBtn">Зареєструватися</span>
       </div>
-    </div>
-  </div>
-
-  <!-- Verification Modal (for Discord OAuth) -->
-  <div id="verification-modal" class="modal-overlay">
-    <div class="modal" style="max-width: 400px;">
-      <span class="close-modal" onclick="closeVerificationModal()">&times;</span>
-      <h3 style="font-size: 1.5rem;">✅ Підтвердження входу</h3>
-      <div class="modal-sub" id="verification-text">Перевірте ваш Discord</div>
-      <div id="verification-status" style="text-align: center; margin: 20px 0;">
-        <i class="fas fa-spinner fa-spin" style="font-size: 48px; color: #5865f2;"></i>
-        <p style="margin-top: 12px;">Очікуємо підтвердження...</p>
-      </div>
-      <button class="modal-btn" onclick="checkVerificationStatus()" style="background: #5865f2;">Перевірити статус</button>
     </div>
   </div>
 
@@ -812,11 +816,9 @@
 <div class="toast" id="toastMsg">Повідомлення</div>
 
 <script>
-  const CLIENT_ID = '1492162869909913740';
-  const REDIRECT_URI = window.location.origin + window.location.pathname;
+  const GOOGLE_CLIENT_ID = '992395032391-cojjbkgo7iaennech1ng6ephvr91n7t9.apps.googleusercontent.com';
+  const DISCORD_CLIENT_ID = '1492162869909913740';
   
-  let pendingAuth = null;
-
   function showToast(message, isError = false) {
     const toast = document.getElementById('toastMsg');
     toast.textContent = message;
@@ -838,15 +840,124 @@
     if (modal) modal.classList.remove('active');
   }
 
-  function closeVerificationModal() {
-    closeModal('verification-modal');
+  // ============ GOOGLE OAUTH (Google Identity Services) ============
+  let googleClient = null;
+  
+  // Initialize Google Sign-In
+  function initGoogleSignIn() {
+    if (typeof google === 'undefined') {
+      console.log('⏳ Очікуємо завантаження Google API...');
+      setTimeout(initGoogleSignIn, 500);
+      return;
+    }
+    
+    console.log('✅ Google API завантажено');
+    
+    google.accounts.id.initialize({
+      client_id: GOOGLE_CLIENT_ID,
+      callback: handleGoogleCredential,
+      auto_select: false,
+      cancel_on_tap_outside: true
+    });
+    
+    // Render the Google button
+    google.accounts.id.renderButton(
+      document.getElementById('googleBtn'),
+      { 
+        theme: 'filled_black', 
+        size: 'large', 
+        width: '100%',
+        text: 'continue_with',
+        shape: 'pill'
+      }
+    );
+    
+    // Also enable One Tap
+    google.accounts.id.prompt((notification) => {
+      if (notification.isNotDisplayed()) {
+        console.log('One Tap не відобразився:', notification.getNotDisplayedReason());
+      }
+      if (notification.isSkippedMoment()) {
+        console.log('One Tap пропущено:', notification.getSkippedReason());
+      }
+    });
   }
-
+  
+  // Handle Google credential response
+  window.handleGoogleCredential = function(response) {
+    console.log('Google credential отримано');
+    
+    // Decode the JWT token to get user info
+    const credential = response.credential;
+    const payload = parseJwt(credential);
+    
+    if (payload) {
+      const user = {
+        id: payload.sub,
+        username: payload.name,
+        email: payload.email,
+        avatar: payload.picture,
+        provider: 'google',
+        given_name: payload.given_name,
+        family_name: payload.family_name
+      };
+      
+      // Save to localStorage
+      saveUserToLocalStorage(user);
+      showToast(`Ласкаво просимо, ${user.username}!`);
+      updateAuthUI();
+      closeModal('authModal');
+    } else {
+      showToast('Помилка авторизації Google', true);
+    }
+  };
+  
+  // Helper function to parse JWT token
+  function parseJwt(token) {
+    try {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(jsonPayload);
+    } catch (e) {
+      console.error('Помилка парсингу JWT:', e);
+      return null;
+    }
+  }
+  
+  // Manual Google login button handler
+  function loginWithGoogle() {
+    if (typeof google !== 'undefined' && google.accounts) {
+      google.accounts.id.prompt();
+    } else {
+      showToast('Завантаження Google API... Спробуйте ще раз за секунду', true);
+      setTimeout(() => {
+        if (typeof google !== 'undefined' && google.accounts) {
+          google.accounts.id.prompt();
+        } else {
+          showToast('Помилка: Google API не завантажився', true);
+        }
+      }, 1000);
+    }
+  }
+  
+  // ============ DISCORD OAUTH ============
   function loginWithDiscord() {
-    const authUrl = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify%20email`;
+    const protocol = window.location.protocol;
+    if (protocol === 'file:') {
+      showToast('❌ Будь ласка, запустіть сторінку через локальний сервер (http://localhost:3000)', true);
+      return;
+    }
+    
+    const redirectUri = window.location.origin + window.location.pathname;
+    const authUrl = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=token&scope=identify%20email`;
+    
     window.location.href = authUrl;
   }
-
+  
+  // Handle Discord OAuth callback
   function handleDiscordCallback() {
     const hash = window.location.hash.substring(1);
     const params = new URLSearchParams(hash);
@@ -872,30 +983,14 @@
             email: userData.email || `${userData.username}@discord.com`,
             avatar: userData.avatar ? `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png` : null,
             provider: 'discord',
-            accessToken: accessToken
+            discriminator: userData.discriminator
           };
-          localStorage.setItem('ubc_current_user', JSON.stringify(user));
           
-          const users = JSON.parse(localStorage.getItem('ubc_users') || '{}');
-          if (!users[user.email]) {
-            users[user.email] = {
-              id: user.id,
-              email: user.email,
-              name: user.username,
-              password: `discord_${user.id}`,
-              provider: 'discord',
-              avatar: user.avatar,
-              createdAt: new Date().toISOString()
-            };
-            localStorage.setItem('ubc_users', JSON.stringify(users));
-          }
-          
+          saveUserToLocalStorage(user);
           showToast(`Ласкаво просимо, ${user.username}!`);
           updateAuthUI();
           
           window.history.replaceState({}, document.title, window.location.pathname);
-          
-          closeModal('authModal');
         }
       })
       .catch(err => {
@@ -906,40 +1001,75 @@
     }
     return false;
   }
-
-  function loginWithGoogle() {
-    const mockUser = {
-      id: `google_${Date.now()}`,
-      username: 'Google_User',
-      email: `user${Math.floor(Math.random() * 1000)}@gmail.com`,
-      avatar: 'https://ui-avatars.com/api/?background=3b82f6&color=fff&name=G',
-      provider: 'google'
-    };
+  
+  // ============ LOCAL STORAGE USER MANAGEMENT ============
+  function saveUserToLocalStorage(user) {
+    // Save current user
+    localStorage.setItem('ubc_current_user', JSON.stringify(user));
     
-    localStorage.setItem('ubc_current_user', JSON.stringify(mockUser));
-    
+    // Save to users database
     const users = JSON.parse(localStorage.getItem('ubc_users') || '{}');
-    if (!users[mockUser.email]) {
-      users[mockUser.email] = {
-        id: mockUser.id,
-        email: mockUser.email,
-        name: mockUser.username,
-        password: `google_${mockUser.id}`,
-        provider: 'google',
+    if (!users[user.email]) {
+      users[user.email] = {
+        id: user.id,
+        email: user.email,
+        name: user.username,
+        provider: user.provider,
+        avatar: user.avatar,
         createdAt: new Date().toISOString()
       };
       localStorage.setItem('ubc_users', JSON.stringify(users));
     }
-    
-    showToast(`Ласкаво просимо, ${mockUser.username}! (Демо-вхід Google)`);
-    updateAuthUI();
-    closeModal('authModal');
   }
-
+  
+  function getCurrentUser() {
+    const user = localStorage.getItem('ubc_current_user');
+    return user ? JSON.parse(user) : null;
+  }
+  
+  function logout() {
+    // Sign out from Google if available
+    if (typeof google !== 'undefined' && google.accounts) {
+      google.accounts.id.disableAutoSelect();
+    }
+    localStorage.removeItem('ubc_current_user');
+    showToast('Ви вийшли з акаунту');
+    updateAuthUI();
+  }
+  
+  // ============ EMAIL/PASSWORD AUTH ============
   function validateEmail(email) {
     return /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(email);
   }
-
+  
+  // ============ UI UPDATE ============
+  function updateAuthUI() {
+    const currentUser = getCurrentUser();
+    const authButtonsContainer = document.getElementById('authButtons');
+    
+    if (currentUser) {
+      const avatarUrl = currentUser.avatar || `https://ui-avatars.com/api/?background=3b82f6&color=fff&name=${encodeURIComponent(currentUser.username.charAt(0))}`;
+      
+      authButtonsContainer.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <img src="${avatarUrl}" class="user-avatar" alt="avatar" 
+               onerror="this.src='https://ui-avatars.com/api/?background=3b82f6&color=fff&name=${currentUser.username.charAt(0)}'">
+          <span class="user-name">${currentUser.username}</span>
+          <button id="logoutBtn" class="btn-login" style="border-color: #ef4444; color: #ef4444;">Вийти</button>
+        </div>
+      `;
+      document.getElementById('logoutBtn')?.addEventListener('click', logout);
+    } else {
+      authButtonsContainer.innerHTML = `
+        <button class="btn-login" id="openLoginBtn">Увійти</button>
+        <button class="btn-reg" id="openRegBtn">Реєстрація</button>
+      `;
+      document.getElementById('openLoginBtn')?.addEventListener('click', () => openAuthModal('login'));
+      document.getElementById('openRegBtn')?.addEventListener('click', () => openAuthModal('register'));
+    }
+  }
+  
+  // ============ MODAL MANAGEMENT ============
   const modal = document.getElementById('authModal');
   const openLoginBtn = document.getElementById('openLoginBtn');
   const openRegBtn = document.getElementById('openRegBtn');
@@ -974,14 +1104,14 @@
     modal.classList.add('active');
   }
   
-  openLoginBtn.addEventListener('click', () => openAuthModal('login'));
-  openRegBtn.addEventListener('click', () => openAuthModal('register'));
-  closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
-  modal.addEventListener('click', (e) => {
+  openLoginBtn?.addEventListener('click', () => openAuthModal('login'));
+  openRegBtn?.addEventListener('click', () => openAuthModal('register'));
+  closeModalBtn?.addEventListener('click', () => modal.classList.remove('active'));
+  modal?.addEventListener('click', (e) => {
     if (e.target === modal) modal.classList.remove('active');
   });
   
-  switchBtn.addEventListener('click', () => {
+  switchBtn?.addEventListener('click', () => {
     if (isLoginMode) {
       openAuthModal('register');
     } else {
@@ -989,7 +1119,7 @@
     }
   });
   
-  authForm.addEventListener('submit', (e) => {
+  authForm?.addEventListener('submit', (e) => {
     e.preventDefault();
     const email = emailInput.value.trim();
     const password = passwordInput.value.trim();
@@ -1057,47 +1187,12 @@
     }
   });
   
-  document.getElementById('googleAuthBtn').addEventListener('click', loginWithGoogle);
-  document.getElementById('discordAuthBtn').addEventListener('click', loginWithDiscord);
-  
-  function getCurrentUser() {
-    const user = localStorage.getItem('ubc_current_user');
-    return user ? JSON.parse(user) : null;
-  }
-  
-  function logout() {
-    localStorage.removeItem('ubc_current_user');
-    showToast('Ви вийшли з акаунту');
-    updateAuthUI();
-  }
-  
-  function updateAuthUI() {
-    const currentUser = getCurrentUser();
-    const authButtonsContainer = document.getElementById('authButtons');
-    
-    if (currentUser) {
-      authButtonsContainer.innerHTML = `
-        <div style="display: flex; align-items: center; gap: 12px;">
-          ${currentUser.avatar ? 
-            `<img src="${currentUser.avatar}" class="user-avatar" alt="avatar" onerror="this.src='https://ui-avatars.com/api/?background=3b82f6&color=fff&name=${currentUser.username.charAt(0)}'">` : 
-            `<div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #8b5cf6); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px;">${currentUser.username.charAt(0).toUpperCase()}</div>`
-          }
-          <span class="user-name">${currentUser.username}</span>
-          <button id="logoutBtn" class="btn-login" style="border-color: #ef4444; color: #ef4444;">Вийти</button>
-        </div>
-      `;
-      document.getElementById('logoutBtn')?.addEventListener('click', logout);
-    } else {
-      authButtonsContainer.innerHTML = `
-        <button class="btn-login" id="openLoginBtn">Увійти</button>
-        <button class="btn-reg" id="openRegBtn">Реєстрація</button>
-      `;
-      document.getElementById('openLoginBtn')?.addEventListener('click', () => openAuthModal('login'));
-      document.getElementById('openRegBtn')?.addEventListener('click', () => openAuthModal('register'));
-    }
-  }
-  
   handleDiscordCallback();
+  
+  setTimeout(initGoogleSignIn, 100);
+  
+  document.getElementById('googleBtn')?.addEventListener('click', loginWithGoogle);
+  document.getElementById('discordBtn')?.addEventListener('click', loginWithDiscord);
   
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
