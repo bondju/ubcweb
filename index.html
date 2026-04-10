@@ -94,6 +94,7 @@
     font-weight: 500;
     transition: all 0.2s ease;
     font-size: 1rem;
+    cursor: pointer;
   }
 
   .nav a:hover {
@@ -148,12 +149,14 @@
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #3b82f6;
+    cursor: pointer;
   }
 
   .user-name {
     color: #60a5fa;
     font-weight: 500;
     font-size: 0.9rem;
+    cursor: pointer;
   }
 
   .modal-overlay {
@@ -570,12 +573,156 @@
     color: #60a5fa;
   }
 
-  /* Google One Tap styling */
-  .google-one-tap {
-    position: fixed;
-    top: 80px;
-    right: 20px;
-    z-index: 1001;
+  /* CAPTCHA Styles */
+  .captcha-container {
+    background: #1e293b;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 1px solid #334155;
+  }
+  
+  .captcha-display {
+    background: #0f172a;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  
+  .captcha-code {
+    font-family: 'Courier New', monospace;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 8px;
+    color: #60a5fa;
+    background: #0a0f1c;
+    padding: 12px;
+    border-radius: 12px;
+    display: inline-block;
+    user-select: none;
+  }
+  
+  .captcha-input {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  
+  .captcha-input input {
+    flex: 1;
+    background: #0f172a;
+    border: 1px solid #334155;
+    padding: 12px 16px;
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+  }
+  
+  .captcha-refresh {
+    background: #334155;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 12px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .captcha-refresh:hover {
+    background: #3b82f6;
+  }
+  
+  /* Profile Page Styles */
+  .profile-section {
+    display: none;
+    margin-top: 40px;
+  }
+  
+  .profile-section.active {
+    display: block;
+  }
+  
+  .profile-card {
+    background: rgba(17, 24, 39, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid #2d3a5e;
+    border-radius: 32px;
+    padding: 40px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .profile-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  
+  .profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid #3b82f6;
+    margin-bottom: 16px;
+    object-fit: cover;
+  }
+  
+  .profile-name {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  
+  .profile-email {
+    color: #9ca3af;
+    font-size: 14px;
+  }
+  
+  .profile-info {
+    background: #1e293b;
+    border-radius: 24px;
+    padding: 24px;
+    margin-top: 24px;
+  }
+  
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #334155;
+  }
+  
+  .info-row:last-child {
+    border-bottom: none;
+  }
+  
+  .info-label {
+    color: #9ca3af;
+    font-weight: 500;
+  }
+  
+  .info-value {
+    color: #f0f3fa;
+    font-weight: 600;
+  }
+  
+  .profile-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  
+  .profile-actions .btn {
+    flex: 1;
+  }
+  
+  /* Main content sections */
+  .main-content {
+    display: block;
+  }
+  
+  .main-content.hidden {
+    display: none;
   }
 
   @media (max-width: 700px) {
@@ -601,6 +748,9 @@
     }
     .card h3 {
       font-size: 1.5rem;
+    }
+    .profile-card {
+      padding: 24px;
     }
   }
 
@@ -634,24 +784,16 @@
 <body>
 <div class="grid-overlay"></div>
 
-<!-- Google One Tap container -->
-<div id="g_id_onload"
-     data-client_id="1488509930485841961.apps.googleusercontent.com"
-     data-login_uri=""
-     data-auto_prompt="false"
-     data-callback="handleGoogleCredential">
-</div>
-<div class="google-one-tap" id="google-one-tap-container"></div>
-
 <div class="container">
 
   <div class="header">
-    <div class="logo">UBC</div>
+    <div class="logo" onclick="showMainContent()">UBC</div>
     <div class="nav">
-      <a href="#features">Можливості</a>
-      <a href="#pricing">Тарифи</a>
-      <a href="#download">Завантажити</a>
-      <a href="#contact">Підтримка</a>
+      <a onclick="showMainContent(); scrollToSection('features')">Можливості</a>
+      <a onclick="showMainContent(); scrollToSection('pricing')">Тарифи</a>
+      <a onclick="showMainContent(); scrollToSection('download')">Завантажити</a>
+      <a onclick="showMainContent(); scrollToSection('contact')">Підтримка</a>
+      <a onclick="showProfilePage()">Профіль</a>
       <div class="auth-buttons" id="authButtons">
         <button class="btn-login" id="openLoginBtn">Увійти</button>
         <button class="btn-reg" id="openRegBtn">Реєстрація</button>
@@ -659,7 +801,7 @@
     </div>
   </div>
 
-  <!-- Модальне вікно -->
+  <!-- Модальне вікно з капчею -->
   <div id="authModal" class="modal-overlay">
     <div class="modal">
       <span class="close-modal" id="closeModalBtn">&times;</span>
@@ -676,6 +818,19 @@
           <input type="password" id="passwordInput" placeholder="••••••••" required>
           <div id="formError" class="error-msg"></div>
         </div>
+        
+        <!-- CAPTCHA -->
+        <div class="captcha-container">
+          <div class="captcha-display">
+            <span class="captcha-code" id="captchaCode"></span>
+          </div>
+          <div class="captcha-input">
+            <input type="text" id="captchaInput" placeholder="Введіть код з картинки" autocomplete="off">
+            <button type="button" class="captcha-refresh" onclick="generateCaptcha()">⟳</button>
+          </div>
+          <div id="captchaError" class="error-msg"></div>
+        </div>
+        
         <button type="submit" class="modal-btn" id="submitBtn">Увійти</button>
       </form>
       
@@ -702,114 +857,150 @@
     </div>
   </div>
 
-  <div class="hero">
-    <h1>Кошторисне ПЗ<br>нового покоління</h1>
-    <p>UBC — це професійний інструмент для інженерів-кошторисників, будівельних компаній та проєктувальників. Розраховуйте швидко, працюйте з актуальними ДБН, експортуйте в будь-які формати.</p>
-    <div class="actions">
-      <a href="#download" class="btn">Завантажити</a>
-      <a href="#pricing" class="btn btn-outline">Обрати ліцензію</a>
-    </div>
-  </div>
-  
-  <div id="features" class="features">
-    <div class="card">
-      <h3>Блискавичні розрахунки</h3>
-      <p>Автоматичний перерахунок ресурсів, індексів та коефіцієнтів у реальному часі. Економія годин роботи.</p>
-    </div>
-    <div class="card">
-      <h3>ДБН + кошторисні норми</h3>
-      <p>Повна відповідність ДСТУ, ДБН, збірникам цінників. Оновлення щокварталу — ви завжди в тренді.</p>
-    </div>
-    <div class="card">
-      <h3>Імпорт / Експорт</h3>
-      <p>Підтримка Excel, PDF та в майбутьньому інше. Легкий обмін даними з замовниками та експертизою.</p>
-    </div>
-  </div>
-  
-  <div class="section">
-    <h2>Професійний інструментарій</h2>
-    <div class="section-sub">
-      UBC розроблений для складних проєктів: моніторинг вартості, динамічні індекси, багатокористувацький режим та API для інтеграції з CRM/ERP.
-    </div>
-    <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 40px;">
-      <span class="badge">Ведення актів КБ-2в</span>
-      <span class="badge">Аналітика ресурсів</span>
-      <span class="badge">Автоматичне оновлення цін</span>
-      <span class="badge">Шаблони кошторисів</span>
-    </div>
-  </div>
-
-  <div id="pricing" class="section">
-    <h2>Оберіть свій тариф</h2>
-    <div class="section-sub">Гнучкі умови для фахівців та великих компаній. Розширте свої можливості разом з UBC.</div>
-
-    <div class="pricing">
-      <div class="price-card">
-        <h3>Basic</h3>
-        <div class="price">Безкоштовно</div>
-        <p>Базові функції для приватного користування або маленьких фірм.</p>
-        <a href="#download" class="btn btn-primary">Скачати</a>
-        <br>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfHoh4ilTzYa5slGztFn_tsYsYk3jBGvRn640lv_CX2G3LDBA/viewform" class="btn">Отримати ключ активації</a>
+  <!-- Profile Page -->
+  <div id="profilePage" class="profile-section">
+    <div class="profile-card">
+      <div class="profile-header">
+        <img id="profileAvatar" class="profile-avatar" src="" alt="Avatar">
+        <h2 id="profileName" class="profile-name"></h2>
+        <p id="profileEmail" class="profile-email"></p>
       </div>
-
-      <div class="price-card">
-        <h3>Profesional</h3>
-        <div class="price">1 990 ₴</div>
-        <p>Всі функції як у Basic · всі новинки · техпідтримка 24/7 · Та все інше що потрібно для справжнього професіонала.</p>
-        <a href="#" class="btn btn-primary">Придбати Pro</a>
+      <div class="profile-info">
+        <div class="info-row">
+          <span class="info-label">ID користувача</span>
+          <span id="profileId" class="info-value"></span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Провайдер</span>
+          <span id="profileProvider" class="info-value"></span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Дата реєстрації</span>
+          <span id="profileDate" class="info-value"></span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Статус</span>
+          <span id="profileStatus" class="info-value" style="color: #4ade80;">Активний</span>
+        </div>
       </div>
-
-      <div class="price-card">
-        <h3>Enterprise</h3>
-        <div class="price">Індивідуально</div>
-        <p>Розширене ліцензування, API, навчання персоналу, інтеграція з обліковими системами, SLA.</p>
-        <a href="#contact" class="btn">Зв'язатись</a>
+      <div class="profile-actions">
+        <button class="btn btn-outline" onclick="showMainContent()">На головну</button>
+        <button class="btn" style="background: #ef4444;" onclick="logout()">Вийти</button>
       </div>
     </div>
   </div>
 
-  <div id="download" class="section">
-    <div class="download-box">
-      <div class="download-info">
-        <h3>UBC Desktop для Windows</h3>
-        <p>Остання стабільна версія 1.0.2 (з підтримкою ДБН 2025). Інсталятор оновлено 07.04.2026</p>
-        <div class="badge" style="margin-top: 10px;">Антивірусна перевірка | Цифровий підпис</div>
+  <!-- Main Content -->
+  <div id="mainContent" class="main-content">
+    <div class="hero">
+      <h1>Кошторисне ПЗ<br>нового покоління</h1>
+      <p>UBC — це професійний інструмент для інженерів-кошторисників, будівельних компаній та проєктувальників. Розраховуйте швидко, працюйте з актуальними ДБН, експортуйте в будь-які формати.</p>
+      <div class="actions">
+        <a href="#download" class="btn">Завантажити</a>
+        <a href="#pricing" class="btn btn-outline">Обрати ліцензію</a>
       </div>
-      <a href="https://drive.usercontent.google.com/download?id=1Ps-b-qlsu_o3OyIt1oB0PZQ-mq3FwUSj&export=download&authuser=0&confirm=t&uuid=a0f8767a-8f41-4b7e-8d87-6aa157dbe5bd&at=AGN2oQ2x9RXNxJksVPhhqM8_ga87%3A1775575307491" class="btn" style="font-size: 1.1rem; padding: 14px 34px;">Завантажити (.exe)</a>
     </div>
-    <div style="margin-top: 24px; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
-      <a href="#" style="color:#60a5fa;">Інструкція користувача</a>
-      <a href="#" style="color:#60a5fa;">Відеоогляд</a>
-      <a href="https://t.me/ubc_support_bot" style="color:#60a5fa;">Чат підтримки</a>
+    
+    <div id="features" class="features">
+      <div class="card">
+        <h3>Блискавичні розрахунки</h3>
+        <p>Автоматичний перерахунок ресурсів, індексів та коефіцієнтів у реальному часі. Економія годин роботи.</p>
+      </div>
+      <div class="card">
+        <h3>ДБН + кошторисні норми</h3>
+        <p>Повна відповідність ДСТУ, ДБН, збірникам цінників. Оновлення щокварталу — ви завжди в тренді.</p>
+      </div>
+      <div class="card">
+        <h3>Імпорт / Експорт</h3>
+        <p>Підтримка Excel, PDF та в майбутьньому інше. Легкий обмін даними з замовниками та експертизою.</p>
+      </div>
     </div>
-  </div>
+    
+    <div class="section">
+      <h2>Професійний інструментарій</h2>
+      <div class="section-sub">
+        UBC розроблений для складних проєктів: моніторинг вартості, динамічні індекси, багатокористувацький режим та API для інтеграції з CRM/ERP.
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 40px;">
+        <span class="badge">Ведення актів КБ-2в</span>
+        <span class="badge">Аналітика ресурсів</span>
+        <span class="badge">Автоматичне оновлення цін</span>
+        <span class="badge">Шаблони кошторисів</span>
+      </div>
+    </div>
 
-  <div id="contact" style="margin-top: 60px; background: #0f1222; border-radius: 40px; padding: 32px 30px; border: 1px solid #293544;">
-    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px;">
+    <div id="pricing" class="section">
+      <h2>Оберіть свій тариф</h2>
+      <div class="section-sub">Гнучкі умови для фахівців та великих компаній. Розширте свої можливості разом з UBC.</div>
+
+      <div class="pricing">
+        <div class="price-card">
+          <h3>Basic</h3>
+          <div class="price">Безкоштовно</div>
+          <p>Базові функції для приватного користування або маленьких фірм.</p>
+          <a href="#download" class="btn btn-primary">Скачати</a>
+          <br>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfHoh4ilTzYa5slGztFn_tsYsYk3jBGvRn640lv_CX2G3LDBA/viewform" class="btn">Отримати ключ активації</a>
+        </div>
+
+        <div class="price-card">
+          <h3>Profesional</h3>
+          <div class="price">1 990 ₴</div>
+          <p>Всі функції як у Basic · всі новинки · техпідтримка 24/7 · Та все інше що потрібно для справжнього професіонала.</p>
+          <a href="#" class="btn btn-primary">Придбати Pro</a>
+        </div>
+
+        <div class="price-card">
+          <h3>Enterprise</h3>
+          <div class="price">Індивідуально</div>
+          <p>Розширене ліцензування, API, навчання персоналу, інтеграція з обліковими системами, SLA.</p>
+          <a href="#contact" class="btn">Зв'язатись</a>
+        </div>
+      </div>
+    </div>
+
+    <div id="download" class="section">
+      <div class="download-box">
+        <div class="download-info">
+          <h3>UBC Desktop для Windows</h3>
+          <p>Остання стабільна версія 1.0.2 (з підтримкою ДБН 2025). Інсталятор оновлено 07.04.2026</p>
+          <div class="badge" style="margin-top: 10px;">Антивірусна перевірка | Цифровий підпис</div>
+        </div>
+        <a href="https://drive.usercontent.google.com/download?id=1Ps-b-qlsu_o3OyIt1oB0PZQ-mq3FwUSj&export=download&authuser=0&confirm=t&uuid=a0f8767a-8f41-4b7e-8d87-6aa157dbe5bd&at=AGN2oQ2x9RXNxJksVPhhqM8_ga87%3A1775575307491" class="btn" style="font-size: 1.1rem; padding: 14px 34px;">Завантажити (.exe)</a>
+      </div>
+      <div style="margin-top: 24px; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+        <a href="#" style="color:#60a5fa;">Інструкція користувача</a>
+        <a href="#" style="color:#60a5fa;">Відеоогляд</a>
+        <a href="https://t.me/ubc_support_bot" style="color:#60a5fa;">Чат підтримки</a>
+      </div>
+    </div>
+
+    <div id="contact" style="margin-top: 60px; background: #0f1222; border-radius: 40px; padding: 32px 30px; border: 1px solid #293544;">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px;">
+        <div>
+          <h3 style="font-size: 1.7rem;">Потрібне корпоративне рішення?</h3>
+          <p style="color:#a3afc4; max-width: 500px;">Надамо консультацію, зробимо демо та розрахуємо спеціальну пропозицію для вашої команди.</p>
+        </div>
+        <a href="mailto:contact@ubcost.com" class="btn btn-outline" style="background:#2563eb; border:none;">Написати менеджеру →</a>
+      </div>
+    </div>
+
+    <div class="footer">
       <div>
-        <h3 style="font-size: 1.7rem;">Потрібне корпоративне рішення?</h3>
-        <p style="color:#a3afc4; max-width: 500px;">Надамо консультацію, зробимо демо та розрахуємо спеціальну пропозицію для вашої команди.</p>
+        <strong style="font-size: 1.2rem; color:#cbd5e1;">UBC</strong><br>
+        Ukraine Building Cost<br>
+        © 2026 — Всі права захищені
       </div>
-      <a href="mailto:contact@ubcost.com" class="btn btn-outline" style="background:#2563eb; border:none;">Написати менеджеру →</a>
-    </div>
-  </div>
-
-  <div class="footer">
-    <div>
-      <strong style="font-size: 1.2rem; color:#cbd5e1;">UBC</strong><br>
-      Ukraine Building Cost<br>
-      © 2026 — Всі права захищені
-    </div>
-    <div style="display: flex; flex-direction: column; gap: 6px;">
-      <a href="#">Політика конфіденційності</a>
-      <a href="#">Ліцензійна угода</a>
-      <a href="mailto:contact@ubcost.com">Технічна підтримка</a>
-    </div>
-    <div>
-      <p>Київ, Україна<br>
-      contact@ubcost.com<br>
-      +38 (066) 820 22 44</p>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <a href="#">Політика конфіденційності</a>
+        <a href="#">Ліцензійна угода</a>
+        <a href="mailto:contact@ubcost.com">Технічна підтримка</a>
+      </div>
+      <div>
+        <p>Київ, Україна<br>
+        contact@ubcost.com<br>
+        +38 (066) 820 22 44</p>
+      </div>
     </div>
   </div>
 </div>
@@ -818,6 +1009,22 @@
 <script>
   const GOOGLE_CLIENT_ID = '992395032391-cojjbkgo7iaennech1ng6ephvr91n7t9.apps.googleusercontent.com';
   const DISCORD_CLIENT_ID = '1492162869909913740';
+  
+  let currentCaptcha = '';
+  
+  // Generate random CAPTCHA
+  function generateCaptcha() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
+    let captcha = '';
+    for (let i = 0; i < 6; i++) {
+      captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    currentCaptcha = captcha;
+    const captchaElement = document.getElementById('captchaCode');
+    if (captchaElement) {
+      captchaElement.textContent = captcha;
+    }
+  }
   
   function showToast(message, isError = false) {
     const toast = document.getElementById('toastMsg');
@@ -833,25 +1040,68 @@
   function openModal(id) {
     const modal = document.getElementById(id);
     if (modal) modal.classList.add('active');
+    generateCaptcha();
   }
 
   function closeModal(id) {
     const modal = document.getElementById(id);
     if (modal) modal.classList.remove('active');
   }
-
-  // ============ GOOGLE OAUTH (Google Identity Services) ============
-  let googleClient = null;
   
-  // Initialize Google Sign-In
+  function showMainContent() {
+    document.getElementById('profilePage').classList.remove('active');
+    document.getElementById('mainContent').classList.remove('hidden');
+    document.getElementById('mainContent').style.display = 'block';
+  }
+  
+  function showProfilePage() {
+    const currentUser = getCurrentUser();
+    if (!currentUser) {
+      showToast('Будь ласка, увійдіть в акаунт', true);
+      openAuthModal('login');
+      return;
+    }
+    updateProfilePage(currentUser);
+    document.getElementById('mainContent').style.display = 'none';
+    document.getElementById('profilePage').classList.add('active');
+  }
+  
+  function updateProfilePage(user) {
+    const avatarUrl = user.avatar || `https://ui-avatars.com/api/?background=3b82f6&color=fff&name=${encodeURIComponent(user.username.charAt(0))}&size=100`;
+    document.getElementById('profileAvatar').src = avatarUrl;
+    document.getElementById('profileName').textContent = user.username;
+    document.getElementById('profileEmail').textContent = user.email;
+    document.getElementById('profileId').textContent = user.id;
+    
+    let providerText = 'Email';
+    if (user.provider === 'google') providerText = 'Google';
+    else if (user.provider === 'discord') providerText = 'Discord';
+    else providerText = 'Email / Пароль';
+    document.getElementById('profileProvider').textContent = providerText;
+    
+    const users = JSON.parse(localStorage.getItem('ubc_users') || '{}');
+    const userData = users[user.email];
+    if (userData && userData.createdAt) {
+      const date = new Date(userData.createdAt);
+      document.getElementById('profileDate').textContent = date.toLocaleDateString('uk-UA');
+    } else {
+      document.getElementById('profileDate').textContent = new Date().toLocaleDateString('uk-UA');
+    }
+  }
+  
+  function scrollToSection(sectionId) {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  // ============ GOOGLE OAUTH ============
   function initGoogleSignIn() {
     if (typeof google === 'undefined') {
-      console.log('⏳ Очікуємо завантаження Google API...');
       setTimeout(initGoogleSignIn, 500);
       return;
     }
-    
-    console.log('✅ Google API завантажено');
     
     google.accounts.id.initialize({
       client_id: GOOGLE_CLIENT_ID,
@@ -860,34 +1110,13 @@
       cancel_on_tap_outside: true
     });
     
-    // Render the Google button
     google.accounts.id.renderButton(
       document.getElementById('googleBtn'),
-      { 
-        theme: 'filled_black', 
-        size: 'large', 
-        width: '100%',
-        text: 'continue_with',
-        shape: 'pill'
-      }
+      { theme: 'filled_black', size: 'large', width: '100%', text: 'continue_with', shape: 'pill' }
     );
-    
-    // Also enable One Tap
-    google.accounts.id.prompt((notification) => {
-      if (notification.isNotDisplayed()) {
-        console.log('One Tap не відобразився:', notification.getNotDisplayedReason());
-      }
-      if (notification.isSkippedMoment()) {
-        console.log('One Tap пропущено:', notification.getSkippedReason());
-      }
-    });
   }
   
-  // Handle Google credential response
   window.handleGoogleCredential = function(response) {
-    console.log('Google credential отримано');
-    
-    // Decode the JWT token to get user info
     const credential = response.credential;
     const payload = parseJwt(credential);
     
@@ -897,12 +1126,8 @@
         username: payload.name,
         email: payload.email,
         avatar: payload.picture,
-        provider: 'google',
-        given_name: payload.given_name,
-        family_name: payload.family_name
+        provider: 'google'
       };
-      
-      // Save to localStorage
       saveUserToLocalStorage(user);
       showToast(`Ласкаво просимо, ${user.username}!`);
       updateAuthUI();
@@ -912,7 +1137,6 @@
     }
   };
   
-  // Helper function to parse JWT token
   function parseJwt(token) {
     try {
       const base64Url = token.split('.')[1];
@@ -922,24 +1146,15 @@
       }).join(''));
       return JSON.parse(jsonPayload);
     } catch (e) {
-      console.error('Помилка парсингу JWT:', e);
       return null;
     }
   }
   
-  // Manual Google login button handler
   function loginWithGoogle() {
     if (typeof google !== 'undefined' && google.accounts) {
       google.accounts.id.prompt();
     } else {
-      showToast('Завантаження Google API... Спробуйте ще раз за секунду', true);
-      setTimeout(() => {
-        if (typeof google !== 'undefined' && google.accounts) {
-          google.accounts.id.prompt();
-        } else {
-          showToast('Помилка: Google API не завантажився', true);
-        }
-      }, 1000);
+      showToast('Завантаження Google API...', true);
     }
   }
   
@@ -947,28 +1162,18 @@
   function loginWithDiscord() {
     const protocol = window.location.protocol;
     if (protocol === 'file:') {
-      showToast('❌ Будь ласка, запустіть сторінку через локальний сервер (http://localhost:3000)', true);
+      showToast('Будь ласка, запустіть сторінку через локальний сервер', true);
       return;
     }
-    
     const redirectUri = window.location.origin + window.location.pathname;
     const authUrl = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=token&scope=identify%20email`;
-    
     window.location.href = authUrl;
   }
   
-  // Handle Discord OAuth callback
   function handleDiscordCallback() {
     const hash = window.location.hash.substring(1);
     const params = new URLSearchParams(hash);
     const accessToken = params.get('access_token');
-    const error = params.get('error');
-    
-    if (error) {
-      showToast('Помилка авторизації через Discord', true);
-      window.history.replaceState({}, document.title, window.location.pathname);
-      return false;
-    }
     
     if (accessToken) {
       fetch('https://discord.com/api/users/@me', {
@@ -982,32 +1187,23 @@
             username: userData.username,
             email: userData.email || `${userData.username}@discord.com`,
             avatar: userData.avatar ? `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png` : null,
-            provider: 'discord',
-            discriminator: userData.discriminator
+            provider: 'discord'
           };
-          
           saveUserToLocalStorage(user);
           showToast(`Ласкаво просимо, ${user.username}!`);
           updateAuthUI();
-          
           window.history.replaceState({}, document.title, window.location.pathname);
         }
       })
       .catch(err => {
-        console.error('Discord API error:', err);
         showToast('Помилка отримання даних користувача', true);
       });
-      return true;
     }
-    return false;
   }
   
-  // ============ LOCAL STORAGE USER MANAGEMENT ============
+  // ============ LOCAL STORAGE ============
   function saveUserToLocalStorage(user) {
-    // Save current user
     localStorage.setItem('ubc_current_user', JSON.stringify(user));
-    
-    // Save to users database
     const users = JSON.parse(localStorage.getItem('ubc_users') || '{}');
     if (!users[user.email]) {
       users[user.email] = {
@@ -1028,37 +1224,33 @@
   }
   
   function logout() {
-    // Sign out from Google if available
     if (typeof google !== 'undefined' && google.accounts) {
       google.accounts.id.disableAutoSelect();
     }
     localStorage.removeItem('ubc_current_user');
     showToast('Ви вийшли з акаунту');
     updateAuthUI();
+    showMainContent();
   }
   
-  // ============ EMAIL/PASSWORD AUTH ============
   function validateEmail(email) {
     return /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(email);
   }
   
-  // ============ UI UPDATE ============
   function updateAuthUI() {
     const currentUser = getCurrentUser();
     const authButtonsContainer = document.getElementById('authButtons');
     
     if (currentUser) {
       const avatarUrl = currentUser.avatar || `https://ui-avatars.com/api/?background=3b82f6&color=fff&name=${encodeURIComponent(currentUser.username.charAt(0))}`;
-      
       authButtonsContainer.innerHTML = `
         <div style="display: flex; align-items: center; gap: 12px;">
-          <img src="${avatarUrl}" class="user-avatar" alt="avatar" 
+          <img src="${avatarUrl}" class="user-avatar" alt="avatar" onclick="showProfilePage()"
                onerror="this.src='https://ui-avatars.com/api/?background=3b82f6&color=fff&name=${currentUser.username.charAt(0)}'">
-          <span class="user-name">${currentUser.username}</span>
-          <button id="logoutBtn" class="btn-login" style="border-color: #ef4444; color: #ef4444;">Вийти</button>
+          <span class="user-name" onclick="showProfilePage()">${currentUser.username}</span>
+          <button id="logoutBtn" class="btn-login" style="border-color: #ef4444; color: #ef4444;" onclick="logout()">Вийти</button>
         </div>
       `;
-      document.getElementById('logoutBtn')?.addEventListener('click', logout);
     } else {
       authButtonsContainer.innerHTML = `
         <button class="btn-login" id="openLoginBtn">Увійти</button>
@@ -1069,11 +1261,8 @@
     }
   }
   
-  // ============ MODAL MANAGEMENT ============
+  // ============ MODAL ============
   const modal = document.getElementById('authModal');
-  const openLoginBtn = document.getElementById('openLoginBtn');
-  const openRegBtn = document.getElementById('openRegBtn');
-  const closeModalBtn = document.getElementById('closeModalBtn');
   const modalTitle = document.getElementById('modalTitle');
   const modalSub = document.getElementById('modalSub');
   const submitBtn = document.getElementById('submitBtn');
@@ -1082,6 +1271,8 @@
   const emailInput = document.getElementById('emailInput');
   const passwordInput = document.getElementById('passwordInput');
   const formError = document.getElementById('formError');
+  const captchaInput = document.getElementById('captchaInput');
+  const captchaError = document.getElementById('captchaError');
   
   let isLoginMode = true;
   
@@ -1099,28 +1290,36 @@
       switchBtn.innerText = 'Вже маєте акаунт? Увійти';
     }
     formError.innerText = '';
+    captchaError.innerText = '';
     emailInput.value = '';
     passwordInput.value = '';
+    if (captchaInput) captchaInput.value = '';
+    generateCaptcha();
     modal.classList.add('active');
   }
   
-  openLoginBtn?.addEventListener('click', () => openAuthModal('login'));
-  openRegBtn?.addEventListener('click', () => openAuthModal('register'));
-  closeModalBtn?.addEventListener('click', () => modal.classList.remove('active'));
+  document.getElementById('closeModalBtn')?.addEventListener('click', () => modal.classList.remove('active'));
   modal?.addEventListener('click', (e) => {
     if (e.target === modal) modal.classList.remove('active');
   });
   
   switchBtn?.addEventListener('click', () => {
-    if (isLoginMode) {
-      openAuthModal('register');
-    } else {
-      openAuthModal('login');
-    }
+    if (isLoginMode) openAuthModal('register');
+    else openAuthModal('login');
   });
   
   authForm?.addEventListener('submit', (e) => {
     e.preventDefault();
+    
+    const captchaValue = captchaInput?.value.trim();
+    if (!captchaValue || captchaValue !== currentCaptcha) {
+      captchaError.innerText = 'Невірний код перевірки';
+      generateCaptcha();
+      if (captchaInput) captchaInput.value = '';
+      return;
+    }
+    captchaError.innerText = '';
+    
     const email = emailInput.value.trim();
     const password = passwordInput.value.trim();
     
@@ -1153,12 +1352,12 @@
         modal.classList.remove('active');
         updateAuthUI();
       } else {
-        formError.innerText = 'Невірна пошта або пароль. Зареєструйтесь, якщо не маєте акаунту.';
+        formError.innerText = 'Невірна пошта або пароль.';
       }
     } else {
       let users = JSON.parse(localStorage.getItem('ubc_users') || '{}');
       if (users[email]) {
-        formError.innerText = 'Користувач з такою поштою вже існує. Увійдіть.';
+        formError.innerText = 'Користувач з такою поштою вже існує.';
       } else {
         const newUser = {
           id: Date.now().toString(),
@@ -1171,7 +1370,6 @@
         };
         users[email] = newUser;
         localStorage.setItem('ubc_users', JSON.stringify(users));
-        
         const currentUser = {
           id: newUser.id,
           username: newUser.name,
@@ -1188,45 +1386,10 @@
   });
   
   handleDiscordCallback();
-  
   setTimeout(initGoogleSignIn, 100);
   
   document.getElementById('googleBtn')?.addEventListener('click', loginWithGoogle);
   document.getElementById('discordBtn')?.addEventListener('click', loginWithDiscord);
-  
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const targetId = this.getAttribute('href');
-      if (targetId === "#" || targetId === "") return;
-      const targetElem = document.querySelector(targetId);
-      if (targetElem) {
-        e.preventDefault();
-        targetElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        history.pushState(null, null, targetId);
-      }
-    });
-  });
-  
-  const navLinks = document.querySelectorAll('.nav a:not(.auth-buttons a)');
-  function updateActiveLink() {
-    let current = '';
-    const scrollPos = window.scrollY + 120;
-    document.querySelectorAll('div[id], section[id]').forEach(section => {
-      if(!section.id) return;
-      const offsetTop = section.offsetTop;
-      const offsetHeight = section.offsetHeight;
-      if (scrollPos >= offsetTop && scrollPos < offsetTop + offsetHeight) {
-        current = section.id;
-      }
-    });
-    navLinks.forEach(link => {
-      link.style.color = '#cbd5e1';
-      const href = link.getAttribute('href').substring(1);
-      if (href === current) link.style.color = '#3b82f6';
-    });
-  }
-  window.addEventListener('scroll', updateActiveLink);
-  updateActiveLink();
   
   updateAuthUI();
 </script>
