@@ -4,8 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>UBC — Сучасне кошторисне ПЗ для професіоналів</title>
-<link rel="icon" type="image/png" href="logo_ubc_dark.png">
+<link rel="icon" type="image/x-icon" href="logo_ubc_dark.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <style>
   * {
     margin: 0;
@@ -33,7 +34,6 @@
     z-index: -2;
   }
 
-  /* сітка з ліній (ефект) */
   .grid-overlay {
     position: fixed;
     top: 0;
@@ -78,11 +78,14 @@
     -webkit-background-clip: text;
     color: transparent;
     letter-spacing: -0.3px;
+    cursor: pointer;
   }
 
   .nav {
     display: flex;
     gap: 32px;
+    align-items: center;
+    flex-wrap: wrap;
   }
 
   .nav a {
@@ -96,6 +99,254 @@
   .nav a:hover {
     color: #3b82f6;
     transform: translateY(-1px);
+  }
+
+  .auth-buttons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  
+  .btn-login {
+    background: transparent;
+    border: 1px solid #3b82f6;
+    color: #3b82f6;
+    padding: 8px 18px;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+  
+  .btn-login:hover {
+    background: rgba(59,130,246,0.15);
+    transform: translateY(-1px);
+  }
+  
+  .btn-reg {
+    background: #2563eb;
+    border: none;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(37,99,235,0.3);
+  }
+  
+  .btn-reg:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+  }
+
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #3b82f6;
+  }
+
+  .user-name {
+    color: #60a5fa;
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+  
+  .modal-overlay.active {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .modal {
+    background: #0f172ad9;
+    backdrop-filter: blur(16px);
+    border: 1px solid #2d3a5e;
+    border-radius: 48px;
+    width: 90%;
+    max-width: 460px;
+    padding: 32px 28px;
+    box-shadow: 0 30px 40px rgba(0,0,0,0.5);
+    transform: scale(0.96);
+    transition: transform 0.2s ease;
+  }
+  
+  .modal-overlay.active .modal {
+    transform: scale(1);
+  }
+  
+  .modal h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #fff, #94a3b8);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+  
+  .modal-sub {
+    color: #9ca3af;
+    margin-bottom: 24px;
+    font-size: 0.9rem;
+  }
+  
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  .input-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #cbd5e1;
+  }
+  
+  .input-group input {
+    width: 100%;
+    background: #1e293b;
+    border: 1px solid #334155;
+    padding: 14px 18px;
+    border-radius: 28px;
+    font-size: 1rem;
+    color: white;
+    outline: none;
+    transition: all 0.2s;
+  }
+  
+  .input-group input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59,130,246,0.3);
+  }
+  
+  .modal-btn {
+    width: 100%;
+    background: #2563eb;
+    border: none;
+    padding: 14px;
+    border-radius: 40px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: white;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.2s;
+  }
+  
+  .modal-btn:hover {
+    background: #1d4ed8;
+  }
+  
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0;
+    color: #6b7280;
+    font-size: 0.8rem;
+  }
+  
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: #334155;
+  }
+  
+  .social-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+  }
+  
+  .social-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 48px;
+    padding: 12px;
+    font-weight: 500;
+    color: #e2e8f0;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+  }
+  
+  .social-btn:hover {
+    background: #2d3a5e;
+    border-color: #3b82f6;
+    transform: translateY(-2px);
+  }
+  
+  .switch-mode {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 0.85rem;
+    color: #9ca3af;
+  }
+  
+  .switch-mode span {
+    color: #60a5fa;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  .close-modal {
+    position: absolute;
+    top: 24px;
+    right: 28px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #94a3b8;
+  }
+  
+  .error-msg {
+    color: #f87171;
+    font-size: 0.75rem;
+    margin-top: 5px;
+    margin-left: 12px;
+  }
+  
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1f2937e6;
+    backdrop-filter: blur(12px);
+    padding: 12px 24px;
+    border-radius: 60px;
+    color: white;
+    font-weight: 500;
+    z-index: 1100;
+    border-left: 4px solid #3b82f6;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
   }
 
   .btn {
@@ -330,6 +581,8 @@
     .nav {
       gap: 24px;
       flex-wrap: wrap;
+      width: 100%;
+      justify-content: space-between;
     }
     .hero h1 {
       font-size: 42px;
@@ -348,6 +601,10 @@
       width: 100%;
       justify-content: center;
     }
+    .auth-buttons {
+      width: 100%;
+      justify-content: flex-start;
+    }
   }
 
   @keyframes fadeUp {
@@ -364,10 +621,6 @@
   .hero, .features, .section, .download-box {
     animation: fadeUp 0.6s ease-out forwards;
   }
-
-  .features .card:nth-child(2) { animation-delay: 0.05s; }
-  .features .card:nth-child(3) { animation-delay: 0.1s; }
-  .features .card:nth-child(4) { animation-delay: 0.15s; }
 </style>
 </head>
 <body>
@@ -381,8 +634,70 @@
       <a href="#pricing">Тарифи</a>
       <a href="#download">Завантажити</a>
       <a href="#contact">Підтримка</a>
+      <div class="auth-buttons" id="authButtons">
+        <button class="btn-login" id="openLoginBtn">Увійти</button>
+        <button class="btn-reg" id="openRegBtn">Реєстрація</button>
+      </div>
     </div>
   </div>
+
+  <!-- Модальне вікно -->
+  <div id="authModal" class="modal-overlay">
+    <div class="modal">
+      <span class="close-modal" id="closeModalBtn">&times;</span>
+      <h3 id="modalTitle">Вхід в акаунт</h3>
+      <div id="modalSub" class="modal-sub">Вітаємо! Увійдіть або створіть профіль</div>
+      
+      <form id="authForm">
+        <div class="input-group">
+          <label>Електронна пошта</label>
+          <input type="email" id="emailInput" placeholder="example@ubcost.com" required>
+        </div>
+        <div class="input-group">
+          <label>Пароль</label>
+          <input type="password" id="passwordInput" placeholder="••••••••" required>
+          <div id="formError" class="error-msg"></div>
+        </div>
+        <button type="submit" class="modal-btn" id="submitBtn">Увійти</button>
+      </form>
+      
+      <div class="divider">
+        <div class="divider-line"></div>
+        <span>АБО</span>
+        <div class="divider-line"></div>
+      </div>
+      
+      <div class="social-buttons">
+        <button class="social-btn" id="googleAuthBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Google
+        </button>
+        <button class="social-btn" id="discordAuthBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.8 19.8 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.3 18.3 0 0 0-5.487 0c-.164-.386-.399-.875-.608-1.25a.077.077 0 0 0-.079-.037A19.8 19.8 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106a13.1 13.1 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128c.125-.094.252-.19.372-.287a.074.074 0 0 1 .076-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.247.194.372.287a.077.077 0 0 1-.006.128a13.1 13.1 0 0 1-1.873.892a.077.077 0 0 0-.041.106c.353.698.765 1.363 1.226 1.994a.076.076 0 0 0 .084.028 19.9 19.9 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.057c.5-5.177-.838-9.674-3.549-13.66a.06.06 0 0 0-.031-.027zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.42 2.157-2.42c1.21 0 2.176 1.096 2.157 2.42c0 1.334-.956 2.419-2.157 2.419zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.42 2.157-2.42c1.21 0 2.176 1.096 2.157 2.42c0 1.334-.946 2.419-2.157 2.419z"/></svg>
+          Discord
+        </button>
+      </div>
+      
+      <div class="switch-mode" id="switchModeText">
+        <span id="switchBtn">Зареєструватися</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Verification Modal (for Discord OAuth) -->
+  <div id="verification-modal" class="modal-overlay">
+    <div class="modal" style="max-width: 400px;">
+      <span class="close-modal" onclick="closeVerificationModal()">&times;</span>
+      <h3 style="font-size: 1.5rem;">✅ Підтвердження входу</h3>
+      <div class="modal-sub" id="verification-text">Перевірте ваш Discord</div>
+      <div id="verification-status" style="text-align: center; margin: 20px 0;">
+        <i class="fas fa-spinner fa-spin" style="font-size: 48px; color: #5865f2;"></i>
+        <p style="margin-top: 12px;">Очікуємо підтвердження...</p>
+      </div>
+      <button class="modal-btn" onclick="checkVerificationStatus()" style="background: #5865f2;">Перевірити статус</button>
+    </div>
+  </div>
+
   <div class="hero">
     <h1>Кошторисне ПЗ<br>нового покоління</h1>
     <p>UBC — це професійний інструмент для інженерів-кошторисників, будівельних компаній та проєктувальників. Розраховуйте швидко, працюйте з актуальними ДБН, експортуйте в будь-які формати.</p>
@@ -391,6 +706,7 @@
       <a href="#pricing" class="btn btn-outline">Обрати ліцензію</a>
     </div>
   </div>
+  
   <div id="features" class="features">
     <div class="card">
       <h3>Блискавичні розрахунки</h3>
@@ -405,7 +721,8 @@
       <p>Підтримка Excel, PDF та в майбутьньому інше. Легкий обмін даними з замовниками та експертизою.</p>
     </div>
   </div>
-<div class="section">
+  
+  <div class="section">
     <h2>Професійний інструментарій</h2>
     <div class="section-sub">
       UBC розроблений для складних проєктів: моніторинг вартості, динамічні індекси, багатокористувацький режим та API для інтеграції з CRM/ERP.
@@ -427,9 +744,9 @@
         <h3>Basic</h3>
         <div class="price">Безкоштовно</div>
         <p>Базові функції для приватного користування або маленьких фірм.</p>
-<a href="#download" class="btn btn-primary">Скачати</a>
-<br>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfHoh4ilTzYa5slGztFn_tsYsYk3jBGvRn640lv_CX2G3LDBA/viewform" class="btn">Отримати ключ активаії</a>
+        <a href="#download" class="btn btn-primary">Скачати</a>
+        <br>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfHoh4ilTzYa5slGztFn_tsYsYk3jBGvRn640lv_CX2G3LDBA/viewform" class="btn">Отримати ключ активації</a>
       </div>
 
       <div class="price-card">
@@ -492,55 +809,331 @@
     </div>
   </div>
 </div>
+<div class="toast" id="toastMsg">Повідомлення</div>
 
 <script>
-  (function() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        const targetId = this.getAttribute('href');
-        if (targetId === "#" || targetId === "") return;
-        const targetElem = document.querySelector(targetId);
-        if (targetElem) {
-          e.preventDefault();
-          targetElem.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-          history.pushState(null, null, targetId);
-        }
-      });
-    });
+  const CLIENT_ID = '1492162869909913740';
+  const REDIRECT_URI = window.location.origin + window.location.pathname;
+  
+  let pendingAuth = null;
 
-    const sections = document.querySelectorAll('section, #features, #pricing, #download, #contact, .section');
-    const navLinks = document.querySelectorAll('.nav a');
+  function showToast(message, isError = false) {
+    const toast = document.getElementById('toastMsg');
+    toast.textContent = message;
+    toast.style.background = isError ? '#7f1a1ae6' : '#1f2937e6';
+    toast.style.borderLeftColor = isError ? '#ef4444' : '#3b82f6';
+    toast.style.opacity = '1';
+    setTimeout(() => {
+      toast.style.opacity = '0';
+    }, 3000);
+  }
+
+  function openModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) modal.classList.add('active');
+  }
+
+  function closeModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) modal.classList.remove('active');
+  }
+
+  function closeVerificationModal() {
+    closeModal('verification-modal');
+  }
+
+  function loginWithDiscord() {
+    const authUrl = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify%20email`;
+    window.location.href = authUrl;
+  }
+
+  function handleDiscordCallback() {
+    const hash = window.location.hash.substring(1);
+    const params = new URLSearchParams(hash);
+    const accessToken = params.get('access_token');
+    const error = params.get('error');
     
-    function updateActiveLink() {
-      let current = '';
-      const scrollPos = window.scrollY + 120;
-      document.querySelectorAll('div[id], section[id]').forEach(section => {
-        if(!section.id) return;
-        const offsetTop = section.offsetTop;
-        const offsetHeight = section.offsetHeight;
-        if (scrollPos >= offsetTop && scrollPos < offsetTop + offsetHeight) {
-          current = section.id;
-        }
-      });
-      // якщо секція без id але є .section з якорем
-      if(!current) {
-        const heroSection = document.querySelector('.hero');
-        if(heroSection && scrollPos < heroSection.offsetTop + 300) current = '';
-      }
-      navLinks.forEach(link => {
-        link.style.color = '#cbd5e1';
-        const href = link.getAttribute('href').substring(1);
-        if (href === current) {
-          link.style.color = '#3b82f6';
-        }
-      });
+    if (error) {
+      showToast('Помилка авторизації через Discord', true);
+      window.history.replaceState({}, document.title, window.location.pathname);
+      return false;
     }
-    window.addEventListener('scroll', updateActiveLink);
-    updateActiveLink();
-  })();
+    
+    if (accessToken) {
+      fetch('https://discord.com/api/users/@me', {
+        headers: { 'Authorization': `Bearer ${accessToken}` }
+      })
+      .then(res => res.json())
+      .then(userData => {
+        if (userData.id) {
+          const user = {
+            id: userData.id,
+            username: userData.username,
+            email: userData.email || `${userData.username}@discord.com`,
+            avatar: userData.avatar ? `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png` : null,
+            provider: 'discord',
+            accessToken: accessToken
+          };
+          localStorage.setItem('ubc_current_user', JSON.stringify(user));
+          
+          const users = JSON.parse(localStorage.getItem('ubc_users') || '{}');
+          if (!users[user.email]) {
+            users[user.email] = {
+              id: user.id,
+              email: user.email,
+              name: user.username,
+              password: `discord_${user.id}`,
+              provider: 'discord',
+              avatar: user.avatar,
+              createdAt: new Date().toISOString()
+            };
+            localStorage.setItem('ubc_users', JSON.stringify(users));
+          }
+          
+          showToast(`Ласкаво просимо, ${user.username}!`);
+          updateAuthUI();
+          
+          window.history.replaceState({}, document.title, window.location.pathname);
+          
+          closeModal('authModal');
+        }
+      })
+      .catch(err => {
+        console.error('Discord API error:', err);
+        showToast('Помилка отримання даних користувача', true);
+      });
+      return true;
+    }
+    return false;
+  }
+
+  function loginWithGoogle() {
+    const mockUser = {
+      id: `google_${Date.now()}`,
+      username: 'Google_User',
+      email: `user${Math.floor(Math.random() * 1000)}@gmail.com`,
+      avatar: 'https://ui-avatars.com/api/?background=3b82f6&color=fff&name=G',
+      provider: 'google'
+    };
+    
+    localStorage.setItem('ubc_current_user', JSON.stringify(mockUser));
+    
+    const users = JSON.parse(localStorage.getItem('ubc_users') || '{}');
+    if (!users[mockUser.email]) {
+      users[mockUser.email] = {
+        id: mockUser.id,
+        email: mockUser.email,
+        name: mockUser.username,
+        password: `google_${mockUser.id}`,
+        provider: 'google',
+        createdAt: new Date().toISOString()
+      };
+      localStorage.setItem('ubc_users', JSON.stringify(users));
+    }
+    
+    showToast(`Ласкаво просимо, ${mockUser.username}! (Демо-вхід Google)`);
+    updateAuthUI();
+    closeModal('authModal');
+  }
+
+  function validateEmail(email) {
+    return /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(email);
+  }
+
+  const modal = document.getElementById('authModal');
+  const openLoginBtn = document.getElementById('openLoginBtn');
+  const openRegBtn = document.getElementById('openRegBtn');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalSub = document.getElementById('modalSub');
+  const submitBtn = document.getElementById('submitBtn');
+  const switchBtn = document.getElementById('switchBtn');
+  const authForm = document.getElementById('authForm');
+  const emailInput = document.getElementById('emailInput');
+  const passwordInput = document.getElementById('passwordInput');
+  const formError = document.getElementById('formError');
+  
+  let isLoginMode = true;
+  
+  function openAuthModal(mode) {
+    isLoginMode = mode === 'login';
+    if (isLoginMode) {
+      modalTitle.innerText = 'Вхід в акаунт';
+      modalSub.innerText = 'Ласкаво просимо! Введіть ваші дані.';
+      submitBtn.innerText = 'Увійти';
+      switchBtn.innerText = 'Зареєструватися';
+    } else {
+      modalTitle.innerText = 'Створення акаунту';
+      modalSub.innerText = 'Зареєструйтесь, щоб отримати доступ до повного функціоналу.';
+      submitBtn.innerText = 'Зареєструватися';
+      switchBtn.innerText = 'Вже маєте акаунт? Увійти';
+    }
+    formError.innerText = '';
+    emailInput.value = '';
+    passwordInput.value = '';
+    modal.classList.add('active');
+  }
+  
+  openLoginBtn.addEventListener('click', () => openAuthModal('login'));
+  openRegBtn.addEventListener('click', () => openAuthModal('register'));
+  closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.remove('active');
+  });
+  
+  switchBtn.addEventListener('click', () => {
+    if (isLoginMode) {
+      openAuthModal('register');
+    } else {
+      openAuthModal('login');
+    }
+  });
+  
+  authForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
+    
+    if (!email || !password) {
+      formError.innerText = 'Заповніть обидва поля.';
+      return;
+    }
+    if (!validateEmail(email)) {
+      formError.innerText = 'Введіть коректну електронну пошту.';
+      return;
+    }
+    if (password.length < 4) {
+      formError.innerText = 'Пароль має містити щонайменше 4 символи.';
+      return;
+    }
+    formError.innerText = '';
+    
+    if (isLoginMode) {
+      const users = JSON.parse(localStorage.getItem('ubc_users') || '{}');
+      if (users[email] && users[email].password === password) {
+        const currentUser = {
+          id: users[email].id,
+          username: users[email].name,
+          email: email,
+          avatar: users[email].avatar,
+          provider: users[email].provider || 'email'
+        };
+        localStorage.setItem('ubc_current_user', JSON.stringify(currentUser));
+        showToast(`Ласкаво просимо, ${users[email].name || email}!`);
+        modal.classList.remove('active');
+        updateAuthUI();
+      } else {
+        formError.innerText = 'Невірна пошта або пароль. Зареєструйтесь, якщо не маєте акаунту.';
+      }
+    } else {
+      let users = JSON.parse(localStorage.getItem('ubc_users') || '{}');
+      if (users[email]) {
+        formError.innerText = 'Користувач з такою поштою вже існує. Увійдіть.';
+      } else {
+        const newUser = {
+          id: Date.now().toString(),
+          email: email,
+          password: password,
+          name: email.split('@')[0],
+          provider: 'email',
+          avatar: null,
+          createdAt: new Date().toISOString()
+        };
+        users[email] = newUser;
+        localStorage.setItem('ubc_users', JSON.stringify(users));
+        
+        const currentUser = {
+          id: newUser.id,
+          username: newUser.name,
+          email: email,
+          avatar: null,
+          provider: 'email'
+        };
+        localStorage.setItem('ubc_current_user', JSON.stringify(currentUser));
+        showToast(`Реєстрація успішна! Ласкаво просимо, ${newUser.name}!`);
+        modal.classList.remove('active');
+        updateAuthUI();
+      }
+    }
+  });
+  
+  document.getElementById('googleAuthBtn').addEventListener('click', loginWithGoogle);
+  document.getElementById('discordAuthBtn').addEventListener('click', loginWithDiscord);
+  
+  function getCurrentUser() {
+    const user = localStorage.getItem('ubc_current_user');
+    return user ? JSON.parse(user) : null;
+  }
+  
+  function logout() {
+    localStorage.removeItem('ubc_current_user');
+    showToast('Ви вийшли з акаунту');
+    updateAuthUI();
+  }
+  
+  function updateAuthUI() {
+    const currentUser = getCurrentUser();
+    const authButtonsContainer = document.getElementById('authButtons');
+    
+    if (currentUser) {
+      authButtonsContainer.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 12px;">
+          ${currentUser.avatar ? 
+            `<img src="${currentUser.avatar}" class="user-avatar" alt="avatar" onerror="this.src='https://ui-avatars.com/api/?background=3b82f6&color=fff&name=${currentUser.username.charAt(0)}'">` : 
+            `<div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #8b5cf6); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px;">${currentUser.username.charAt(0).toUpperCase()}</div>`
+          }
+          <span class="user-name">${currentUser.username}</span>
+          <button id="logoutBtn" class="btn-login" style="border-color: #ef4444; color: #ef4444;">Вийти</button>
+        </div>
+      `;
+      document.getElementById('logoutBtn')?.addEventListener('click', logout);
+    } else {
+      authButtonsContainer.innerHTML = `
+        <button class="btn-login" id="openLoginBtn">Увійти</button>
+        <button class="btn-reg" id="openRegBtn">Реєстрація</button>
+      `;
+      document.getElementById('openLoginBtn')?.addEventListener('click', () => openAuthModal('login'));
+      document.getElementById('openRegBtn')?.addEventListener('click', () => openAuthModal('register'));
+    }
+  }
+  
+  handleDiscordCallback();
+  
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const targetId = this.getAttribute('href');
+      if (targetId === "#" || targetId === "") return;
+      const targetElem = document.querySelector(targetId);
+      if (targetElem) {
+        e.preventDefault();
+        targetElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.pushState(null, null, targetId);
+      }
+    });
+  });
+  
+  const navLinks = document.querySelectorAll('.nav a:not(.auth-buttons a)');
+  function updateActiveLink() {
+    let current = '';
+    const scrollPos = window.scrollY + 120;
+    document.querySelectorAll('div[id], section[id]').forEach(section => {
+      if(!section.id) return;
+      const offsetTop = section.offsetTop;
+      const offsetHeight = section.offsetHeight;
+      if (scrollPos >= offsetTop && scrollPos < offsetTop + offsetHeight) {
+        current = section.id;
+      }
+    });
+    navLinks.forEach(link => {
+      link.style.color = '#cbd5e1';
+      const href = link.getAttribute('href').substring(1);
+      if (href === current) link.style.color = '#3b82f6';
+    });
+  }
+  window.addEventListener('scroll', updateActiveLink);
+  updateActiveLink();
+  
+  updateAuthUI();
 </script>
 </body>
 </html>
