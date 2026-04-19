@@ -1000,7 +1000,9 @@
           <p>Остання стабільна версія 1.0.2 (з підтримкою ДБН 2025). Інсталятор оновлено 07.04.2026</p>
           <div class="badge" style="margin-top: 10px;">Антивірусна перевірка | Цифровий підпис</div>
         </div>
-        <a href="https://drive.usercontent.google.com/download?id=1Ps-b-qlsu_o3OyIt1oB0PZQ-mq3FwUSj&export=download&authuser=0&confirm=t&uuid=a0f8767a-8f41-4b7e-8d87-6aa157dbe5bd&at=AGN2oQ2x9RXNxJksVPhhqM8_ga87%3A1775575307491" class="btn" style="font-size: 1.1rem; padding: 14px 34px;">Завантажити (.exe)</a>
+       <a href="https://drive.google.com/uc?export=download&id=1yyFEaqwk-y4CWnkSmX8tiQE89TB3dbLK" class="btn" style="font-size: 1.1rem; padding: 14px 34px;">
+  Завантажити (.exe)
+</a>
       </div>
       <div style="margin-top: 24px; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
         <a href="#" style="color:#60a5fa;">Інструкція користувача</a>
@@ -1044,11 +1046,9 @@
   const GOOGLE_CLIENT_ID = '992395032391-cojjbkgo7iaennech1ng6ephvr91n7t9.apps.googleusercontent.com';
   const DISCORD_CLIENT_ID = '1492162869909913740';
   
-  // CAPTCHA Variables
   let currentCaptchaCode = '';
   let failedAttempts = 0;
   
-  // ============ ADVANCED CANVAS CAPTCHA ============
   function generateAdvancedCaptcha() {
     const canvas = document.getElementById('captchaCanvas');
     if (!canvas) return;
@@ -1057,7 +1057,6 @@
     const width = canvas.width = 400;
     const height = canvas.height = 90;
     
-    // Character set (exclude confusing characters like 0, O, 1, l, I)
     const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789';
     let code = '';
     for (let i = 0; i < 7; i++) {
@@ -1065,20 +1064,17 @@
     }
     currentCaptchaCode = code;
     
-    // Draw gradient background
     const gradient = ctx.createLinearGradient(0, 0, width, height);
     gradient.addColorStop(0, '#0f172a');
     gradient.addColorStop(1, '#1e293b');
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, width, height);
     
-    // Draw noise pattern (random pixels)
     for (let i = 0; i < 300; i++) {
       ctx.fillStyle = `rgba(${Math.random() * 100 + 100}, ${Math.random() * 100 + 100}, 255, ${Math.random() * 0.3})`;
       ctx.fillRect(Math.random() * width, Math.random() * height, 1, 1);
     }
     
-    // Draw random lines (sinusoidal waves)
     for (let i = 0; i < 6; i++) {
       ctx.beginPath();
       const startY = Math.random() * height;
@@ -1092,7 +1088,6 @@
       ctx.stroke();
     }
     
-    // Draw random circles/ellipses as noise
     for (let i = 0; i < 15; i++) {
       ctx.beginPath();
       ctx.ellipse(
@@ -1108,7 +1103,6 @@
       ctx.fill();
     }
     
-    // Draw the code characters with distortion
     for (let i = 0; i < code.length; i++) {
       const char = code[i];
       const x = 25 + i * 52;
@@ -1119,15 +1113,12 @@
       ctx.translate(x, y);
       ctx.rotate(rotation);
       
-      // Random font size variation
       const fontSize = 32 + Math.sin(i) * 4;
       ctx.font = `bold ${fontSize}px "Courier New", "Monaco", monospace`;
       
-      // Random color for each character
       const hue = 200 + Math.random() * 60;
       ctx.fillStyle = `hsl(${hue}, 70%, 60%)`;
       
-      // Add shadow for depth
       ctx.shadowBlur = 2;
       ctx.shadowColor = 'rgba(0,0,0,0.5)';
       
@@ -1137,7 +1128,6 @@
       ctx.restore();
     }
     
-    // Draw extra distortion lines over text
     for (let i = 0; i < 8; i++) {
       ctx.beginPath();
       ctx.moveTo(Math.random() * width, Math.random() * height);
@@ -1153,7 +1143,6 @@
       ctx.fillRect(Math.random() * width, Math.random() * height, 1.5, 1.5);
     }
     
-    // Add border
     ctx.strokeStyle = '#3b82f6';
     ctx.lineWidth = 1;
     ctx.strokeRect(0, 0, width, height);
