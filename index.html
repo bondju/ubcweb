@@ -880,6 +880,205 @@
     line-height: 1.4;
 }
 
+.guide-section {
+    margin-top: 60px;
+}
+
+.guide-shell {
+    min-height: 84vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 26px;
+    background:
+      radial-gradient(circle at top left, rgba(37, 99, 235, 0.18), transparent 28%),
+      linear-gradient(160deg, rgba(15, 23, 42, 0.98), rgba(8, 13, 24, 0.96));
+    border: 1px solid rgba(96, 165, 250, 0.18);
+    border-radius: 42px;
+    padding: 28px;
+    box-shadow: 0 30px 80px rgba(2, 6, 23, 0.45);
+}
+
+.guide-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.guide-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(37, 99, 235, 0.14);
+    border: 1px solid rgba(96, 165, 250, 0.16);
+    color: #93c5fd;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+
+.guide-title-wrap {
+    max-width: 700px;
+}
+
+.guide-title-wrap h3 {
+    font-size: clamp(2rem, 3.8vw, 3.8rem);
+    line-height: 1.04;
+    letter-spacing: -0.04em;
+    color: #f8fbff;
+    margin-bottom: 16px;
+}
+
+.guide-title-wrap p {
+    color: #aebed3;
+    font-size: 1.02rem;
+    max-width: 640px;
+}
+
+.guide-step-badge {
+    min-width: 140px;
+    padding: 16px 18px;
+    border-radius: 24px;
+    background: rgba(15, 23, 42, 0.76);
+    border: 1px solid rgba(148, 163, 184, 0.14);
+    text-align: right;
+}
+
+.guide-step-label {
+    display: block;
+    color: #7dd3fc;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 8px;
+}
+
+.guide-step-count {
+    display: block;
+    color: #f8fbff;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.guide-stage {
+    min-height: 0;
+    display: block;
+    align-items: stretch;
+}
+
+.guide-visual {
+    position: relative;
+    min-height: 56vh;
+    width: 100%;
+    border-radius: 30px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #0c1424, #09101c);
+    border: 1px solid rgba(96, 165, 250, 0.16);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.guide-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.guide-image.is-hidden {
+    display: none;
+}
+
+.guide-image-fallback {
+    position: absolute;
+    inset: 0;
+    display: none;
+    place-items: center;
+    padding: 30px;
+    background:
+      linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(15, 23, 42, 0.65)),
+      repeating-linear-gradient(
+        45deg,
+        rgba(148, 163, 184, 0.08) 0,
+        rgba(148, 163, 184, 0.08) 14px,
+        transparent 14px,
+        transparent 28px
+      );
+}
+
+.guide-image-fallback.is-visible {
+    display: grid;
+}
+
+.guide-fallback-box {
+    width: min(520px, 100%);
+    border-radius: 28px;
+    padding: 28px;
+    background: rgba(8, 15, 28, 0.84);
+    border: 1px solid rgba(125, 211, 252, 0.18);
+    text-align: center;
+}
+
+.guide-fallback-box strong {
+    display: block;
+    font-size: 1.4rem;
+    color: #f8fbff;
+    margin-bottom: 10px;
+}
+
+.guide-fallback-box span {
+    display: block;
+    color: #aebed3;
+    margin-bottom: 10px;
+}
+
+.guide-fallback-box code {
+    color: #93c5fd;
+    font-size: 0.92rem;
+}
+
+.guide-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.guide-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.guide-progress-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid rgba(148, 163, 184, 0.45);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.guide-progress-dot.active {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.12);
+}
+
+.guide-nav {
+    display: flex;
+    gap: 12px;
+}
+
+.guide-nav button {
+    min-width: 126px;
+}
+
 @media (max-width: 700px) {
     .partners-grid {
         gap: 20px;
@@ -893,6 +1092,33 @@
     }
     .partner-name {
         font-size: 1rem;
+    }
+    .guide-shell {
+        min-height: auto;
+        padding: 20px 16px;
+    }
+    .guide-topbar,
+    .guide-stage {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .guide-step-badge {
+        text-align: left;
+        min-width: 0;
+    }
+    .guide-visual {
+        min-height: 42vh;
+    }
+    .guide-controls,
+    .guide-nav {
+        width: 100%;
+    }
+    .guide-controls {
+        align-items: stretch;
+    }
+    .guide-nav button {
+        flex: 1;
+        min-width: 0;
     }
 }
 </style>
@@ -1113,6 +1339,181 @@
       </div>
     </div>
 
+    <div id="guide" class="section guide-section">
+      <h2>Ð†Ð½ÑÑ‚Ñ€ÑƒÐºÑ†Ñ–Ñ ÐºÐ¾Ñ€Ð¸ÑÑ‚ÑƒÐ²Ð°Ñ‡Ð°</h2>
+      <div class="section-sub">ÐšÐ¾Ñ€Ð¾Ñ‚ÐºÐ¸Ð¹ Ð¿Ð¾ÐºÑ€Ð¾ÐºÐ¾Ð²Ð¸Ð¹ Ð³Ð°Ð¹Ð´ Ð·Ñ– ÑÐºÑ€Ñ–Ð½Ð°Ð¼Ð¸, Ñ‰Ð¾Ð± ÑˆÐ²Ð¸Ð´ÐºÐ¾ Ð¾ÑÐ²Ð¾Ñ—Ñ‚Ð¸ Ð¾ÑÐ½Ð¾Ð²Ð½Ñ– ÑÑ†ÐµÐ½Ð°Ñ€Ñ–Ñ— Ñ€Ð¾Ð±Ð¾Ñ‚Ð¸ Ð² UBC.</div>
+
+      <div class="guide-shell">
+        <div class="guide-carousel">
+          <div class="guide-slide active" data-guide-slide="0">
+            <div class="guide-shot">
+              <div class="guide-window">
+                <div class="guide-window-top">
+                  <span class="guide-dot red"></span>
+                  <span class="guide-dot yellow"></span>
+                  <span class="guide-dot green"></span>
+                </div>
+                <div class="guide-window-body">
+                  <div class="guide-toolbar">
+                    <span style="color:#e2e8f0; font-weight:700;">Ð¡Ñ‚Ð°Ñ€Ñ‚ Ð¿Ñ€Ð¾Ñ”ÐºÑ‚Ñƒ</span>
+                    <span class="guide-chip">ÐÐ¾Ð²Ð¸Ð¹ Ð¾Ð±'Ñ”ÐºÑ‚</span>
+                  </div>
+                  <div class="guide-panels">
+                    <div class="guide-panel">
+                      <span class="guide-panel-title">Ð—Ð°Ð¼Ð¾Ð²Ð½Ð¸Ðº</span>
+                      <span class="guide-panel-text">Ð ÐµÐºÐ²Ñ–Ð·Ð¸Ñ‚Ð¸ ÐºÐ¾Ð¼Ð¿Ð°Ð½Ñ–Ñ— Ñ‚Ð° Ð²Ð¸Ð´ Ñ€Ð¾Ð±Ñ–Ñ‚</span>
+                    </div>
+                    <div class="guide-panel">
+                      <span class="guide-panel-title">ÐÐ¾Ñ€Ð¼Ð°Ñ‚Ð¸Ð²Ð½Ð° Ð±Ð°Ð·Ð°</span>
+                      <span class="guide-panel-text">Ð’Ð¸Ð±Ñ–Ñ€ ÐÐ‘Ð, Ð”Ð¡Ð¢Ð£ Ñ‚Ð° Ñ–Ð½Ð´ÐµÐºÑÑ–Ð²</span>
+                    </div>
+                    <div class="guide-panel">
+                      <span class="guide-panel-title">Ð›Ð¾ÐºÐ°Ð»ÑŒÐ½Ñ– ÐºÐ¾ÑˆÑ‚Ð¾Ñ€Ð¸ÑÐ¸</span>
+                      <span class="guide-panel-text">Ð¡Ñ‚Ð²Ð¾Ñ€ÐµÐ½Ð½Ñ Ñ€Ð¾Ð·Ð´Ñ–Ð»Ñ–Ð² Ñ– Ð²Ñ–Ð´Ð¾Ð¼Ð¾ÑÑ‚ÐµÐ¹</span>
+                    </div>
+                    <div class="guide-panel">
+                      <span class="guide-panel-title">Ð•ÐºÑÐ¿Ð¾Ñ€Ñ‚</span>
+                      <span class="guide-panel-text">PDF, Excel Ñ‚Ð° Ð´Ñ€ÑƒÐº ÐºÐ¾Ð¼Ð¿Ð»ÐµÐºÑ‚Ñƒ</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="guide-copy">
+              <h3>1. Ð¡Ñ‚Ð²Ð¾Ñ€Ñ–Ñ‚ÑŒ Ð½Ð¾Ð²Ð¸Ð¹ Ð¿Ñ€Ð¾Ñ”ÐºÑ‚</h3>
+              <p>ÐŸÑ–ÑÐ»Ñ Ð²ÑÑ‚Ð°Ð½Ð¾Ð²Ð»ÐµÐ½Ð½Ñ Ð²Ñ–Ð´ÐºÑ€Ð¸Ð¹Ñ‚Ðµ UBC, Ð¾Ð±ÐµÑ€Ñ–Ñ‚ÑŒ Ñ‚Ð¸Ð¿ Ð¾Ð±'Ñ”ÐºÑ‚Ð° Ñ‚Ð° Ð·Ð°Ð¿Ð¾Ð²Ð½Ñ–Ñ‚ÑŒ Ð¾ÑÐ½Ð¾Ð²Ð½Ñ– Ñ€ÐµÐºÐ²Ñ–Ð·Ð¸Ñ‚Ð¸. Ð¦Ðµ Ð´Ð°Ñ” Ð¾ÑÐ½Ð¾Ð²Ñƒ Ð´Ð»Ñ Ñ‚Ð¾Ñ‡Ð½Ð¾Ð³Ð¾ Ñ€Ð¾Ð·Ñ€Ð°Ñ…ÑƒÐ½ÐºÑƒ Ñ‚Ð° Ð¿Ñ–Ð´Ð±Ð¾Ñ€Ñƒ Ð½Ð¾Ñ€Ð¼Ð°Ñ‚Ð¸Ð²Ð½Ð¾Ñ— Ð±Ð°Ð·Ð¸.</p>
+              <div class="guide-points">
+                <div class="guide-point">
+                  <strong>Ð©Ð¾ Ð²Ð²ÐµÑÑ‚Ð¸</strong>
+                  <span>ÐÐ°Ð·Ð²Ñƒ Ð¿Ñ€Ð¾Ñ”ÐºÑ‚Ñƒ, Ð·Ð°Ð¼Ð¾Ð²Ð½Ð¸ÐºÐ°, Ð¼Ñ–ÑÑ†ÐµÐ²Ñ–ÑÑ‚ÑŒ Ñ‚Ð° Ð¿ÐµÑ€Ñ–Ð¾Ð´ Ñ€Ð¾Ð·Ñ€Ð°Ñ…ÑƒÐ½ÐºÑƒ.</span>
+                </div>
+                <div class="guide-point">
+                  <strong>Ð ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚</strong>
+                  <span>Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð¾Ð±'Ñ”ÐºÑ‚Ð° Ð±ÑƒÐ´Ðµ Ð³Ð¾Ñ‚Ð¾Ð²Ð° Ð´Ð¾ Ð´Ð¾Ð´Ð°Ð²Ð°Ð½Ð½Ñ Ð¿Ð¾Ð·Ð¸Ñ†Ñ–Ð¹ Ñ– Ñ€Ð¾Ð·Ð´Ñ–Ð»Ñ–Ð².</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-slide" data-guide-slide="1">
+            <div class="guide-shot">
+              <div class="guide-window">
+                <div class="guide-window-top">
+                  <span class="guide-dot red"></span>
+                  <span class="guide-dot yellow"></span>
+                  <span class="guide-dot green"></span>
+                </div>
+                <div class="guide-window-body">
+                  <div class="guide-toolbar">
+                    <span style="color:#e2e8f0; font-weight:700;">Ð ÐµÑÑƒÑ€ÑÐ½Ð° Ð²Ñ–Ð´Ð¾Ð¼Ñ–ÑÑ‚ÑŒ</span>
+                    <span class="guide-chip">ÐÐ²Ñ‚Ð¾Ð¿ÐµÑ€ÐµÑ€Ð°Ñ…ÑƒÐ½Ð¾Ðº</span>
+                  </div>
+                  <div class="guide-table">
+                    <div class="guide-table-row header">
+                      <span>Ð ÐµÑÑƒÑ€Ñ</span>
+                      <span>ÐžÐ´.</span>
+                      <span>Ð¦Ñ–Ð½Ð°</span>
+                    </div>
+                    <div class="guide-table-row">
+                      <span>Ð‘ÐµÑ‚Ð¾Ð½ Ð’25</span>
+                      <span>Ð¼3</span>
+                      <span>4 680</span>
+                    </div>
+                    <div class="guide-table-row">
+                      <span>ÐÑ€Ð¼Ð°Ñ‚ÑƒÑ€Ð° A500C</span>
+                      <span>Ñ‚</span>
+                      <span>38 250</span>
+                    </div>
+                    <div class="guide-table-row">
+                      <span>ÐžÐ¿Ð»Ð°Ñ‚Ð° Ð¿Ñ€Ð°Ñ†Ñ–</span>
+                      <span>Ð»ÑŽÐ´.-Ð³Ð¾Ð´</span>
+                      <span>215</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="guide-copy">
+              <h3>2. Ð”Ð¾Ð´Ð°Ð²Ð°Ð¹Ñ‚Ðµ Ñ€Ð¾Ð±Ð¾Ñ‚Ð¸ Ñ‚Ð° Ñ€ÐµÑÑƒÑ€ÑÐ¸</h3>
+              <p>Ð¡Ñ„Ð¾Ñ€Ð¼ÑƒÐ¹Ñ‚Ðµ Ð»Ð¾ÐºÐ°Ð»ÑŒÐ½Ð¸Ð¹ ÐºÐ¾ÑˆÑ‚Ð¾Ñ€Ð¸Ñ, Ð´Ð¾Ð±ÐµÑ€Ñ–Ñ‚ÑŒ Ð½Ð¾Ñ€Ð¼Ð¸ Ñ‚Ð° Ð¿ÐµÑ€ÐµÐ²Ñ–Ñ€Ñ‚Ðµ Ñ€ÐµÑÑƒÑ€ÑÐ½Ñƒ Ñ‡Ð°ÑÑ‚Ð¸Ð½Ñƒ. UBC Ð´Ð¾Ð¿Ð¾Ð¼Ð°Ð³Ð°Ñ” ÑˆÐ²Ð¸Ð´ÐºÐ¾ Ð²Ð¸ÑÐ²Ð¸Ñ‚Ð¸ Ð¿ÐµÑ€ÐµÐ²Ð¸Ñ‰ÐµÐ½Ð½Ñ, Ð´ÑƒÐ±Ð»Ñ– Ð°Ð±Ð¾ Ð·Ð°ÑÑ‚Ð°Ñ€Ñ–Ð»Ñ– Ñ†Ñ–Ð½Ð¸.</p>
+              <div class="guide-points">
+                <div class="guide-point">
+                  <strong>ÐŸÐ¾Ñ€Ð°Ð´Ð°</strong>
+                  <span>Ð’Ð¸ÐºÐ¾Ñ€Ð¸ÑÑ‚Ð¾Ð²ÑƒÐ¹Ñ‚Ðµ Ñ„Ñ–Ð»ÑŒÑ‚Ñ€Ð¸ Ñ‚Ð° Ð¿Ð¾ÑˆÑƒÐº, Ñ‰Ð¾Ð± Ð·Ð½Ð°Ñ…Ð¾Ð´Ð¸Ñ‚Ð¸ Ð¿Ð¾Ð·Ð¸Ñ†Ñ–Ñ— Ð·Ð° ÐºÐ¾Ð´Ð¾Ð¼ Ð°Ð±Ð¾ ÐºÐ»ÑŽÑ‡Ð¾Ð²Ð¸Ð¼ ÑÐ»Ð¾Ð²Ð¾Ð¼.</span>
+                </div>
+                <div class="guide-point">
+                  <strong>Ð©Ð¾ ÐºÐ¾Ð½Ñ‚Ñ€Ð¾Ð»ÑŽÐ²Ð°Ñ‚Ð¸</strong>
+                  <span>Ð†Ð½Ð´ÐµÐºÑÐ¸ Ð¿ÐµÑ€ÐµÑ€Ð°Ñ…ÑƒÐ½ÐºÑƒ, Ð·Ð°Ñ€Ð¾Ð±Ñ–Ñ‚Ð½Ñƒ Ð¿Ð»Ð°Ñ‚Ñƒ, Ð¼Ð°Ñ‚ÐµÑ€Ñ–Ð°Ð»Ð¸ Ñ‚Ð° Ð¼Ð°ÑˆÐ¸Ð½Ð¸.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-slide" data-guide-slide="2">
+            <div class="guide-shot">
+              <div class="guide-window">
+                <div class="guide-window-top">
+                  <span class="guide-dot red"></span>
+                  <span class="guide-dot yellow"></span>
+                  <span class="guide-dot green"></span>
+                </div>
+                <div class="guide-window-body">
+                  <div class="guide-toolbar">
+                    <span style="color:#e2e8f0; font-weight:700;">Ð•ÐºÑÐ¿Ð¾Ñ€Ñ‚ Ð´Ð¾ÐºÑƒÐ¼ÐµÐ½Ñ‚Ñ–Ð²</span>
+                    <span class="guide-chip">PDF / Excel</span>
+                  </div>
+                  <div class="guide-report">
+                    <span class="guide-report-line long"></span>
+                    <span class="guide-report-line mid"></span>
+                    <span class="guide-report-line short"></span>
+                    <span class="guide-report-line long"></span>
+                    <span class="guide-report-line mid"></span>
+                    <span class="guide-report-line short"></span>
+                  </div>
+                  <div class="guide-panels">
+                    <div class="guide-panel">
+                      <span class="guide-panel-title">Ð¤Ð¾Ñ€Ð¼Ð°Ñ‚Ð¸</span>
+                      <span class="guide-panel-text">PDF Ð´Ð»Ñ Ð¿Ð¾Ð³Ð¾Ð´Ð¶ÐµÐ½Ð½Ñ, Excel Ð´Ð»Ñ Ð¿Ð¾Ð´Ð°Ð»ÑŒÑˆÐ¾Ñ— Ñ€Ð¾Ð±Ð¾Ñ‚Ð¸</span>
+                    </div>
+                    <div class="guide-panel">
+                      <span class="guide-panel-title">ÐŸÐ°ÐºÐµÑ‚Ð¸ Ð´Ð¾ÐºÑƒÐ¼ÐµÐ½Ñ‚Ñ–Ð²</span>
+                      <span class="guide-panel-text">Ð›Ð¾ÐºÐ°Ð»ÑŒÐ½Ð¸Ð¹ ÐºÐ¾ÑˆÑ‚Ð¾Ñ€Ð¸Ñ, Ð·Ð²ÐµÐ´ÐµÐ½Ð¸Ð¹ Ñ€Ð¾Ð·Ñ€Ð°Ñ…ÑƒÐ½Ð¾Ðº, Ð°ÐºÑ‚Ð¸</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="guide-copy">
+              <h3>3. Ð•ÐºÑÐ¿Ð¾Ñ€Ñ‚ÑƒÐ¹Ñ‚Ðµ Ñ‚Ð° Ð´Ñ–Ð»Ñ–Ñ‚ÑŒÑÑ</h3>
+              <p>ÐšÐ¾Ð»Ð¸ ÐºÐ¾ÑˆÑ‚Ð¾Ñ€Ð¸Ñ Ð³Ð¾Ñ‚Ð¾Ð²Ð¸Ð¹, ÑÑ„Ð¾Ñ€Ð¼ÑƒÐ¹Ñ‚Ðµ ÐºÐ¾Ð¼Ð¿Ð»ÐµÐºÑ‚ Ð´Ð¾ÐºÑƒÐ¼ÐµÐ½Ñ‚Ñ–Ð² Ñ‚Ð° ÐµÐºÑÐ¿Ð¾Ñ€Ñ‚ÑƒÐ¹Ñ‚Ðµ Ð¹Ð¾Ð³Ð¾ Ñƒ Ð·Ñ€ÑƒÑ‡Ð½Ð¾Ð¼Ñƒ Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚Ñ– Ð´Ð»Ñ Ð·Ð°Ð¼Ð¾Ð²Ð½Ð¸ÐºÐ°, ÐµÐºÑÐ¿ÐµÑ€Ñ‚Ð¸Ð·Ð¸ Ñ‡Ð¸ Ð²Ð½ÑƒÑ‚Ñ€Ñ–ÑˆÐ½ÑŒÐ¾Ð³Ð¾ Ð¿Ð¾Ð³Ð¾Ð´Ð¶ÐµÐ½Ð½Ñ.</p>
+              <div class="guide-points">
+                <div class="guide-point">
+                  <strong>Ð“Ð¾Ñ‚Ð¾Ð²Ð¸Ð¹ Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚</strong>
+                  <span>ÐžÐ´Ð¸Ð½ ÐºÐ¾Ð¼Ð¿Ð»ÐµÐºÑ‚ Ñ„Ð°Ð¹Ð»Ñ–Ð² Ð´Ð»Ñ Ð´Ñ€ÑƒÐºÑƒ, Ð°Ñ€Ñ…Ñ–Ð²Ñƒ Ñ‚Ð° Ð¾Ð±Ð¼Ñ–Ð½Ñƒ Ð· ÐºÐ¾Ð»ÐµÐ³Ð°Ð¼Ð¸.</span>
+                </div>
+                <div class="guide-point">
+                  <strong>Ð”Ð°Ð»Ñ–</strong>
+                  <span>Ð¯ÐºÑ‰Ð¾ Ð¿Ð¾Ñ‚Ñ€Ñ–Ð±Ð½Ð° Ð´Ð¾Ð²Ñ–Ð´ÐºÐ° Ð°Ð±Ð¾ Ð´ÐµÐ¼Ð¾, ÑÐºÐ¾Ñ€Ð¸ÑÑ‚Ð°Ð¹Ñ‚ÐµÑÑ Ñ‡Ð°Ñ‚Ð¾Ð¼ Ð¿Ñ–Ð´Ñ‚Ñ€Ð¸Ð¼ÐºÐ¸ Ð½Ð¸Ð¶Ñ‡Ðµ.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="guide-controls">
+          <div class="guide-progress">
+            <button class="guide-progress-dot active" type="button" aria-label="ÐšÑ€Ð¾Ðº 1" onclick="setGuideSlide(0)"></button>
+            <button class="guide-progress-dot" type="button" aria-label="ÐšÑ€Ð¾Ðº 2" onclick="setGuideSlide(1)"></button>
+            <button class="guide-progress-dot" type="button" aria-label="ÐšÑ€Ð¾Ðº 3" onclick="setGuideSlide(2)"></button>
+          </div>
+          <div class="guide-nav">
+            <button class="btn btn-outline" type="button" onclick="changeGuideSlide(-1)">ÐÐ°Ð·Ð°Ð´</button>
+            <button class="btn" type="button" onclick="changeGuideSlide(1)">Ð’Ð¿ÐµÑ€ÐµÐ´</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="contact" style="margin-top: 60px; background: #0f1222; border-radius: 40px; padding: 32px 30px; border: 1px solid #293544;">
       <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px;">
         <div>
@@ -1147,9 +1548,52 @@
 <script>
   const GOOGLE_CLIENT_ID = '992395032391-cojjbkgo7iaennech1ng6ephvr91n7t9.apps.googleusercontent.com';
   const DISCORD_CLIENT_ID = '1492162869909913740';
+  const GUIDE_SLIDES = [
+    {
+      title: 'Завантажте та відкрийте файл',
+      description: 'Після встановлення запустіть програму та відкрийте інсталятор, який ви завантажили. Це ініціює процес встановлення та налаштування UBC на вашому комп\'ютері.',
+      cardTitle: 'Завантажте та відкрийте файл',
+      cardText: '',
+      image: 'img/sc1.png',
+      imageAlt: 'Завантажте та відкрийте файл',
+    },
+    {
+      title: 'Windows SmartScreen може спрацювати',
+      description: 'Натисніть "Додатково" та потім перейдіть до наступного кроку.',
+      cardTitle: 'Windows SmartScreen може спрацювати',
+      cardText: '',
+      image: 'img/sc2.png',
+      imageAlt: 'Windows SmartScreen може спрацювати',
+    },
+    {
+      title: 'Натисніть "Запустити все одно"',
+      description: 'Якщо з\'явиться попередження від Windows SmartScreen, виберіть "Додатково" та потім "Запустити все одно". Це стандартна процедура для програм, які ще не набрали достатньої кількості завантажень для автоматичного підтвердження безпеки.',
+      cardTitle: 'Натисніть "Запустити все одно"',
+      cardText: '',
+      image: 'img/sc3.png',
+      imageAlt: 'Натисніть "Запустити все одно"',
+    },
+    {
+      title: 'Зачекайте на завершення встановлення',
+      description: 'Після цього розпочнеться процес встановлення. Зачекайте, поки він завершиться. Це може зайняти кілька хвилин, залежно від швидкості вашого комп\'ютера.',
+      cardTitle: 'Зачекайте на завершення встановлення',
+      cardText: '',
+      image: 'img/sc4.png',
+      imageAlt: 'Зачекайте на завершення встановлення',
+    },
+    {
+      title: 'Активуйте програму своїм ключем активації',
+      description: 'Після встановлення відкрийте програму та введіть ключ активації разом з вашим email, ключ це той самий, який ви отримали після заповнення форми. Це дозволить вам розпочати роботу з UBC та отримати доступ до програми.',
+      cardTitle: 'Активуйте програму своїм ключем активації',
+      cardText: '',
+      image: 'img/sc5.png',
+      imageAlt: 'Активуйте програму своїм ключем активації',
+    },
+  ];
   
   let currentCaptchaCode = '';
   let failedAttempts = 0;
+  let currentGuideSlide = 0;
   
   function generateAdvancedCaptcha() {
     const canvas = document.getElementById('captchaCanvas');
@@ -1372,6 +1816,128 @@
     }
   }
 
+  function renderGuideShell() {
+    const guide = document.getElementById('guide');
+    if (!guide) return;
+
+    guide.innerHTML = `
+      <h2>Інструкція користувача</h2>
+      <div class="guide-shell">
+        <div class="guide-topbar">
+          <div class="guide-title-wrap">
+            <span class="guide-label">User Guide</span>
+            <h3 id="guideSlideTitle"></h3>
+            <p id="guideSlideDescription"></p>
+          </div>
+          <div class="guide-step-badge">
+            <span class="guide-step-label">Крок</span>
+            <span class="guide-step-count" id="guideStepCount"></span>
+          </div>
+        </div>
+        <div class="guide-stage">
+          <div class="guide-visual">
+            <img id="guideImage" class="guide-image" src="" alt="">
+            <div id="guideImageFallback" class="guide-image-fallback">
+              <div class="guide-fallback-box">
+                <strong id="guideFallbackTitle"></strong>
+                <span>Додайте свій скрін і змініть шлях у <code>GUIDE_SLIDES</code>.</span>
+                <code id="guideFallbackPath"></code>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="guide-controls">
+          <div id="guideProgress" class="guide-progress"></div>
+          <div class="guide-nav">
+            <button class="btn btn-outline" type="button" onclick="changeGuideSlide(-1)">Назад</button>
+            <button class="btn" type="button" onclick="changeGuideSlide(1)">Вперед</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const progress = document.getElementById('guideProgress');
+    GUIDE_SLIDES.forEach((slide, index) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'guide-progress-dot';
+      dot.setAttribute('aria-label', `Крок ${index + 1}`);
+      dot.addEventListener('click', () => setGuideSlide(index));
+      progress.appendChild(dot);
+    });
+  }
+
+  function updateGuideSlider() {
+    if (!GUIDE_SLIDES.length) return;
+
+    const slide = GUIDE_SLIDES[currentGuideSlide];
+    const titleEl = document.getElementById('guideSlideTitle');
+    const descriptionEl = document.getElementById('guideSlideDescription');
+    const stepCountEl = document.getElementById('guideStepCount');
+    const imageEl = document.getElementById('guideImage');
+    const fallbackEl = document.getElementById('guideImageFallback');
+    const fallbackTitleEl = document.getElementById('guideFallbackTitle');
+    const fallbackPathEl = document.getElementById('guideFallbackPath');
+    const dots = document.querySelectorAll('.guide-progress-dot');
+
+    if (!titleEl || !descriptionEl || !stepCountEl || !imageEl || !fallbackEl || !fallbackTitleEl || !fallbackPathEl) {
+      return;
+    }
+
+    titleEl.textContent = slide.title;
+    descriptionEl.textContent = slide.description;
+    stepCountEl.textContent = `${String(currentGuideSlide + 1).padStart(2, '0')} / ${String(GUIDE_SLIDES.length).padStart(2, '0')}`;
+
+    fallbackTitleEl.textContent = slide.title;
+    fallbackPathEl.textContent = slide.image;
+    imageEl.alt = slide.imageAlt || slide.title;
+    imageEl.classList.remove('is-hidden');
+    fallbackEl.classList.remove('is-visible');
+
+    imageEl.onerror = () => {
+      imageEl.classList.add('is-hidden');
+      fallbackEl.classList.add('is-visible');
+    };
+
+    imageEl.onload = () => {
+      imageEl.classList.remove('is-hidden');
+      fallbackEl.classList.remove('is-visible');
+    };
+
+    if (!slide.image) {
+      imageEl.removeAttribute('src');
+      imageEl.classList.add('is-hidden');
+      fallbackEl.classList.add('is-visible');
+    } else {
+      imageEl.src = slide.image;
+    }
+
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentGuideSlide);
+    });
+  }
+
+  function setGuideSlide(index) {
+    if (!GUIDE_SLIDES.length) return;
+    currentGuideSlide = ((index % GUIDE_SLIDES.length) + GUIDE_SLIDES.length) % GUIDE_SLIDES.length;
+    updateGuideSlider();
+  }
+
+  function changeGuideSlide(direction) {
+    setGuideSlide(currentGuideSlide + direction);
+  }
+
+  function bindGuideLink() {
+    const downloadSection = document.getElementById('download');
+    if (!downloadSection) return;
+
+    const guideLink = Array.from(downloadSection.querySelectorAll('a')).find((link) => link.textContent.includes('Ð†Ð½ÑÑ‚Ñ€ÑƒÐºÑ†Ñ–Ñ') || link.textContent.includes('Інструкція'));
+    if (!guideLink) return;
+
+    guideLink.setAttribute('href', '#guide');
+    guideLink.setAttribute('onclick', "scrollToSection('guide')");
+  }
+
   // ============ GOOGLE OAUTH ============
   function initGoogleSignIn() {
     if (typeof google === 'undefined') {
@@ -1537,7 +2103,6 @@
     }
   }
   
-  // ============ MODAL ============
   const modal = document.getElementById('authModal');
   const modalTitle = document.getElementById('modalTitle');
   const modalSub = document.getElementById('modalSub');
@@ -1651,16 +2216,17 @@
     }
   });
   
-  // Make canvas clickable to refresh
   const canvas = document.getElementById('captchaCanvas');
   if (canvas) {
     canvas.addEventListener('click', refreshCaptcha);
   }
   
-  // Initialize
   handleDiscordCallback();
   setTimeout(initGoogleSignIn, 100);
   generateAdvancedCaptcha();
+  renderGuideShell();
+  bindGuideLink();
+  updateGuideSlider();
   
   document.getElementById('googleBtn')?.addEventListener('click', loginWithGoogle);
   document.getElementById('discordBtn')?.addEventListener('click', loginWithDiscord);
