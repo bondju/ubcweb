@@ -1238,7 +1238,7 @@
   <div id="mainContent" class="main-content">
     <div class="hero">
       <h1>Кошторисне ПЗ<br>нового покоління</h1>
-      <p>UBC — це професійний інструмент для інженерів-кошторисників, будівельних компаній та проєктувальників. Розраховуйте швидко, працюйте з актуальними ДБН, експортуйте в будь-які формати.</p>
+      <p>Ukraine Building Cost — це професійний інструмент для інженерів-кошторисників, будівельних компаній та проєктувальників. Розраховуйте швидко, працюйте з актуальними ДБН, експортуйте в будь-які формати.</p>
       <div class="actions">
         <a href="#download" class="btn">Завантажити</a>
         <a href="#pricing" class="btn btn-outline">Обрати ліцензію</a>
@@ -1269,7 +1269,7 @@
                 <img src="villorum.jpg" alt="Логотип партнера" width ="300px" height ="300px">
             </div>
             <div class="partner-name">LCC "VILLORUM"</div>
-            <div class="partner-desc">Провідний забудовник України</div>
+            <div class="partner-desc">Провідний інженер консультант</div>
         </div>
     </div>
 </div>
@@ -1551,7 +1551,7 @@
   const GUIDE_SLIDES = [
     {
       title: 'Отримайте ключ активації',
-      description: 'Для використання UBC вам потрібен ключ активації. Ви можете отримати його, заповнивши коротку форму за посиланням вижчще. Після заповнення форми ви отримаєте ключ на вказану електронну адресу, який буде необхідний для активації програми після встановлення.',
+      description: 'Заповніть форму за <a onclick="showMainContent(); scrollToSection(\'pricing\')" style="color: #d3dadb; text-decoration: underline;">посиланням</a>, щоб отримати безкоштовний ключ активації для UBC.',
       cardTitle: 'Спочатку отримайте ключ активації',
       cardText: '',
       image: 'img/sc_pre.png',
@@ -1893,7 +1893,7 @@
     }
 
     titleEl.textContent = slide.title;
-    descriptionEl.textContent = slide.description;
+    descriptionEl.innerHTML = slide.description;
     stepCountEl.textContent = `${String(currentGuideSlide + 1).padStart(2, '0')} / ${String(GUIDE_SLIDES.length).padStart(2, '0')}`;
 
     fallbackTitleEl.textContent = slide.title;
