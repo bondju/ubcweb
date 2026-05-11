@@ -1135,10 +1135,13 @@
       <a onclick="showMainContent(); scrollToSection('pricing')">Тарифи</a>
       <a onclick="showMainContent(); scrollToSection('download')">Завантажити</a>
       <a onclick="showMainContent(); scrollToSection('contact')">Підтримка</a>
-      <a onclick="showProfilePage()">Профіль</a>
-      <div class="auth-buttons" id="authButtons">
-        <button class="btn-login" id="openLoginBtn">Увійти</button>
-        <button class="btn-reg" id="openRegBtn">Реєстрація</button>
+      <a onclick="showProfilePage()" style="display: none;">Профіль</a>
+      <div class="auth-buttons" id="authButtons" style="display: none;">
+        <button class="btn-login" id="openLoginBtn" style="display: none;">Увійти</button>
+        <button class="btn-reg" id="openRegBtn" style="display: none;">Реєстрація</button>
+      </div>
+     <div class="auth-buttons" id="Proffile">
+        <a href="/mycabinet/index.html"><button class="btn-reg">Мій кабінет</button></a>
       </div>
     </div>
   </div>
