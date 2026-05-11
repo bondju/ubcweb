@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мій кабінет</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 20px;
+            color: #333;
+        }
+
+        .user-email {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+            background: white;
+            padding: 5px;
+            border-radius: 10px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            color: #666;
+        }
+
+        .tab-btn.active {
+            background: #007bff;
+            color: white;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .alert {
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .license-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .license-key {
+            font-family: monospace;
+            font-size: 14px;
+            font-weight: bold;
+            color: #007bff;
+            background: white;
+            padding: 8px;
+            border-radius: 5px;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+
+        .device-item {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .device-name {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .device-details {
+            font-size: 11px;
+            color: #666;
+        }
+
+        .deactivate-btn {
+            background: #ffc107;
+            color: #333;
+            padding: 5px 12px;
+            font-size: 12px;
+            width: auto;
+        }
+
+        .stats-grid {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stat-card {
+            flex: 1;
+            background: #007bff;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .qr-code {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .qr-code img {
+            max-width: 150px;
+        }
+
+        .hidden {
+            display: none;
+        }
+.beta-banner {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    background: #d10d14;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    z-index: 9999;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+.top-banner {
+    top: 0;
+}
+
+.bottom-banner {
+    bottom: 0;
+}
+
+body {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+    </style>
+</head>
+<body>
+    <div class="beta-banner top-banner">
+        ЩЕ В РОЗРОБЦІ (БЕТА ДОСТУП)
+    </div>
+    <div class="container">
+        <div class="header" id="header" style="display: none;">
+            <h1>Мій кабінет</h1>
+            <div>
+                <span class="user-email" id="userEmail"></span>
+                <button class="logout-btn" onclick="logout()">Вийти</button>
+            </div>
+        </div>
+
+        <div id="loginView">
+            <div class="card">
+                <h2>Вхід</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" required placeholder="your@email.com">
+                    </div>
+                    <button type="submit">Увійти</button>
+                </form>
+                <div id="loginMessage"></div>
+            </div>
+        </div>
+
+        <div id="appView" style="display: none;">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('status')">Статус</button>
+                <button class="tab-btn" onclick="switchTab('devices')">Пристрої</button>
+            </div>
+
+            <div id="statusTab">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="statActivations">0</div>
+                        <div class="stat-label">Активацій</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statRemaining">0</div>
+                        <div class="stat-label">Доступно</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2>Ліцензія</h2>
+                    <div id="licenseInfo">Завантаження...</div>
+                </div>
+            </div>
+
+            <div id="devicesTab" style="display: none;">
+                <div class="card">
+                    <h2>Пристрої</h2>
+                    <div id="devicesList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="beta-banner bottom-banner">
+            ЩЕ В РОЗРОБЦІ (БЕТА ДОСТУП)
+    </div>
+
+    <div id="totpModal" class="modal">
+        <div class="modal-content">
+            <h2>2FA Код</h2>
+            <div id="totpContent"></div>
+            <form id="totpForm">
+                <div class="form-group">
+                    <label>Код</label>
+                    <input type="text" id="totpCode" placeholder="000000" maxlength="6" required>
+                </div>
+                <button type="submit">Підтвердити</button>
+            </form>
+            <div id="totpMessage"></div>
+        </div>
+    </div>
+
+    <script>
+        let sessionToken = localStorage.getItem('sessionToken');
+        let currentEmail = null;
+        const API_BASE = 'https://api.ubcost.com';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (sessionToken) {
+                verifySession();
+            }
+            
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            document.getElementById('totpForm').addEventListener('submit', verifyTOTP);
+        });
+
+        async function verifySession() {
+            try {
+                const formData = new FormData();
+                formData.append('session_token', sessionToken);
+                
+                const res = await fetch(API_BASE + '/v1/verify-session', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await res.json();
+                
+                if (data.valid) {
+                    currentEmail = data.email;
+                    showApp();
+                    loadStatus();
+                } else {
+                    logout();
+                }
+            } catch (error) {
+                console.error('Session verify error:', error);
+                logout();
+            }
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            
+            showMessage('loginMessage', 'Завантаження...', 'info');
+            
+            try {
+                const res = await fetch(API_BASE + '/v1/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email })
+                });
+                
+                const data = await res.json();
+                
+                if (res.ok) {
+                    if (data.status === 'setup_required') {
+                        showTOTPSetup(data);
+                    } else if (data.status === 'success') {
+                        currentEmail = email;
+                        showTOTPModal(email);
+                    }
+                } else {
+                    showMessage('loginMessage', data.detail || 'Помилка входу', 'error');
+                }
+            } catch (error) {
+                showMessage('loginMessage', 'Помилка з\'єднання', 'error');
+            }
+        }
+
+        function showTOTPSetup(data) {
+            const modal = document.getElementById('totpModal');
+            const content = document.getElementById('totpContent');
+            
+            content.innerHTML = `
+                <div class="alert alert-info">
+                    <p>1. Встановіть Google Authenticator</p>
+                    <p>2. Відскануйте QR-код</p>
+                    <p>3. Введіть код</p>
+                </div>
+                <div class="qr-code">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(data.uri)}">
+                </div>
+                <div class="form-group">
+                    <label>Секрет: ${data.secret}</label>
+                </div>
+            `;
+            
+            modal.style.display = 'flex';
+            window.totpEmail = data.email;
+        }
+
+        function showTOTPModal(email) {
+            const modal = document.getElementById('totpModal');
+            const content = document.getElementById('totpContent');
+            content.innerHTML = '<div class="alert alert-info">Введіть код з Google Authenticator</div>';
+            modal.style.display = 'flex';
+            window.totpEmail = email;
+        }
+
+        async function verifyTOTP(e) {
+            e.preventDefault();
+            const code = document.getElementById('totpCode').value;
+            const email = window.totpEmail;
+            
+            try {
+                const res = await fetch(API_BASE + '/v1/verify-totp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, totp_code: code })
+                });
+                
+                const data = await res.json();
+                
+                if (res.ok) {
+                    sessionToken = data.session_token;
+                    localStorage.setItem('sessionToken', sessionToken);
+                    currentEmail = data.email;
+                    document.getElementById('totpModal').style.display = 'none';
+                    showApp();
+                    loadStatus();
+                    showMessage('loginMessage', 'Вхід виконано!', 'success');
+                } else {
+                    showMessage('totpMessage', 'Невірний код', 'error');
+                }
+            } catch (error) {
+                showMessage('totpMessage', 'Помилка', 'error');
+            }
+        }
+
+        async function logout() {
+            if (sessionToken) {
+                const formData = new FormData();
+                formData.append('session_token', sessionToken);
+                try {
+                    await fetch(API_BASE + '/v1/logout', { method: 'POST', body: formData });
+                } catch(e) {}
+            }
+            
+            localStorage.removeItem('sessionToken');
+            sessionToken = null;
+            document.getElementById('loginView').style.display = 'block';
+            document.getElementById('appView').style.display = 'none';
+            document.getElementById('header').style.display = 'none';
+        }
+
+        function showApp() {
+            document.getElementById('loginView').style.display = 'none';
+            document.getElementById('appView').style.display = 'block';
+            document.getElementById('header').style.display = 'flex';
+            document.getElementById('userEmail').textContent = currentEmail;
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('#statusTab, #devicesTab').forEach(tab => {
+                tab.style.display = 'none';
+            });
+            document.getElementById(tabName + 'Tab').style.display = 'block';
+            
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (tabName === 'status') loadStatus();
+            if (tabName === 'devices') loadDevices();
+        }
+
+        async function loadStatus() {
+            try {
+                const res = await fetch(API_BASE + '/v1/my-licenses', {
+                    headers: { 'session-token': sessionToken }
+                });
+                
+                const data = await res.json();
+                
+                if (data.has_license && data.licenses.length > 0) {
+                    const lic = data.licenses[0];
+                    document.getElementById('statActivations').textContent = lic.activations_count || 0;
+                    document.getElementById('statRemaining').textContent = lic.remaining_activations || 0;
+                    
+                    document.getElementById('licenseInfo').innerHTML = `
+                        <div class="license-box">
+                            <div class="license-key">${escapeHtml(lic.key)}</div>
+                            <p>Макс: ${lic.max_activations} | Використано: ${lic.activations_count}</p>
+                            <p>Створено: ${new Date(lic.created_at).toLocaleDateString()}</p>
+                        </div>
+                    `;
+                } else {
+                    document.getElementById('licenseInfo').innerHTML = '<div class="alert alert-info">Немає ліцензії</div>';
+                }
+            } catch (error) {
+                console.error('Load status error:', error);
+                document.getElementById('licenseInfo').innerHTML = '<div class="alert alert-error">Помилка завантаження</div>';
+            }
+        }
+
+        async function loadDevices() {
+            const container = document.getElementById('devicesList');
+            container.innerHTML = '<div class="loading">Завантаження...</div>';
+            
+            try {
+                const res = await fetch(API_BASE + '/v1/my-licenses', {
+                    headers: { 'session-token': sessionToken }
+                });
+                
+                const data = await res.json();
+                
+                if (data.has_license && data.licenses[0] && data.licenses[0].activations.length > 0) {
+                    const activations = data.licenses[0].activations;
+                    container.innerHTML = '';
+                    
+                    activations.forEach(device => {
+                        container.innerHTML += `
+                            <div class="device-item">
+                                <div>
+                                    <div class="device-name">${escapeHtml(device.device_name)}</div>
+                                    <div class="device-details">ID: ${escapeHtml(device.device_id)}<br>${new Date(device.activated_at).toLocaleString()}</div>
+                                </div>
+                                <button class="deactivate-btn" onclick="deactivate('${data.licenses[0].key}', '${device.device_id}')">Видалити</button>
+                            </div>
+                        `;
+                    });
+                } else {
+                    container.innerHTML = '<div class="alert alert-info">Немає пристроїв</div>';
+                }
+            } catch (error) {
+                container.innerHTML = '<div class="alert alert-error">Помилка завантаження</div>';
+            }
+        }
+
+        async function deactivate(licenseKey, deviceId) {
+            if (!confirm('Видалити пристрій?')) return;
+            
+            try {
+                const res = await fetch(API_BASE + '/v1/deactivate?license_key=' + encodeURIComponent(licenseKey) + '&device_id=' + encodeURIComponent(deviceId), {
+                    method: 'DELETE',
+                    headers: { 'session-token': sessionToken }
+                });
+                
+                if (res.ok) {
+                    loadDevices();
+                    loadStatus();
+                } else {
+                    alert('Помилка видалення');
+                }
+            } catch (error) {
+                alert('Помилка: ' + error.message);
+            }
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function showMessage(elementId, message, type) {
+            const el = document.getElementById(elementId);
+            if (el) {
+                el.innerHTML = '<div class="alert alert-' + type + '">' + message + '</div>';
+                setTimeout(() => {
+                    if (el.innerHTML.includes(message)) el.innerHTML = '';
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>
