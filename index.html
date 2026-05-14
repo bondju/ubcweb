@@ -166,7 +166,7 @@
 
     .intro-word::before,
     .intro-word::after {
-      content: "Ukraine\A Building Cost";
+      content: "Ukraine Building \A Cost";
       position: absolute;
       inset: 0;
       white-space: pre-line;
@@ -331,15 +331,15 @@
     }
 
     .btn.secondary {
-      background: var(--panel-2);
-      border-color: var(--line);
+      background: #31445d;
+      border-color: #232b36;
       color: var(--soft);
       box-shadow: none;
     }
 
     .btn.secondary:hover {
-      background: #1c2531;
-      border-color: #344256;
+      background: #3b6296;
+      border-color: #314663;
     }
 
     .btn.ghost {
@@ -396,17 +396,14 @@
     }
 
     h1 {
-      margin-bottom: 20px;
-      max-width: 720px;
-      font-size: clamp(2.7rem, 6vw, 5.4rem);
-      line-height: 1.02;
-      letter-spacing: 0;
-      background: linear-gradient(110deg, #ffffff 0%, #dbeafe 34%, #f7b955 58%, #ffffff 82%);
-      background-size: 240% 100%;
-      -webkit-background-clip: text;
+      font-size: clamp(50px, 8vw, 10px);
+      font-weight: 800;
+      line-height: 1.15;
+      background: linear-gradient(to right, #ffffff, #94a3b8);
       background-clip: text;
+      -webkit-background-clip: text;
       color: transparent;
-      animation: headlineSheen 8s ease-in-out infinite;
+      letter-spacing: -1px;
     }
 
     .hero-copy {
@@ -550,8 +547,8 @@
     .product-frame img {
       display: block;
       width: 100%;
-      aspect-ratio: 16 / 10;
-      object-fit: cover;
+      aspect-ratio: 16 / 8.3;
+      object-fit: contain;
       object-position: center;
       background: #0c111a;
     }
@@ -876,7 +873,7 @@
 
     .dot {
       width: 11px;
-      height: 11px;
+      height: 13.5px;
       border: 1px solid #657386;
       border-radius: 50%;
       background: transparent;
@@ -1450,8 +1447,8 @@
 </head>
 <body class="intro-lock">
   <div class="intro" id="intro" aria-label="Ukraine Building Cost intro">
-    <div class="intro-rings" aria-hidden="true"></div>
-    <div class="intro-word">Ukraine<br>Building Cost</div>
+    <!-- <div class="intro-rings" aria-hidden="true"></div> -->
+    <div class="intro-word">Ukraine Building <br>Cost</div>
     <div class="intro-hint">
       <div class="intro-wheel" aria-hidden="true"></div>
       <span>Прокрутіть нижще</span>
@@ -1482,25 +1479,24 @@
     <section class="container hero" aria-labelledby="hero-title">
       <div>
         <div class="eyebrow"><span class="status-dot"></span> Версія 1.0.48 доступна для Windows</div>
-        <h1 id="hero-title">Кошториси, акти та ресурси без зайвої ручної роботи</h1>
+        <h1>Кошторисне ПЗ нового покоління</h1><!--  id="hero-title" -->
         <p class="hero-copy">
-          UBC допомагає будівельним командам швидко формувати кошторисну документацію, контролювати ресурси,
-          готувати експорт у PDF та Excel і працювати з актуальною нормативною базою.
+           Ukraine Building Cost — це професійний інструмент для інженерів-кошторисників, будівельних компаній та проєктувальників. Розраховуйте швидко, працюйте з актуальними ДБН, експортуйте в будь-які формати.
         </p>
         <div class="hero-actions">
           <a class="btn" href="#download">Завантажити UBC</a>
           <a class="btn secondary" href="#guide">Подивитись інструкцію</a>
         </div>
         <div class="metrics" aria-label="Ключові переваги">
-          <div class="metric"><strong>DBN 2026</strong><span>підтримка актуальних норм</span></div>
-          <div class="metric"><strong>PDF / Excel</strong><span>зручний експорт документів</span></div>
-          <div class="metric"><strong>KB-2в</strong><span>акти та пакети документів</span></div>
+          <div class="metric"><strong>Пошук цін</strong><span>Онлайн пошук цін через різні торгівельні мережі</span></div>
+          <div class="metric"><strong>PDF / Excel</strong><span>зручний експорт документів та відправка між колегами</span></div>
+          <div class="metric"><strong>КБ-2в</strong><span>Ведення актів КБ-2в у зручному та зрузомілому інтерфейсі</span></div>
         </div>
-        <a class="scroll-cue" href="#features" aria-label="Прокрутити вниз">
+        <!-- <a class="scroll-cue" href="#features" aria-label="Прокрутити вниз">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M12 5v14"></path>
             <path d="m19 12-7 7-7-7"></path>
-          </svg>
+          </svg> -->
         </a>
       </div>
 
@@ -1509,42 +1505,42 @@
           <div class="frame-bar">
             <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
           </div>
-          <img src="img/sc_pre.png" alt="Вікно програми UBC з активацією">
+          <img src="img/app.png" alt="Вікно програми UBC з активацією">
         </div>
-        <div class="trust-strip">
+        <!-- <div class="trust-strip">
           <div><strong>Продукт для реальної роботи.</strong> Інсталятор, інструкція, перевірка файлу та форма для ключа зібрані в одному місці.</div>
           <a class="btn ghost" href="https://www.virustotal.com/gui/file/849d4a605cec49c9bfa61dd3d339c9482e274b1e17358b624170996729e2c54a/detection">VirusTotal</a>
-        </div>
+        </div> -->
       </div>
     </section>
 
     <section id="features" class="container">
       <div class="section-head">
         <div>
-          <h2>Що UBC закриває для команди</h2>
-          <p>Сторінка стала ближчою до продукту: конкретні сценарії, зрозумілі дії та менше шуму навколо головного завдання.</p>
+          <h2>Професійний інструментарій</h2>
+          <p>Програма надає:</p>
         </div>
       </div>
       <div class="feature-grid">
         <article class="card">
           <span class="icon">01</span>
-          <h3>Кошторисні розрахунки</h3>
-          <p>Створення структури об'єкта, локальних кошторисів, позицій робіт і ресурсної частини без розкиданих таблиць.</p>
+          <h3>Блискавичні розрахунки</h3>
+          <p>Автоматичний перерахунок ресурсів, індексів та коефіцієнтів у реальному часі. Економія годин роботи.</p>
         </article>
         <article class="card">
           <span class="icon">02</span>
-          <h3>Контроль ресурсів</h3>
-          <p>Перевірка матеріалів, машин, заробітної плати та індексів перерахунку у зрозумілому робочому інтерфейсі.</p>
+          <h3>ДБН + кошторисні норми</h3>
+          <p>Повна відповідність ДСТУ, ДБН, збірникам цінників. Оновлення щокварталу — ви завжди в тренді.</p>
         </article>
         <article class="card">
           <span class="icon">03</span>
-          <h3>Експорт і передача</h3>
-          <p>Готові документи для погодження, друку, архіву або передачі замовнику у поширених форматах.</p>
+          <h3>Імпорт / Експорт</h3>
+          <p>Підтримка Excel, PDF та в майбутьньому інше. Легкий обмін даними з замовниками та експертизою.</p>
         </article>
       </div>
     </section>
 
-    <section id="workflow" class="container">
+    <!-- <section id="workflow" class="container">
       <div class="section-head">
         <div>
           <h2>Робочий процес без плутанини</h2>
@@ -1574,13 +1570,31 @@
           </div>
         </div>
       </div>
+    </section> -->
+
+    <section class="container">
+      <div class="section-head">
+        <div>
+          <h2>Партнери</h2>
+          <p>Нам довіряють провідні компанії та організації з будівельної галузі</p>
+        </div>
+      </div>
+      <div class="partners">
+        <article class="partner">
+          <img src="villorum.jpg" alt="Логотип VILLORUM">
+          <div>
+            <h3>LCC "VILLORUM"</h3>
+            <p>Провідний інженер консультант</p>
+          </div>
+        </article>
+      </div>
     </section>
 
     <section id="pricing" class="container">
       <div class="section-head">
         <div>
           <h2>Тарифи</h2>
-          <p>Почніть безкоштовно, а для командних або корпоративних сценаріїв підключайте розширені умови.</p>
+          <p>Гнучкі умови для фахівців та великих компаній. Розширте свої можливості разом з UBC.</p>
         </div>
       </div>
       <div class="pricing">
@@ -1596,13 +1610,13 @@
         </article>
         <article class="price-card">
           <h3>Professional</h3>
-          <div class="price">У розробці</div>
+          <div class="price" style="color: #b2a854;">У розробці</div>
           <ul>
             <li>Розширені функції Basic</li>
             <li>Нові модулі після релізу</li>
             <li>Пріоритетна підтримка</li>
           </ul>
-          <a class="btn secondary" href="#contact">Повідомити про інтерес</a>
+          <!-- <a class="btn secondary" href="#contact">Повідомити про інтерес</a> -->
         </article>
         <article class="price-card">
           <h3>Enterprise</h3>
@@ -1612,7 +1626,7 @@
             <li>Інтеграції та консультації</li>
             <li>Умови для організації</li>
           </ul>
-          <a class="btn secondary" href="mailto:contact@ubcost.com">Зв'язатися</a>
+          <a class="btn secondary" href="#contact">Зв'язатися</a>
         </article>
       </div>
     </section>
@@ -1623,11 +1637,11 @@
           <div class="eyebrow"><span class="status-dot"></span> Стабільний реліз</div>
           <h2>UBC Desktop для Windows</h2>
           <p>Версія 1.0.48. Інсталятор оновлено 11.05.2026. Розмір файлу близько 400 МБ.</p>
-          <div class="download-meta">
+          <!-- <div class="download-meta">
             <span class="pill">Windows installer</span>
             <span class="pill">Перевірка VirusTotal</span>
             <span class="pill">Підтримка DBN 2026</span>
-          </div>
+          </div> -->
         </div>
         <div class="hero-actions">
           <a class="btn" href="https://github.com/bondju/ubcweb/raw/refs/heads/main/Ukraine%20Building%20Cost%20Setup%201.0.48.exe">Завантажити .exe</a>
@@ -1649,6 +1663,7 @@
           <div class="guide-media"><img id="guideImage" src="img/sc_pre.png" alt=""></div>
           <div class="guide-copy">
             <span class="pill" id="guideCount">Крок 01 / 06</span>
+            <br>
             <h3 id="guideTitle">Отримайте ключ активації</h3>
             <p id="guideText">Заповніть форму в блоці тарифів, щоб отримати безкоштовний ключ для запуску UBC.</p>
           </div>
@@ -1660,24 +1675,6 @@
             <button class="btn" type="button" id="guideNext">Вперед</button>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section class="container">
-      <div class="section-head">
-        <div>
-          <h2>Партнери</h2>
-          <p>UBC розвивається разом із фахівцями будівельної галузі та практичним досвідом реальних проєктів.</p>
-        </div>
-      </div>
-      <div class="partners">
-        <article class="partner">
-          <img src="villorum.jpg" alt="Логотип партнера VILLORUM">
-          <div>
-            <h3>LCC "VILLORUM"</h3>
-            <p>Інженерний консультант і партнер з практичного впровадження.</p>
-          </div>
-        </article>
       </div>
     </section>
 
@@ -1696,7 +1693,7 @@
     <div class="container footer-grid">
       <div>
         <strong style="color: var(--text); font-size: 1.1rem;">UBC</strong>
-        <p>Ukraine Building Cost<br>© 2026 - усі права захищені</p>
+        <p>Ukraine Building Cost<br>© 2026 — Всі права захищені</p>
       </div>
       <div>
         <a href="license.txt">Політика конфіденційності</a>
@@ -1772,14 +1769,14 @@
         alt: 'Завантажений файл інсталятора UBC'
       },
       {
-        title: 'Перейдіть через SmartScreen',
-        text: 'Якщо Windows показує попередження, натисніть "Додатково", щоб побачити наступну дію.',
+        title: "Якщо з'явиться єкран SmartScreen - не хвилюйтесь",
+        text: 'Якщо Windows показує попередження, натисніть "Докладніше", щоб побачити наступну дію.',
         image: 'img/sc2.png',
-        alt: 'Windows SmartScreen з кнопкою додатково'
+        alt: 'Windows SmartScreen з кнопкою Докладніше'
       },
       {
         title: 'Запустіть встановлення',
-        text: 'Оберіть "Запустити все одно", якщо довіряєте інсталятору та перевірили файл.',
+        text: 'Оберіть "Виконати", та зачекайте, поки відкриється інсталятор UBC. SmartScreen зявляється через те, що UBC — новий продукт, і Windows ще не "навчився" довіряти йому. Це стандартна процедура для нових програм.',
         image: 'img/sc3.png',
         alt: 'Кнопка запуску інсталятора після SmartScreen'
       },
