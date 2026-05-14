@@ -1,2248 +1,2250 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>UBC — Сучасне кошторисне ПЗ для професіоналів</title>
-<link rel="icon" type="image/png" href="logo_ubc_dark.png">
-<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Ukraine Building Cost - професійне кошторисне програмне забезпечення для будівельних компаній, інженерів та проєктувальників.">
+  <title>UBC - кошторисне ПЗ для будівництва</title>
+  <link rel="icon" type="image/png" href="logo_ubc_dark.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    :root {
+      --bg: #080b10;
+      --panel: #10151d;
+      --panel-2: #151b25;
+      --line: #26313f;
+      --text: #f6f8fb;
+      --muted: #a7b0bd;
+      --soft: #d7dde7;
+      --blue: #2f6fed;
+      --blue-2: #5b8ff6;
+      --green: #22c55e;
+      --amber: #f7b955;
+      --red: #ef4444;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.34);
+    }
 
-  body {
-    font-family: 'Inter', sans-serif;
-    background: #05080f;
-    color: #f0f3fa;
-    line-height: 1.5;
-    scroll-behavior: smooth;
-  }
+    * {
+      box-sizing: border-box;
+    }
 
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.08), rgba(5, 8, 15, 0.95));
-    pointer-events: none;
-    z-index: -2;
-  }
+    html {
+      scroll-behavior: smooth;
+    }
 
-  .grid-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-      linear-gradient(rgba(55, 65, 81, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(55, 65, 81, 0.1) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: -1;
-  }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        linear-gradient(180deg, rgba(47, 111, 237, 0.10), transparent 420px),
+        linear-gradient(90deg, rgba(34, 197, 94, 0.05), transparent 45%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
 
-  .container {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
+    body.intro-lock {
+      overflow: hidden;
+    }
 
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 0;
-    flex-wrap: wrap;
-    gap: 20px;
-    backdrop-filter: blur(12px);
-    background: rgba(5, 8, 15, 0.65);
-    border-bottom: 1px solid rgba(55, 65, 81, 0.4);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    margin-bottom: 20px;
-  }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(91, 143, 246, 0.16), transparent 28rem),
+        radial-gradient(circle at 82% 10%, rgba(247, 185, 85, 0.12), transparent 24rem),
+        radial-gradient(circle at 15% 86%, rgba(34, 197, 94, 0.11), transparent 22rem);
+    }
 
-  .logo {
-    font-size: 28px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #FFFFFF, #60A5FA);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    letter-spacing: -0.3px;
-    cursor: pointer;
-  }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      opacity: 0.26;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: linear-gradient(to bottom, black, transparent 76%);
+      animation: gridDrift 18s linear infinite;
+    }
 
-  .nav {
-    display: flex;
-    gap: 32px;
-    align-items: center;
-    flex-wrap: wrap;
-  }
+    a {
+      color: inherit;
+    }
 
-  .nav a {
-    text-decoration: none;
-    color: #cbd5e1;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    font-size: 1rem;
-    cursor: pointer;
-  }
+    button,
+    input {
+      font: inherit;
+    }
 
-  .nav a:hover {
-    color: #3b82f6;
-    transform: translateY(-1px);
-  }
-
-  .auth-buttons {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-  }
-  
-  .btn-login {
-    background: transparent;
-    border: 1px solid #3b82f6;
-    color: #3b82f6;
-    padding: 8px 18px;
-    border-radius: 40px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.2s ease;
-    cursor: pointer;
-  }
-  
-  .btn-login:hover {
-    background: rgba(59,130,246,0.15);
-    transform: translateY(-1px);
-  }
-  
-  .btn-reg {
-    background: #2563eb;
-    border: none;
-    color: white;
-    padding: 8px 20px;
-    border-radius: 40px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 8px rgba(37,99,235,0.3);
-  }
-  
-  .btn-reg:hover {
-    background: #1d4ed8;
-    transform: translateY(-1px);
-  }
-
-  .user-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #3b82f6;
-    cursor: pointer;
-  }
-
-  .user-name {
-    color: #60a5fa;
-    font-weight: 500;
-    font-size: 0.9rem;
-    cursor: pointer;
-  }
-
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(8px);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    visibility: hidden;
-    opacity: 0;
-    transition: all 0.3s ease;
-  }
-  
-  .modal-overlay.active {
-    visibility: visible;
-    opacity: 1;
-  }
-  
-  .modal {
-    background: #0f172ad9;
-    backdrop-filter: blur(16px);
-    border: 1px solid #2d3a5e;
-    border-radius: 48px;
-    width: 90%;
-    max-width: 480px;
-    padding: 32px 28px;
-    box-shadow: 0 30px 40px rgba(0,0,0,0.5);
-    transform: scale(0.96);
-    transition: transform 0.2s ease;
-  }
-  
-  .modal-overlay.active .modal {
-    transform: scale(1);
-  }
-  
-  .modal h3 {
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-    background: linear-gradient(135deg, #fff, #94a3b8);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-  }
-  
-  .modal-sub {
-    color: #9ca3af;
-    margin-bottom: 24px;
-    font-size: 0.9rem;
-  }
-  
-  .input-group {
-    margin-bottom: 20px;
-  }
-  
-  .input-group label {
-    display: block;
-    margin-bottom: 6px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: #cbd5e1;
-  }
-  
-  .input-group input {
-    width: 100%;
-    background: #1e293b;
-    border: 1px solid #334155;
-    padding: 14px 18px;
-    border-radius: 28px;
-    font-size: 1rem;
-    color: white;
-    outline: none;
-    transition: all 0.2s;
-  }
-  
-  .input-group input:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 2px rgba(59,130,246,0.3);
-  }
-  
-  .modal-btn {
-    width: 100%;
-    background: #2563eb;
-    border: none;
-    padding: 14px;
-    border-radius: 40px;
-    font-weight: 700;
-    font-size: 1rem;
-    color: white;
-    cursor: pointer;
-    margin-top: 8px;
-    transition: all 0.2s;
-  }
-  
-  .modal-btn:hover {
-    background: #1d4ed8;
-  }
-  
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin: 24px 0;
-    color: #6b7280;
-    font-size: 0.8rem;
-  }
-  
-  .divider-line {
-    flex: 1;
-    height: 1px;
-    background: #334155;
-  }
-  
-  .social-buttons {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-  }
-  
-  .social-btn {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    background: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 48px;
-    padding: 12px;
-    font-weight: 500;
-    color: #e2e8f0;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-size: 0.9rem;
-  }
-  
-  .social-btn:hover {
-    background: #2d3a5e;
-    border-color: #3b82f6;
-    transform: translateY(-2px);
-  }
-  
-  .switch-mode {
-    text-align: center;
-    margin-top: 24px;
-    font-size: 0.85rem;
-    color: #9ca3af;
-  }
-  
-  .switch-mode span {
-    color: #60a5fa;
-    cursor: pointer;
-    font-weight: 600;
-  }
-  
-  .close-modal {
-    position: absolute;
-    top: 24px;
-    right: 28px;
-    font-size: 28px;
-    cursor: pointer;
-    color: #94a3b8;
-  }
-  
-  .error-msg {
-    color: #f87171;
-    font-size: 0.75rem;
-    margin-top: 5px;
-    margin-left: 12px;
-  }
-  
-  .toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #1f2937e6;
-    backdrop-filter: blur(12px);
-    padding: 12px 24px;
-    border-radius: 60px;
-    color: white;
-    font-weight: 500;
-    z-index: 1100;
-    border-left: 4px solid #3b82f6;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background: #2563eb;
-    padding: 12px 28px;
-    border-radius: 40px;
-    text-decoration: none;
-    color: white;
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: all 0.25s ease;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
-  }
-
-  .btn-outline {
-    background: rgba(31, 41, 55, 0.8);
-    backdrop-filter: blur(4px);
-    box-shadow: none;
-    border: 1px solid #374151;
-  }
-
-  .btn-outline:hover {
-    background: #374151;
-    border-color: #4b5563;
-    transform: translateY(-2px);
-  }
-
-  .btn:hover {
-    background: #1d4ed8;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
-  }
-
-  .hero {
-    margin-top: 60px;
-    max-width: 800px;
-  }
-
-  .hero h1 {
-    font-size: clamp(42px, 8vw, 70px);
-    font-weight: 800;
-    line-height: 1.15;
-    background: linear-gradient(to right, #ffffff, #94a3b8);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    letter-spacing: -1px;
-  }
-
-  .hero p {
-    margin-top: 24px;
-    color: #9ca3af;
-    font-size: 1.2rem;
-    max-width: 650px;
-  }
-
-  .actions {
-    margin-top: 36px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-
-  .features {
-    margin-top: 110px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 28px;
-  }
-
-  .card {
-    background: rgba(17, 24, 39, 0.7);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(55, 65, 81, 0.5);
-    padding: 32px 24px;
-    border-radius: 32px;
-    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-  }
-
-  .card:hover {
-    transform: translateY(-6px);
-    border-color: #3b82f6;
-    background: rgba(31, 41, 55, 0.8);
-    box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.4);
-  }
-
-  .card h3 {
-    font-size: 1.7rem;
-    margin-bottom: 12px;
-    font-weight: 700;
-  }
-
-  .card p {
-    color: #a1a9bb;
-    line-height: 1.5;
-  }
-
-  .section {
-    margin-top: 130px;
-  }
-
-  .section h2 {
-    font-size: clamp(32px, 5vw, 48px);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin-bottom: 16px;
-  }
-
-  .section-sub {
-    color: #9ca3af;
-    max-width: 680px;
-    font-size: 1.1rem;
-  }
-
-  .pricing {
-    margin-top: 48px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 32px;
-  }
-
-  .price-card {
-    background: rgba(17, 24, 39, 0.8);
-    backdrop-filter: blur(4px);
-    border-radius: 32px;
-    padding: 36px 28px;
-    border: 1px solid #1f2937;
-    transition: all 0.3s ease;
-    text-align: center;
-  }
-
-  .price-card:hover {
-    border-color: #3b82f6;
-    transform: scale(1.02);
-    background: #111827;
-    box-shadow: 0 25px 35px -12px rgba(0, 0, 0, 0.5);
-  }
-
-  .price-card h3 {
-    font-size: 1.8rem;
-    font-weight: 700;
-  }
-
-  .price {
-    font-size: 42px;
-    font-weight: 800;
-    margin: 20px 0;
-    color: #facc15;
-  }
-
-  .price-card p {
-    color: #b9c1d4;
-    margin-bottom: 28px;
-  }
-
-  .price-card .btn {
-    width: 100%;
-    background: #1f2a3e;
-    box-shadow: none;
-  }
-
-  .price-card .btn-primary {
-    background: #2563eb;
-  }
-
-  .price-card .btn-primary:hover {
-    background: #1d4ed8;
-  }
-
-  .download-box {
-    background: linear-gradient(145deg, #0f172a, #0a0f1c);
-    border-radius: 48px;
-    padding: 48px 40px;
-    margin-top: 40px;
-    border: 1px solid #2d3a5e;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 30px;
-  }
-
-  .download-info h3 {
-    font-size: 1.9rem;
-    margin-bottom: 8px;
-  }
-
-  .badge {
-    background: #1e293b;
-    padding: 6px 14px;
-    border-radius: 40px;
-    font-size: 0.8rem;
-    color: #94a3b8;
-    display: inline-block;
-  }
-
-  .footer {
-    margin-top: 130px;
-    padding: 40px 0 50px;
-    border-top: 1px solid #1e293b;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 30px;
-    color: #6b7280;
-    font-size: 0.85rem;
-  }
-
-  .footer a {
-    color: #9ca3af;
-    text-decoration: none;
-  }
-
-  .footer a:hover {
-    color: #60a5fa;
-  }
-
-  /* Advanced CAPTCHA Styles */
-  .captcha-container {
-    background: #1e293b;
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 20px;
-    border: 1px solid #334155;
-  }
-  
-  .captcha-canvas-wrapper {
-    text-align: center;
-    margin-bottom: 12px;
-    position: relative;
-  }
-  
-  .captcha-canvas {
-    background: #0f172a;
-    border-radius: 12px;
-    cursor: pointer;
-    border: 1px solid #334155;
-    width: 100%;
-    height: 90px;
-    transition: all 0.2s;
-  }
-  
-  .captcha-canvas:hover {
-    border-color: #3b82f6;
-  }
-  
-  .captcha-controls {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    margin-top: 12px;
-  }
-  
-  .captcha-controls input {
-    flex: 1;
-    background: #0f172a;
-    border: 1px solid #334155;
-    padding: 12px 16px;
-    border-radius: 12px;
-    color: white;
-    font-size: 1rem;
-    font-family: monospace;
-    letter-spacing: 1px;
-  }
-  
-  .captcha-controls input:focus {
-    border-color: #3b82f6;
-    outline: none;
-  }
-  
-  .captcha-refresh {
-    background: #334155;
-    border: none;
-    padding: 12px 18px;
-    border-radius: 12px;
-    color: white;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  
-  .captcha-refresh:hover {
-    background: #3b82f6;
-    transform: scale(1.02);
-  }
-  
-  .captcha-hint {
-    font-size: 0.7rem;
-    color: #64748b;
-    margin-top: 8px;
-    text-align: center;
-  }
-  
-  /* Profile Page Styles */
-  .profile-section {
-    display: none;
-    margin-top: 40px;
-  }
-  
-  .profile-section.active {
-    display: block;
-  }
-  
-  .profile-card {
-    background: rgba(17, 24, 39, 0.8);
-    backdrop-filter: blur(8px);
-    border: 1px solid #2d3a5e;
-    border-radius: 32px;
-    padding: 40px;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  .profile-header {
-    text-align: center;
-    margin-bottom: 32px;
-  }
-  
-  .profile-avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 3px solid #3b82f6;
-    margin-bottom: 16px;
-    object-fit: cover;
-  }
-  
-  .profile-name {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-  
-  .profile-email {
-    color: #9ca3af;
-    font-size: 14px;
-  }
-  
-  .profile-info {
-    background: #1e293b;
-    border-radius: 24px;
-    padding: 24px;
-    margin-top: 24px;
-  }
-  
-  .info-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid #334155;
-  }
-  
-  .info-row:last-child {
-    border-bottom: none;
-  }
-  
-  .info-label {
-    color: #9ca3af;
-    font-weight: 500;
-  }
-  
-  .info-value {
-    color: #f0f3fa;
-    font-weight: 600;
-  }
-  
-  .profile-actions {
-    display: flex;
-    gap: 16px;
-    margin-top: 24px;
-  }
-  
-  .profile-actions .btn {
-    flex: 1;
-  }
-  
-  .main-content {
-    display: block;
-  }
-  
-  .main-content.hidden {
-    display: none;
-  }
-
-  @media (max-width: 700px) {
     .container {
-      padding: 0 20px;
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
     }
-    .header {
-      flex-direction: column;
-      align-items: flex-start;
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(8, 11, 16, 0.82);
+      border-bottom: 1px solid rgba(38, 49, 63, 0.9);
+      backdrop-filter: blur(16px);
+      transform: translateZ(0);
     }
-    .nav {
-      gap: 24px;
-      flex-wrap: wrap;
-      width: 100%;
-      justify-content: space-between;
+
+    .intro {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      --intro-progress: 0;
+      contain: layout paint style;
+      background:
+        radial-gradient(circle at 50% 38%, rgba(91, 143, 246, 0.22), transparent 26rem),
+        linear-gradient(180deg, #05070b 0%, #080b10 62%, #10151d 100%);
+      transition: opacity 0.45s ease, visibility 0.45s ease;
     }
-    .hero h1 {
-      font-size: 42px;
+
+    .intro::before {
+      content: "";
+      position: absolute;
+      inset: -30%;
+      background:
+        linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 84px);
+      transform: rotate(-8deg);
+      animation: introScan 5s linear infinite;
+      opacity: 0.42;
     }
-    .download-box {
-      flex-direction: column;
+
+    .intro-rings {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at center, transparent 0 21%, rgba(91, 143, 246, 0.16) 21.4%, transparent 22%),
+        radial-gradient(ellipse at center, transparent 0 34%, rgba(247, 185, 85, 0.12) 34.4%, transparent 35%),
+        radial-gradient(ellipse at center, transparent 0 49%, rgba(255, 255, 255, 0.08) 49.4%, transparent 50%);
+      opacity: calc(0.72 - (var(--intro-progress) * 0.72));
+      transform: translateZ(0) scale(calc(1 + (var(--intro-progress) * 0.72)));
+      will-change: transform, opacity;
+    }
+
+    .intro-word {
+      position: relative;
+      z-index: 1;
+      display: block;
+      padding: 0 24px;
       text-align: center;
+      font-size: clamp(3.2rem, 13vw, 11rem);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: 0;
+      background: linear-gradient(110deg, #ffffff 0%, #c7d7ff 36%, #f7b955 58%, #ffffff 100%);
+      background-size: 220% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 54px rgba(91, 143, 246, 0.18);
+      animation: headlineSheen 7s ease-in-out infinite;
+      opacity: calc(1 - var(--intro-progress));
+      transform: translateZ(0) scale(calc(1 + (var(--intro-progress) * 1.28)));
+      will-change: transform, opacity;
     }
-    .card h3 {
-      font-size: 1.5rem;
-    }
-    .profile-card {
-      padding: 24px;
-    }
-  }
 
-  @media (max-width: 480px) {
-    .actions .btn {
-      width: 100%;
-      justify-content: center;
+    .intro-word::before,
+    .intro-word::after {
+      content: "Ukraine\A Building Cost";
+      position: absolute;
+      inset: 0;
+      white-space: pre-line;
+      pointer-events: none;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.20);
+      text-shadow: none;
+      transform: translate3d(-10px, 7px, 0) scale(1.015);
+      opacity: 0.55;
+      mix-blend-mode: screen;
     }
-    .auth-buttons {
-      width: 100%;
-      justify-content: flex-start;
-    }
-  }
 
-  @keyframes fadeUp {
-    0% {
+    .intro-word::after {
+      -webkit-text-stroke-color: rgba(91, 143, 246, 0.26);
+      transform: translate3d(12px, -8px, 0) scale(0.992);
+      opacity: 0.42;
+    }
+
+    .intro-hint {
+      position: absolute;
+      left: 50%;
+      bottom: max(34px, env(safe-area-inset-bottom));
+      z-index: 1;
+      display: grid;
+      justify-items: center;
+      gap: 10px;
+      transform: translateX(-50%);
+      color: rgba(246, 248, 251, 0.78);
+      font-weight: 700;
+      font-size: 0.88rem;
+      opacity: calc(1 - var(--intro-progress));
+      will-change: opacity;
+    }
+
+    .intro-wheel {
+      width: 28px;
+      height: 46px;
+      border: 2px solid rgba(246, 248, 251, 0.56);
+      border-radius: 999px;
+      position: relative;
+    }
+
+    .intro-wheel::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 8px;
+      width: 4px;
+      height: 8px;
+      border-radius: 999px;
+      background: #fff;
+      transform: translateX(-50%);
+      animation: wheelTick 1.35s ease-in-out infinite;
+    }
+
+    .intro.is-hidden {
       opacity: 0;
-      transform: translateY(20px);
+      visibility: hidden;
+      pointer-events: none;
     }
-    100% {
+
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+    }
+
+    .brand span {
+      display: grid;
+      line-height: 1.05;
+    }
+
+    .brand small {
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.72rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-links a,
+    .nav-links button {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 9px 11px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.18s ease, color 0.18s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links button:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      gap: 10px;
+      padding: 11px 16px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background: var(--blue);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 0%, rgba(255, 255, 255, 0.22) 46%, transparent 72%);
+      transform: translateX(-120%);
+      transition: transform 0.5s ease;
+    }
+
+    .btn:hover::after {
+      transform: translateX(120%);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      background: #255fd0;
+      box-shadow: 0 14px 34px rgba(47, 111, 237, 0.28);
+    }
+
+    .btn.secondary {
+      background: var(--panel-2);
+      border-color: var(--line);
+      color: var(--soft);
+      box-shadow: none;
+    }
+
+    .btn.secondary:hover {
+      background: #1c2531;
+      border-color: #344256;
+    }
+
+    .btn.ghost {
+      background: transparent;
+      border-color: var(--line);
+      color: var(--soft);
+    }
+
+    .hero {
+      position: relative;
+      padding: 72px 0 54px;
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1.1fr);
+      gap: 50px;
+      align-items: center;
+      perspective: 1200px;
+    }
+
+    .hero > * {
+      animation: heroRise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .hero > *:nth-child(2) {
+      animation-delay: 0.12s;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      padding: 7px 10px;
+      border: 1px solid rgba(91, 143, 246, 0.28);
+      border-radius: 8px;
+      background: rgba(47, 111, 237, 0.10);
+      color: #bcd0ff;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.14);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      max-width: 720px;
+      font-size: clamp(2.7rem, 6vw, 5.4rem);
+      line-height: 1.02;
+      letter-spacing: 0;
+      background: linear-gradient(110deg, #ffffff 0%, #dbeafe 34%, #f7b955 58%, #ffffff 82%);
+      background-size: 240% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: headlineSheen 8s ease-in-out infinite;
+    }
+
+    .hero-copy {
+      margin-bottom: 28px;
+      max-width: 640px;
+      color: var(--soft);
+      font-size: 1.12rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .scroll-cue {
+      position: absolute;
+      left: 50%;
+      bottom: 22px;
+      display: inline-grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(215, 221, 231, 0.28);
+      border-radius: 999px;
+      color: var(--soft);
+      text-decoration: none;
+      background: rgba(16, 21, 29, 0.56);
+      backdrop-filter: blur(10px);
+      transform: translateX(-50%);
+      animation: arrowBounce 1.6s ease-in-out infinite;
+    }
+
+    .scroll-cue svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 620px;
+    }
+
+    .metric {
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(16, 21, 29, 0.72);
+      transform: translateZ(0);
+      transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .metric:hover {
+      transform: translateY(-4px);
+      border-color: rgba(91, 143, 246, 0.55);
+      background: rgba(21, 27, 37, 0.92);
+    }
+
+    .metric strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--text);
+      font-size: 1.18rem;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .product-frame {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      background: #111827;
+      box-shadow: var(--shadow);
+      transform-style: preserve-3d;
+      transition: transform 0.18s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      will-change: transform;
+    }
+
+    .product-frame::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      z-index: 2;
+      pointer-events: none;
+      background: radial-gradient(circle at var(--shine-x, 50%) var(--shine-y, 50%), rgba(255, 255, 255, 0.24), transparent 19rem);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      mix-blend-mode: screen;
+    }
+
+    .product-frame:hover {
+      border-color: rgba(91, 143, 246, 0.72);
+      box-shadow: 0 34px 110px rgba(47, 111, 237, 0.24), var(--shadow);
+    }
+
+    .product-frame:hover::before {
+      opacity: 1;
+    }
+
+    .frame-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 42px;
+      padding: 0 14px;
+      border-bottom: 1px solid #2b3646;
+      background: #151c27;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 7px;
+    }
+
+    .window-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ef4444;
+    }
+
+    .window-dots span:nth-child(2) {
+      background: #f59e0b;
+    }
+
+    .window-dots span:nth-child(3) {
+      background: #22c55e;
+    }
+
+    .product-frame img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      object-position: center;
+      background: #0c111a;
+    }
+
+    .trust-strip {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: center;
+      margin: 16px 0 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(16, 21, 29, 0.7);
+      color: var(--muted);
+    }
+
+    .trust-strip strong {
+      color: var(--text);
+    }
+
+    section {
+      padding: 62px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 30px;
+      margin-bottom: 26px;
+    }
+
+    .section-head h2 {
+      margin-bottom: 8px;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .section-head p {
+      max-width: 650px;
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      min-height: 100%;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(16, 21, 29, 0.86);
+      transition: transform 0.28s ease, border-color 0.28s ease, background 0.28s ease, box-shadow 0.28s ease;
+    }
+
+    .card:hover,
+    .price-card:hover,
+    .step:hover,
+    .partner:hover {
+      transform: translateY(-6px);
+      border-color: rgba(91, 143, 246, 0.55);
+      background: rgba(21, 27, 37, 0.96);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.22);
+    }
+
+    .card .icon {
+      display: inline-grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      margin-bottom: 16px;
+      border-radius: 8px;
+      background: rgba(47, 111, 237, 0.14);
+      color: #a9c1ff;
+      font-weight: 800;
+    }
+
+    .card h3 {
+      margin-bottom: 8px;
+      font-size: 1.12rem;
+    }
+
+    .card p,
+    .card li {
+      color: var(--muted);
+    }
+
+    .workflow {
+      display: grid;
+      grid-template-columns: 0.86fr 1.14fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .workflow-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      transition: transform 0.28s ease, border-color 0.28s ease, background 0.28s ease, box-shadow 0.28s ease;
+    }
+
+    .step-number {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: rgba(247, 185, 85, 0.14);
+      color: var(--amber);
+      font-weight: 800;
+    }
+
+    .step p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .screenshot-stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .screenshot-stack img {
+      width: 100%;
+      border: 1px solid #344256;
+      border-radius: 8px;
+      background: #111827;
+      object-fit: cover;
+      transition: transform 0.35s ease, filter 0.35s ease;
+    }
+
+    .screenshot-stack img:hover {
+      transform: scale(1.015);
+      filter: saturate(1.08) contrast(1.04);
+    }
+
+    .screenshot-stack img:first-child {
+      aspect-ratio: 16 / 9;
+    }
+
+    .mini-shots {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .pricing {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .price-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      transition: transform 0.28s ease, border-color 0.28s ease, background 0.28s ease, box-shadow 0.28s ease;
+    }
+
+    .price-card.featured {
+      border-color: rgba(91, 143, 246, 0.72);
+      box-shadow: inset 0 0 0 1px rgba(91, 143, 246, 0.2);
+    }
+
+    .price-card ul {
+      display: grid;
+      gap: 10px;
+      margin: 0 0 6px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .price-card li::before {
+      content: "✓";
+      margin-right: 9px;
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .price {
+      color: var(--text);
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .price small {
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 600;
+    }
+
+    .price-card .btn {
+      margin-top: auto;
+      width: 100%;
+    }
+
+    .download-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 28px;
+      align-items: center;
+      padding: 28px;
+      border: 1px solid rgba(91, 143, 246, 0.34);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(47, 111, 237, 0.18), transparent 48%),
+        var(--panel);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .download-panel::after {
+      content: "";
+      position: absolute;
+      inset: auto -20% -55% 18%;
+      height: 180px;
+      background: linear-gradient(90deg, transparent, rgba(91, 143, 246, 0.22), rgba(247, 185, 85, 0.12), transparent);
+      filter: blur(18px);
+      animation: lightSweep 7s ease-in-out infinite;
+    }
+
+    .download-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .guide-shell {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      overflow: hidden;
+      box-shadow: 0 24px 90px rgba(0, 0, 0, 0.22);
+    }
+
+    .guide-slide {
+      display: grid;
+      grid-template-columns: 1.14fr 0.86fr;
+      gap: 0;
+      min-height: 520px;
+    }
+
+    .guide-media {
+      min-width: 0;
+      background: #0b1018;
+      border-right: 1px solid var(--line);
+    }
+
+    .guide-media img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+      padding: 18px;
+    }
+
+    .guide-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 34px;
+    }
+
+    .guide-copy h3 {
+      font-size: clamp(1.7rem, 3vw, 2.5rem);
+      line-height: 1.12;
+      margin-bottom: 14px;
+    }
+
+    .guide-copy p {
+      color: var(--muted);
+    }
+
+    .guide-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border: 1px solid #657386;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background: var(--blue-2);
+      border-color: var(--blue-2);
+    }
+
+    .partners {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .partner {
+      display: grid;
+      grid-template-columns: 78px 1fr;
+      gap: 16px;
+      align-items: center;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      transition: transform 0.28s ease, border-color 0.28s ease, background 0.28s ease, box-shadow 0.28s ease;
+    }
+
+    .partner img {
+      width: 78px;
+      height: 78px;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .contact {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-2);
+    }
+
+    .footer {
+      padding: 40px 0 50px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .footer a {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      color: var(--text);
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(12px);
+    }
+
+    .modal-overlay.active {
+      display: grid;
+    }
+
+    .modal {
+      width: min(460px, 100%);
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #10151d;
+      box-shadow: var(--shadow);
+      animation: modalPop 0.34s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 18px 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .auth-divider::before,
+    .auth-divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .social-login {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 44px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #0b1018;
+      color: var(--soft);
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .social-btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(91, 143, 246, 0.65);
+      background: #151d2a;
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .close {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--soft);
+      cursor: pointer;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+      margin-bottom: 14px;
+    }
+
+    .field label {
+      color: var(--soft);
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+
+    .field input {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #0b1018;
+      color: var(--text);
+      outline: none;
+    }
+
+    .field input:focus {
+      border-color: var(--blue-2);
+      box-shadow: 0 0 0 3px rgba(91, 143, 246, 0.16);
+    }
+
+    .captcha {
+      display: grid;
+      gap: 10px;
+      margin: 16px 0;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #0b1018;
+    }
+
+    canvas {
+      width: 100%;
+      height: 78px;
+      border-radius: 8px;
+      background: #111827;
+      cursor: pointer;
+    }
+
+    .captcha-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+    }
+
+    .captcha-row input {
+      min-width: 0;
+      min-height: 46px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #101722;
+      color: var(--text);
+      outline: none;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .captcha-row input:focus {
+      border-color: var(--blue-2);
+      box-shadow: 0 0 0 3px rgba(91, 143, 246, 0.16);
+    }
+
+    .switch {
+      margin-top: 14px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .switch button {
+      border: 0;
+      background: transparent;
+      color: #9eb8ff;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .error {
+      min-height: 20px;
+      color: #ff9b9b;
+      font-size: 0.86rem;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      z-index: 120;
+      transform: translateX(-50%) translateY(20px);
+      max-width: min(520px, calc(100% - 40px));
+      padding: 12px 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #111827;
+      color: var(--text);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .toast.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.is-visible {
       opacity: 1;
       transform: translateY(0);
     }
-  }
 
-  .hero, .features, .section, .download-box {
-    animation: fadeUp 0.6s ease-out forwards;
-  }
-  
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-  }
-  
-  .shake {
-    animation: shake 0.3s ease-in-out;
-  }
-
- /* Стилі для секції "Наші партнери" */
-.partners-section {
-    margin-top: 110px;
-}
-
-.partners-grid {
-    margin-top: 48px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 30px;
-}
-
-.partner-card {
-    background: rgba(17, 24, 39, 0.7);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(55, 65, 81, 0.5);
-    border-radius: 28px;
-    padding: 28px 20px 24px;
-    text-align: center;
-    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-}
-
-.partner-card:hover {
-    transform: translateY(-6px);
-    border-color: #3b82f6;
-    background: rgba(31, 41, 55, 0.8);
-    box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.4);
-}
-
-.partner-logo {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 20px;
-    background: #0f172a;
-    border-radius: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    border: 1px solid #334155;
-    transition: all 0.2s;
-}
-
-.partner-card:hover .partner-logo {
-    border-color: #3b82f6;
-}
-
-.partner-logo img {
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain;
-    filter: brightness(0.95);
-    transition: filter 0.2s;
-}
-
-.partner-card:hover .partner-logo img {
-    filter: brightness(1.05);
-}
-
-.partner-name {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #e2e8f0;
-    margin-bottom: 6px;
-}
-
-.partner-desc {
-    font-size: 0.8rem;
-    color: #94a3b8;
-    line-height: 1.4;
-}
-
-.guide-section {
-    margin-top: 60px;
-}
-
-.guide-shell {
-    min-height: 84vh;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    gap: 26px;
-    background:
-      radial-gradient(circle at top left, rgba(37, 99, 235, 0.18), transparent 28%),
-      linear-gradient(160deg, rgba(15, 23, 42, 0.98), rgba(8, 13, 24, 0.96));
-    border: 1px solid rgba(96, 165, 250, 0.18);
-    border-radius: 42px;
-    padding: 28px;
-    box-shadow: 0 30px 80px rgba(2, 6, 23, 0.45);
-}
-
-.guide-topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.guide-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 14px;
-    border-radius: 999px;
-    background: rgba(37, 99, 235, 0.14);
-    border: 1px solid rgba(96, 165, 250, 0.16);
-    color: #93c5fd;
-    font-size: 0.78rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-}
-
-.guide-title-wrap {
-    max-width: 700px;
-}
-
-.guide-title-wrap h3 {
-    font-size: clamp(2rem, 3.8vw, 3.8rem);
-    line-height: 1.04;
-    letter-spacing: -0.04em;
-    color: #f8fbff;
-    margin-bottom: 16px;
-}
-
-.guide-title-wrap p {
-    color: #aebed3;
-    font-size: 1.02rem;
-    max-width: 640px;
-}
-
-.guide-step-badge {
-    min-width: 140px;
-    padding: 16px 18px;
-    border-radius: 24px;
-    background: rgba(15, 23, 42, 0.76);
-    border: 1px solid rgba(148, 163, 184, 0.14);
-    text-align: right;
-}
-
-.guide-step-label {
-    display: block;
-    color: #7dd3fc;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    margin-bottom: 8px;
-}
-
-.guide-step-count {
-    display: block;
-    color: #f8fbff;
-    font-size: 2rem;
-    font-weight: 800;
-}
-
-.guide-stage {
-    min-height: 0;
-    display: block;
-    align-items: stretch;
-}
-
-.guide-visual {
-    position: relative;
-    min-height: 56vh;
-    width: 100%;
-    border-radius: 30px;
-    overflow: hidden;
-    background: linear-gradient(180deg, #0c1424, #09101c);
-    border: 1px solid rgba(96, 165, 250, 0.16);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
-
-.guide-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.guide-image.is-hidden {
-    display: none;
-}
-
-.guide-image-fallback {
-    position: absolute;
-    inset: 0;
-    display: none;
-    place-items: center;
-    padding: 30px;
-    background:
-      linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(15, 23, 42, 0.65)),
-      repeating-linear-gradient(
-        45deg,
-        rgba(148, 163, 184, 0.08) 0,
-        rgba(148, 163, 184, 0.08) 14px,
-        transparent 14px,
-        transparent 28px
-      );
-}
-
-.guide-image-fallback.is-visible {
-    display: grid;
-}
-
-.guide-fallback-box {
-    width: min(520px, 100%);
-    border-radius: 28px;
-    padding: 28px;
-    background: rgba(8, 15, 28, 0.84);
-    border: 1px solid rgba(125, 211, 252, 0.18);
-    text-align: center;
-}
-
-.guide-fallback-box strong {
-    display: block;
-    font-size: 1.4rem;
-    color: #f8fbff;
-    margin-bottom: 10px;
-}
-
-.guide-fallback-box span {
-    display: block;
-    color: #aebed3;
-    margin-bottom: 10px;
-}
-
-.guide-fallback-box code {
-    color: #93c5fd;
-    font-size: 0.92rem;
-}
-
-.guide-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 14px;
-    flex-wrap: wrap;
-}
-
-.guide-progress {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.guide-progress-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    border: 1px solid rgba(148, 163, 184, 0.45);
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.guide-progress-dot.active {
-    background: #3b82f6;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.12);
-}
-
-.guide-nav {
-    display: flex;
-    gap: 12px;
-}
-
-.guide-nav button {
-    min-width: 126px;
-}
-
-@media (max-width: 700px) {
-    .partners-grid {
-        gap: 20px;
+    @keyframes heroRise {
+      from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
-    .partner-card {
-        padding: 20px 16px;
+
+    @keyframes headlineSheen {
+      0%, 100% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
     }
-    .partner-logo {
-        width: 100px;
-        height: 100px;
+
+    @keyframes gridDrift {
+      from {
+        background-position: 0 0, 0 0;
+      }
+      to {
+        background-position: 72px 72px, 72px 72px;
+      }
     }
-    .partner-name {
-        font-size: 1rem;
+
+    @keyframes lightSweep {
+      0%, 100% {
+        transform: translateX(-12%);
+        opacity: 0.55;
+      }
+      50% {
+        transform: translateX(18%);
+        opacity: 0.95;
+      }
     }
-    .guide-shell {
-        min-height: auto;
-        padding: 20px 16px;
+
+    @keyframes modalPop {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.97);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
-    .guide-topbar,
-    .guide-stage {
-        display: grid;
+
+    @keyframes introBreath {
+      0%, 100% {
+        transform: scale(1);
+        filter: blur(0);
+      }
+      50% {
+        transform: scale(1.025);
+        filter: blur(0.2px);
+      }
+    }
+
+    @keyframes introExit {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+      }
+      22% {
+        opacity: 0.96;
+        transform: scale(1.08);
+        filter: blur(0.2px);
+      }
+      48% {
+        opacity: 0.78;
+        transform: scale(1.34);
+        filter: blur(1px);
+      }
+      74% {
+        opacity: 0.34;
+        transform: scale(1.88);
+        filter: blur(4px);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(2.55);
+        filter: blur(14px);
+      }
+    }
+
+    @keyframes introReturn {
+      0% {
+        opacity: 0;
+        transform: scale(2.45);
+        filter: blur(14px);
+      }
+      28% {
+        opacity: 0.32;
+        transform: scale(1.86);
+        filter: blur(5px);
+      }
+      62% {
+        opacity: 0.78;
+        transform: scale(1.22);
+        filter: blur(1.2px);
+      }
+      86% {
+        opacity: 0.96;
+        transform: scale(1.035);
+        filter: blur(0.2px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes introScan {
+      from {
+        transform: translateX(-10%) rotate(-8deg);
+      }
+      to {
+        transform: translateX(10%) rotate(-8deg);
+      }
+    }
+
+    @keyframes wheelTick {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, 0);
+      }
+      35% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, 18px);
+      }
+    }
+
+    @keyframes introTunnel {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.62;
+      }
+      50% {
+        transform: scale(1.08);
+        opacity: 0.86;
+      }
+    }
+
+    @keyframes ringExit {
+      from {
+        opacity: 0.76;
+        transform: scale(1);
+      }
+      45% {
+        opacity: 0.58;
+        transform: scale(1.35);
+      }
+      to {
+        opacity: 0;
+        transform: scale(2.05);
+      }
+    }
+
+    @keyframes ringReturn {
+      from {
+        opacity: 0;
+        transform: scale(2.05);
+      }
+      55% {
+        opacity: 0.54;
+        transform: scale(1.28);
+      }
+      to {
+        opacity: 0.76;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes arrowBounce {
+      0%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      50% {
+        transform: translateX(-50%) translateY(8px);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+
+    @media (max-width: 960px) {
+      .hero,
+      .workflow,
+      .guide-slide {
         grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 46px;
+        padding-bottom: 82px;
+      }
+
+      .product-frame {
+        order: -1;
+      }
+
+      .feature-grid,
+      .pricing,
+      .partners {
+        grid-template-columns: 1fr;
+      }
+
+      .guide-media {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .guide-media img {
+        max-height: 420px;
+      }
+
+      .footer-grid,
+      .download-panel,
+      .contact {
+        grid-template-columns: 1fr;
+      }
     }
-    .guide-step-badge {
-        text-align: left;
-        min-width: 0;
-    }
-    .guide-visual {
-        min-height: 42vh;
-    }
-    .guide-controls,
-    .guide-nav {
+
+    @media (max-width: 760px) {
+      .container {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .nav {
+        min-height: auto;
+        padding: 14px 0;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
         width: 100%;
-    }
-    .guide-controls {
-        align-items: stretch;
-    }
-    .guide-nav button {
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+
+      .nav-actions {
+        width: 100%;
+      }
+
+      .nav-actions .btn {
         flex: 1;
-        min-width: 0;
+      }
+
+      .metrics,
+      .mini-shots {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .download-panel,
+      .guide-copy,
+      .contact {
+        padding: 20px;
+      }
+
+      .social-login {
+        grid-template-columns: 1fr;
+      }
     }
-}
-</style>
+  </style>
 </head>
-<body>
-<div class="grid-overlay"></div>
-
-<div class="container">
-
-  <div class="header">
-    <div class="logo" onclick="showMainContent()">UBC</div>
-    <div class="nav">
-      <a onclick="showMainContent(); scrollToSection('features')">Можливості</a>
-      <a onclick="showMainContent(); scrollToSection('pricing')">Тарифи</a>
-      <a onclick="showMainContent(); scrollToSection('download')">Завантажити</a>
-      <a onclick="showMainContent(); scrollToSection('contact')">Підтримка</a>
-      <a onclick="showProfilePage()" style="display: none;">Профіль</a>
-      <div class="auth-buttons" id="authButtons" style="display: none;">
-        <button class="btn-login" id="openLoginBtn" style="display: none;">Увійти</button>
-        <button class="btn-reg" id="openRegBtn" style="display: none;">Реєстрація</button>
-      </div>
-     <div class="auth-buttons" id="Proffile">
-        <a href="/mycabinet"><button class="btn-reg">Мій кабінет</button></a>
-      </div>
+<body class="intro-lock">
+  <div class="intro" id="intro" aria-label="Ukraine Building Cost intro">
+    <div class="intro-rings" aria-hidden="true"></div>
+    <div class="intro-word">Ukraine<br>Building Cost</div>
+    <div class="intro-hint">
+      <div class="intro-wheel" aria-hidden="true"></div>
+      <span>Прокрутіть нижще</span>
     </div>
   </div>
 
-  <div id="authModal" class="modal-overlay">
-    <div class="modal">
-      <span class="close-modal" id="closeModalBtn">&times;</span>
-      <h3 id="modalTitle">Вхід в акаунт</h3>
-      <div id="modalSub" class="modal-sub">Вітаємо! Увійдіть або створіть профіль</div>
-      
-      <form id="authForm">
-        <div class="input-group">
-          <label>Електронна пошта</label>
-          <input type="email" id="emailInput" placeholder="example@ubcost.com" required>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="UBC головна">
+        <img src="logo_ubc_light.png" alt="UBC">
+        <span>UBC <small>Ukraine Building Cost</small></span>
+      </a>
+      <nav class="nav-links" aria-label="Головна навігація">
+        <a href="#features">Можливості</a>
+        <a href="#workflow">Процес</a>
+        <a href="#pricing">Тарифи</a>
+        <a href="#download">Завантажити</a>
+        <a href="#guide">Інструкція</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="btn ghost" type="button" data-open-auth>Увійти</button>
+        <a class="btn secondary" href="mycabinet/">Мій кабінет</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="container hero" aria-labelledby="hero-title">
+      <div>
+        <div class="eyebrow"><span class="status-dot"></span> Версія 1.0.48 доступна для Windows</div>
+        <h1 id="hero-title">Кошториси, акти та ресурси без зайвої ручної роботи</h1>
+        <p class="hero-copy">
+          UBC допомагає будівельним командам швидко формувати кошторисну документацію, контролювати ресурси,
+          готувати експорт у PDF та Excel і працювати з актуальною нормативною базою.
+        </p>
+        <div class="hero-actions">
+          <a class="btn" href="#download">Завантажити UBC</a>
+          <a class="btn secondary" href="#guide">Подивитись інструкцію</a>
         </div>
-        <div class="input-group">
-          <label>Пароль</label>
-          <input type="password" id="passwordInput" placeholder="••••••••" required>
-          <div id="formError" class="error-msg"></div>
+        <div class="metrics" aria-label="Ключові переваги">
+          <div class="metric"><strong>DBN 2026</strong><span>підтримка актуальних норм</span></div>
+          <div class="metric"><strong>PDF / Excel</strong><span>зручний експорт документів</span></div>
+          <div class="metric"><strong>KB-2в</strong><span>акти та пакети документів</span></div>
         </div>
-        
-        <div class="captcha-container">
-          <div class="captcha-canvas-wrapper">
-            <canvas id="captchaCanvas" class="captcha-canvas" width="400" height="90" style="width:100%; height:90px"></canvas>
+        <a class="scroll-cue" href="#features" aria-label="Прокрутити вниз">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 5v14"></path>
+            <path d="m19 12-7 7-7-7"></path>
+          </svg>
+        </a>
+      </div>
+
+      <div>
+        <div class="product-frame" aria-label="Скріншот UBC">
+          <div class="frame-bar">
+            <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
           </div>
-          <div class="captcha-controls">
-            <input type="text" id="captchaInput" placeholder="Введіть код безпеки" autocomplete="off" maxlength="8">
-            <button type="button" class="captcha-refresh" onclick="refreshCaptcha()">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-              Оновити
-            </button>
+          <img src="img/sc_pre.png" alt="Вікно програми UBC з активацією">
+        </div>
+        <div class="trust-strip">
+          <div><strong>Продукт для реальної роботи.</strong> Інсталятор, інструкція, перевірка файлу та форма для ключа зібрані в одному місці.</div>
+          <a class="btn ghost" href="https://www.virustotal.com/gui/file/849d4a605cec49c9bfa61dd3d339c9482e274b1e17358b624170996729e2c54a/detection">VirusTotal</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="container">
+      <div class="section-head">
+        <div>
+          <h2>Що UBC закриває для команди</h2>
+          <p>Сторінка стала ближчою до продукту: конкретні сценарії, зрозумілі дії та менше шуму навколо головного завдання.</p>
+        </div>
+      </div>
+      <div class="feature-grid">
+        <article class="card">
+          <span class="icon">01</span>
+          <h3>Кошторисні розрахунки</h3>
+          <p>Створення структури об'єкта, локальних кошторисів, позицій робіт і ресурсної частини без розкиданих таблиць.</p>
+        </article>
+        <article class="card">
+          <span class="icon">02</span>
+          <h3>Контроль ресурсів</h3>
+          <p>Перевірка матеріалів, машин, заробітної плати та індексів перерахунку у зрозумілому робочому інтерфейсі.</p>
+        </article>
+        <article class="card">
+          <span class="icon">03</span>
+          <h3>Експорт і передача</h3>
+          <p>Готові документи для погодження, друку, архіву або передачі замовнику у поширених форматах.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="workflow" class="container">
+      <div class="section-head">
+        <div>
+          <h2>Робочий процес без плутанини</h2>
+          <p>Від ключа активації до готового комплекту документів: користувач одразу бачить маршрут і наступну дію.</p>
+        </div>
+      </div>
+      <div class="workflow">
+        <div class="workflow-list">
+          <div class="step">
+            <span class="step-number">1</span>
+            <div><h3>Отримайте ключ</h3><p>Заповніть форму для безкоштовного ключа активації та використайте його після встановлення.</p></div>
           </div>
-          <div class="captcha-hint">
-            Натисніть на зображення, щоб оновити | Введіть символи, які бачите
+          <div class="step">
+            <span class="step-number">2</span>
+            <div><h3>Встановіть програму</h3><p>Завантажте інсталятор для Windows, пройдіть підказки SmartScreen і дочекайтесь завершення.</p></div>
           </div>
-          <div id="captchaError" class="error-msg"></div>
+          <div class="step">
+            <span class="step-number">3</span>
+            <div><h3>Почніть кошторис</h3><p>Відкрийте UBC, активуйте програму й формуйте перший проєкт за інструкцією нижче.</p></div>
+          </div>
         </div>
-        
-        <button type="submit" class="modal-btn" id="submitBtn">Увійти</button>
-      </form>
-      
-      <div class="divider">
-        <div class="divider-line"></div>
-        <span>АБО</span>
-        <div class="divider-line"></div>
+        <div class="screenshot-stack">
+          <img src="img/sc1.png" alt="Запуск інсталятора UBC">
+          <div class="mini-shots">
+            <img src="img/sc2.png" alt="Попередження Windows SmartScreen">
+            <img src="img/sc5.png" alt="Активація програми UBC">
+          </div>
+        </div>
       </div>
-      
-      <div class="social-buttons">
-        <button class="social-btn" id="googleBtn">
-          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-          Google
-        </button>
-        <button class="social-btn" id="discordBtn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.8 19.8 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.3 18.3 0 0 0-5.487 0c-.164-.386-.399-.875-.608-1.25a.077.077 0 0 0-.079-.037A19.8 19.8 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106a13.1 13.1 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128c.125-.094.252-.19.372-.287a.074.074 0 0 1 .076-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.247.194.372.287a.077.077 0 0 1-.006.128a13.1 13.1 0 0 1-1.873.892a.077.077 0 0 0-.041.106c.353.698.765 1.363 1.226 1.994a.076.076 0 0 0 .084.028 19.9 19.9 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.057c.5-5.177-.838-9.674-3.549-13.66a.06.06 0 0 0-.031-.027zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.42 2.157-2.42c1.21 0 2.176 1.096 2.157 2.42c0 1.334-.956 2.419-2.157 2.419zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.42 2.157-2.42c1.21 0 2.176 1.096 2.157 2.42c0 1.334-.946 2.419-2.157 2.419z"/></svg>
-          Discord
-        </button>
-      </div>
-      
-      <div class="switch-mode" id="switchModeText">
-        <span id="switchBtn">Зареєструватися</span>
-      </div>
-    </div>
-  </div>
+    </section>
 
-  <div id="profilePage" class="profile-section">
-    <div class="profile-card">
-      <div class="profile-header">
-        <img id="profileAvatar" class="profile-avatar" src="" alt="Avatar">
-        <h2 id="profileName" class="profile-name"></h2>
-        <p id="profileEmail" class="profile-email"></p>
-      </div>
-      <div class="profile-info">
-        <div class="info-row">
-          <span class="info-label">ID користувача</span>
-          <span id="profileId" class="info-value"></span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">Провайдер</span>
-          <span id="profileProvider" class="info-value"></span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">Дата реєстрації</span>
-          <span id="profileDate" class="info-value"></span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">Статус</span>
-          <span id="profileStatus" class="info-value" style="color: #4ade80;">Активний</span>
+    <section id="pricing" class="container">
+      <div class="section-head">
+        <div>
+          <h2>Тарифи</h2>
+          <p>Почніть безкоштовно, а для командних або корпоративних сценаріїв підключайте розширені умови.</p>
         </div>
       </div>
-      <div class="profile-actions">
-        <button class="btn btn-outline" onclick="showMainContent()">На головну</button>
-        <button class="btn" style="background: #ef4444;" onclick="logout()">Вийти</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="mainContent" class="main-content">
-    <div class="hero">
-      <h1>Кошторисне ПЗ<br>нового покоління</h1>
-      <p>Ukraine Building Cost — це професійний інструмент для інженерів-кошторисників, будівельних компаній та проєктувальників. Розраховуйте швидко, працюйте з актуальними ДБН, експортуйте в будь-які формати.</p>
-      <div class="actions">
-        <a href="#download" class="btn">Завантажити</a>
-        <a href="#pricing" class="btn btn-outline">Обрати ліцензію</a>
-      </div>
-    </div>
-    
-    <div id="features" class="features">
-      <div class="card">
-        <h3>Блискавичні розрахунки</h3>
-        <p>Автоматичний перерахунок ресурсів, індексів та коефіцієнтів у реальному часі. Економія годин роботи.</p>
-      </div>
-      <div class="card">
-        <h3>ДБН + кошторисні норми</h3>
-        <p>Повна відповідність ДСТУ, ДБН, збірникам цінників. Оновлення щокварталу — ви завжди в тренді.</p>
-      </div>
-      <div class="card">
-        <h3>Імпорт / Експорт</h3>
-        <p>Підтримка Excel, PDF та в майбутьньому інше. Легкий обмін даними з замовниками та експертизою.</p>
-      </div>
-    </div>
-<div class="section partners-section">
-    <h2>Наші партнери</h2>
-    <div class="section-sub">Нам довіряють провідні компанії та організації галузі</div>
-
-    <div class="partners-grid">
-        <div class="partner-card">
-            <div class="partner-logo">
-                <img src="villorum.jpg" alt="Логотип партнера" width ="300px" height ="300px">
-            </div>
-            <div class="partner-name">LCC "VILLORUM"</div>
-            <div class="partner-desc">Провідний інженер консультант</div>
-        </div>
-    </div>
-</div>
-    
-    <div class="section">
-      <h2>Професійний інструментарій</h2>
-      <div class="section-sub">
-        UBC розроблений для складних проєктів: моніторинг вартості, динамічні індекси, багатокористувацький режим та API для інтеграції з CRM/ERP.
-      </div>
-      <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 40px;">
-        <span class="badge">Ведення актів КБ-2в</span>
-        <span class="badge">Аналітика ресурсів</span>
-        <span class="badge">Автоматичне оновлення цін</span>
-        <span class="badge">Шаблони кошторисів</span>
-      </div>
-    </div>
-
-    <div id="pricing" class="section">
-      <h2>Оберіть свій тариф</h2>
-      <div class="section-sub">Гнучкі умови для фахівців та великих компаній. Розширте свої можливості разом з UBC.</div>
-
       <div class="pricing">
-        <div class="price-card">
+        <article class="price-card featured">
           <h3>Basic</h3>
           <div class="price">Безкоштовно</div>
-          <p>Базові функції для приватного користування або маленьких фірм.</p>
-          <a href="#download" class="btn btn-primary">Скачати</a>
-          <br>
-         <br>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfHoh4ilTzYa5slGztFn_tsYsYk3jBGvRn640lv_CX2G3LDBA/viewform" class="btn">Отримати ключ активації</a>
-        </div>
-
-        <div class="price-card">
-          <h3>Profesional</h3>
-          <!-- <div class="price">1 990 ₴</div> -->
-         <div class="price">В розробці</div>
-          <p>Всі функції як у Basic · всі новинки · техпідтримка 24/7 · Та все інше що потрібно для справжнього професіонала.</p>
-          <!-- <a href="#" class="btn btn-primary">Придбати Pro</a> -->
-        </div>
-
-        <div class="price-card">
+          <ul>
+            <li>Базові кошторисні функції</li>
+            <li>Активація через ключ</li>
+            <li>Оновлення інсталятора</li>
+          </ul>
+          <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfHoh4ilTzYa5slGztFn_tsYsYk3jBGvRn640lv_CX2G3LDBA/viewform">Отримати ключ</a>
+        </article>
+        <article class="price-card">
+          <h3>Professional</h3>
+          <div class="price">У розробці</div>
+          <ul>
+            <li>Розширені функції Basic</li>
+            <li>Нові модулі після релізу</li>
+            <li>Пріоритетна підтримка</li>
+          </ul>
+          <a class="btn secondary" href="#contact">Повідомити про інтерес</a>
+        </article>
+        <article class="price-card">
           <h3>Enterprise</h3>
-          <div class="price">Індивідуально</div>
-          <p>Розширене ліцензування, API, навчання персоналу, інтеграція з обліковими системами, SLA.</p>
-          <a href="#contact" class="btn">Зв'язатись</a>
-        </div>
+          <div class="price">Індивідуально <small>/ команда</small></div>
+          <ul>
+            <li>Навчання персоналу</li>
+            <li>Інтеграції та консультації</li>
+            <li>Умови для організації</li>
+          </ul>
+          <a class="btn secondary" href="mailto:contact@ubcost.com">Зв'язатися</a>
+        </article>
       </div>
-    </div>
+    </section>
 
-    <div id="download" class="section">
-      <div class="download-box">
-        <div class="download-info">
-          <h3>UBC Desktop для Windows</h3>
-         <h6>Вага програми ~400МБ</h6>
-          <p>Остання стабільна версія 1.0.48 (з підтримкою ДБН 2026). Інсталятор оновлено 11.05.2026 </p>
-          <div class="badge" style="margin-top: 10px;">Антивірусна перевірка | Цифровий підпис</div>
-        </div>
-       <a href="https://www.virustotal.com/gui/file/849d4a605cec49c9bfa61dd3d339c9482e274b1e17358b624170996729e2c54a/detection" class="btn">VirusTotal</a>
-       <a href="https://github.com/bondju/ubcweb/raw/refs/heads/main/Ukraine%20Building%20Cost%20Setup%201.0.48.exe" class="btn" style="font-size: 1.1rem; padding: 14px 34px;">
-  Завантажити (.exe)
-</a>
-      </div>
-      <div style="margin-top: 24px; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
-        <a href="#" style="color:#60a5fa;">Інструкція користувача</a>
-        <a href="#" style="color:#60a5fa;">Відеоогляд</a>
-        <a href="https://t.me/ubc_support_bot" style="color:#60a5fa;">Чат підтримки</a>
-      </div>
-    </div>
-
-    <div id="guide" class="section guide-section">
-      <h2>Ð†Ð½ÑÑ‚Ñ€ÑƒÐºÑ†Ñ–Ñ ÐºÐ¾Ñ€Ð¸ÑÑ‚ÑƒÐ²Ð°Ñ‡Ð°</h2>
-      <div class="section-sub">ÐšÐ¾Ñ€Ð¾Ñ‚ÐºÐ¸Ð¹ Ð¿Ð¾ÐºÑ€Ð¾ÐºÐ¾Ð²Ð¸Ð¹ Ð³Ð°Ð¹Ð´ Ð·Ñ– ÑÐºÑ€Ñ–Ð½Ð°Ð¼Ð¸, Ñ‰Ð¾Ð± ÑˆÐ²Ð¸Ð´ÐºÐ¾ Ð¾ÑÐ²Ð¾Ñ—Ñ‚Ð¸ Ð¾ÑÐ½Ð¾Ð²Ð½Ñ– ÑÑ†ÐµÐ½Ð°Ñ€Ñ–Ñ— Ñ€Ð¾Ð±Ð¾Ñ‚Ð¸ Ð² UBC.</div>
-
-      <div class="guide-shell">
-        <div class="guide-carousel">
-          <div class="guide-slide active" data-guide-slide="0">
-            <div class="guide-shot">
-              <div class="guide-window">
-                <div class="guide-window-top">
-                  <span class="guide-dot red"></span>
-                  <span class="guide-dot yellow"></span>
-                  <span class="guide-dot green"></span>
-                </div>
-                <div class="guide-window-body">
-                  <div class="guide-toolbar">
-                    <span style="color:#e2e8f0; font-weight:700;">Ð¡Ñ‚Ð°Ñ€Ñ‚ Ð¿Ñ€Ð¾Ñ”ÐºÑ‚Ñƒ</span>
-                    <span class="guide-chip">ÐÐ¾Ð²Ð¸Ð¹ Ð¾Ð±'Ñ”ÐºÑ‚</span>
-                  </div>
-                  <div class="guide-panels">
-                    <div class="guide-panel">
-                      <span class="guide-panel-title">Ð—Ð°Ð¼Ð¾Ð²Ð½Ð¸Ðº</span>
-                      <span class="guide-panel-text">Ð ÐµÐºÐ²Ñ–Ð·Ð¸Ñ‚Ð¸ ÐºÐ¾Ð¼Ð¿Ð°Ð½Ñ–Ñ— Ñ‚Ð° Ð²Ð¸Ð´ Ñ€Ð¾Ð±Ñ–Ñ‚</span>
-                    </div>
-                    <div class="guide-panel">
-                      <span class="guide-panel-title">ÐÐ¾Ñ€Ð¼Ð°Ñ‚Ð¸Ð²Ð½Ð° Ð±Ð°Ð·Ð°</span>
-                      <span class="guide-panel-text">Ð’Ð¸Ð±Ñ–Ñ€ ÐÐ‘Ð, Ð”Ð¡Ð¢Ð£ Ñ‚Ð° Ñ–Ð½Ð´ÐµÐºÑÑ–Ð²</span>
-                    </div>
-                    <div class="guide-panel">
-                      <span class="guide-panel-title">Ð›Ð¾ÐºÐ°Ð»ÑŒÐ½Ñ– ÐºÐ¾ÑˆÑ‚Ð¾Ñ€Ð¸ÑÐ¸</span>
-                      <span class="guide-panel-text">Ð¡Ñ‚Ð²Ð¾Ñ€ÐµÐ½Ð½Ñ Ñ€Ð¾Ð·Ð´Ñ–Ð»Ñ–Ð² Ñ– Ð²Ñ–Ð´Ð¾Ð¼Ð¾ÑÑ‚ÐµÐ¹</span>
-                    </div>
-                    <div class="guide-panel">
-                      <span class="guide-panel-title">Ð•ÐºÑÐ¿Ð¾Ñ€Ñ‚</span>
-                      <span class="guide-panel-text">PDF, Excel Ñ‚Ð° Ð´Ñ€ÑƒÐº ÐºÐ¾Ð¼Ð¿Ð»ÐµÐºÑ‚Ñƒ</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="guide-copy">
-              <h3>1. Ð¡Ñ‚Ð²Ð¾Ñ€Ñ–Ñ‚ÑŒ Ð½Ð¾Ð²Ð¸Ð¹ Ð¿Ñ€Ð¾Ñ”ÐºÑ‚</h3>
-              <p>ÐŸÑ–ÑÐ»Ñ Ð²ÑÑ‚Ð°Ð½Ð¾Ð²Ð»ÐµÐ½Ð½Ñ Ð²Ñ–Ð´ÐºÑ€Ð¸Ð¹Ñ‚Ðµ UBC, Ð¾Ð±ÐµÑ€Ñ–Ñ‚ÑŒ Ñ‚Ð¸Ð¿ Ð¾Ð±'Ñ”ÐºÑ‚Ð° Ñ‚Ð° Ð·Ð°Ð¿Ð¾Ð²Ð½Ñ–Ñ‚ÑŒ Ð¾ÑÐ½Ð¾Ð²Ð½Ñ– Ñ€ÐµÐºÐ²Ñ–Ð·Ð¸Ñ‚Ð¸. Ð¦Ðµ Ð´Ð°Ñ” Ð¾ÑÐ½Ð¾Ð²Ñƒ Ð´Ð»Ñ Ñ‚Ð¾Ñ‡Ð½Ð¾Ð³Ð¾ Ñ€Ð¾Ð·Ñ€Ð°Ñ…ÑƒÐ½ÐºÑƒ Ñ‚Ð° Ð¿Ñ–Ð´Ð±Ð¾Ñ€Ñƒ Ð½Ð¾Ñ€Ð¼Ð°Ñ‚Ð¸Ð²Ð½Ð¾Ñ— Ð±Ð°Ð·Ð¸.</p>
-              <div class="guide-points">
-                <div class="guide-point">
-                  <strong>Ð©Ð¾ Ð²Ð²ÐµÑÑ‚Ð¸</strong>
-                  <span>ÐÐ°Ð·Ð²Ñƒ Ð¿Ñ€Ð¾Ñ”ÐºÑ‚Ñƒ, Ð·Ð°Ð¼Ð¾Ð²Ð½Ð¸ÐºÐ°, Ð¼Ñ–ÑÑ†ÐµÐ²Ñ–ÑÑ‚ÑŒ Ñ‚Ð° Ð¿ÐµÑ€Ñ–Ð¾Ð´ Ñ€Ð¾Ð·Ñ€Ð°Ñ…ÑƒÐ½ÐºÑƒ.</span>
-                </div>
-                <div class="guide-point">
-                  <strong>Ð ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚</strong>
-                  <span>Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ð¾Ð±'Ñ”ÐºÑ‚Ð° Ð±ÑƒÐ´Ðµ Ð³Ð¾Ñ‚Ð¾Ð²Ð° Ð´Ð¾ Ð´Ð¾Ð´Ð°Ð²Ð°Ð½Ð½Ñ Ð¿Ð¾Ð·Ð¸Ñ†Ñ–Ð¹ Ñ– Ñ€Ð¾Ð·Ð´Ñ–Ð»Ñ–Ð².</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="guide-slide" data-guide-slide="1">
-            <div class="guide-shot">
-              <div class="guide-window">
-                <div class="guide-window-top">
-                  <span class="guide-dot red"></span>
-                  <span class="guide-dot yellow"></span>
-                  <span class="guide-dot green"></span>
-                </div>
-                <div class="guide-window-body">
-                  <div class="guide-toolbar">
-                    <span style="color:#e2e8f0; font-weight:700;">Ð ÐµÑÑƒÑ€ÑÐ½Ð° Ð²Ñ–Ð´Ð¾Ð¼Ñ–ÑÑ‚ÑŒ</span>
-                    <span class="guide-chip">ÐÐ²Ñ‚Ð¾Ð¿ÐµÑ€ÐµÑ€Ð°Ñ…ÑƒÐ½Ð¾Ðº</span>
-                  </div>
-                  <div class="guide-table">
-                    <div class="guide-table-row header">
-                      <span>Ð ÐµÑÑƒÑ€Ñ</span>
-                      <span>ÐžÐ´.</span>
-                      <span>Ð¦Ñ–Ð½Ð°</span>
-                    </div>
-                    <div class="guide-table-row">
-                      <span>Ð‘ÐµÑ‚Ð¾Ð½ Ð’25</span>
-                      <span>Ð¼3</span>
-                      <span>4 680</span>
-                    </div>
-                    <div class="guide-table-row">
-                      <span>ÐÑ€Ð¼Ð°Ñ‚ÑƒÑ€Ð° A500C</span>
-                      <span>Ñ‚</span>
-                      <span>38 250</span>
-                    </div>
-                    <div class="guide-table-row">
-                      <span>ÐžÐ¿Ð»Ð°Ñ‚Ð° Ð¿Ñ€Ð°Ñ†Ñ–</span>
-                      <span>Ð»ÑŽÐ´.-Ð³Ð¾Ð´</span>
-                      <span>215</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="guide-copy">
-              <h3>2. Ð”Ð¾Ð´Ð°Ð²Ð°Ð¹Ñ‚Ðµ Ñ€Ð¾Ð±Ð¾Ñ‚Ð¸ Ñ‚Ð° Ñ€ÐµÑÑƒÑ€ÑÐ¸</h3>
-              <p>Ð¡Ñ„Ð¾Ñ€Ð¼ÑƒÐ¹Ñ‚Ðµ Ð»Ð¾ÐºÐ°Ð»ÑŒÐ½Ð¸Ð¹ ÐºÐ¾ÑˆÑ‚Ð¾Ñ€Ð¸Ñ, Ð´Ð¾Ð±ÐµÑ€Ñ–Ñ‚ÑŒ Ð½Ð¾Ñ€Ð¼Ð¸ Ñ‚Ð° Ð¿ÐµÑ€ÐµÐ²Ñ–Ñ€Ñ‚Ðµ Ñ€ÐµÑÑƒÑ€ÑÐ½Ñƒ Ñ‡Ð°ÑÑ‚Ð¸Ð½Ñƒ. UBC Ð´Ð¾Ð¿Ð¾Ð¼Ð°Ð³Ð°Ñ” ÑˆÐ²Ð¸Ð´ÐºÐ¾ Ð²Ð¸ÑÐ²Ð¸Ñ‚Ð¸ Ð¿ÐµÑ€ÐµÐ²Ð¸Ñ‰ÐµÐ½Ð½Ñ, Ð´ÑƒÐ±Ð»Ñ– Ð°Ð±Ð¾ Ð·Ð°ÑÑ‚Ð°Ñ€Ñ–Ð»Ñ– Ñ†Ñ–Ð½Ð¸.</p>
-              <div class="guide-points">
-                <div class="guide-point">
-                  <strong>ÐŸÐ¾Ñ€Ð°Ð´Ð°</strong>
-                  <span>Ð’Ð¸ÐºÐ¾Ñ€Ð¸ÑÑ‚Ð¾Ð²ÑƒÐ¹Ñ‚Ðµ Ñ„Ñ–Ð»ÑŒÑ‚Ñ€Ð¸ Ñ‚Ð° Ð¿Ð¾ÑˆÑƒÐº, Ñ‰Ð¾Ð± Ð·Ð½Ð°Ñ…Ð¾Ð´Ð¸Ñ‚Ð¸ Ð¿Ð¾Ð·Ð¸Ñ†Ñ–Ñ— Ð·Ð° ÐºÐ¾Ð´Ð¾Ð¼ Ð°Ð±Ð¾ ÐºÐ»ÑŽÑ‡Ð¾Ð²Ð¸Ð¼ ÑÐ»Ð¾Ð²Ð¾Ð¼.</span>
-                </div>
-                <div class="guide-point">
-                  <strong>Ð©Ð¾ ÐºÐ¾Ð½Ñ‚Ñ€Ð¾Ð»ÑŽÐ²Ð°Ñ‚Ð¸</strong>
-                  <span>Ð†Ð½Ð´ÐµÐºÑÐ¸ Ð¿ÐµÑ€ÐµÑ€Ð°Ñ…ÑƒÐ½ÐºÑƒ, Ð·Ð°Ñ€Ð¾Ð±Ñ–Ñ‚Ð½Ñƒ Ð¿Ð»Ð°Ñ‚Ñƒ, Ð¼Ð°Ñ‚ÐµÑ€Ñ–Ð°Ð»Ð¸ Ñ‚Ð° Ð¼Ð°ÑˆÐ¸Ð½Ð¸.</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="guide-slide" data-guide-slide="2">
-            <div class="guide-shot">
-              <div class="guide-window">
-                <div class="guide-window-top">
-                  <span class="guide-dot red"></span>
-                  <span class="guide-dot yellow"></span>
-                  <span class="guide-dot green"></span>
-                </div>
-                <div class="guide-window-body">
-                  <div class="guide-toolbar">
-                    <span style="color:#e2e8f0; font-weight:700;">Ð•ÐºÑÐ¿Ð¾Ñ€Ñ‚ Ð´Ð¾ÐºÑƒÐ¼ÐµÐ½Ñ‚Ñ–Ð²</span>
-                    <span class="guide-chip">PDF / Excel</span>
-                  </div>
-                  <div class="guide-report">
-                    <span class="guide-report-line long"></span>
-                    <span class="guide-report-line mid"></span>
-                    <span class="guide-report-line short"></span>
-                    <span class="guide-report-line long"></span>
-                    <span class="guide-report-line mid"></span>
-                    <span class="guide-report-line short"></span>
-                  </div>
-                  <div class="guide-panels">
-                    <div class="guide-panel">
-                      <span class="guide-panel-title">Ð¤Ð¾Ñ€Ð¼Ð°Ñ‚Ð¸</span>
-                      <span class="guide-panel-text">PDF Ð´Ð»Ñ Ð¿Ð¾Ð³Ð¾Ð´Ð¶ÐµÐ½Ð½Ñ, Excel Ð´Ð»Ñ Ð¿Ð¾Ð´Ð°Ð»ÑŒÑˆÐ¾Ñ— Ñ€Ð¾Ð±Ð¾Ñ‚Ð¸</span>
-                    </div>
-                    <div class="guide-panel">
-                      <span class="guide-panel-title">ÐŸÐ°ÐºÐµÑ‚Ð¸ Ð´Ð¾ÐºÑƒÐ¼ÐµÐ½Ñ‚Ñ–Ð²</span>
-                      <span class="guide-panel-text">Ð›Ð¾ÐºÐ°Ð»ÑŒÐ½Ð¸Ð¹ ÐºÐ¾ÑˆÑ‚Ð¾Ñ€Ð¸Ñ, Ð·Ð²ÐµÐ´ÐµÐ½Ð¸Ð¹ Ñ€Ð¾Ð·Ñ€Ð°Ñ…ÑƒÐ½Ð¾Ðº, Ð°ÐºÑ‚Ð¸</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="guide-copy">
-              <h3>3. Ð•ÐºÑÐ¿Ð¾Ñ€Ñ‚ÑƒÐ¹Ñ‚Ðµ Ñ‚Ð° Ð´Ñ–Ð»Ñ–Ñ‚ÑŒÑÑ</h3>
-              <p>ÐšÐ¾Ð»Ð¸ ÐºÐ¾ÑˆÑ‚Ð¾Ñ€Ð¸Ñ Ð³Ð¾Ñ‚Ð¾Ð²Ð¸Ð¹, ÑÑ„Ð¾Ñ€Ð¼ÑƒÐ¹Ñ‚Ðµ ÐºÐ¾Ð¼Ð¿Ð»ÐµÐºÑ‚ Ð´Ð¾ÐºÑƒÐ¼ÐµÐ½Ñ‚Ñ–Ð² Ñ‚Ð° ÐµÐºÑÐ¿Ð¾Ñ€Ñ‚ÑƒÐ¹Ñ‚Ðµ Ð¹Ð¾Ð³Ð¾ Ñƒ Ð·Ñ€ÑƒÑ‡Ð½Ð¾Ð¼Ñƒ Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚Ñ– Ð´Ð»Ñ Ð·Ð°Ð¼Ð¾Ð²Ð½Ð¸ÐºÐ°, ÐµÐºÑÐ¿ÐµÑ€Ñ‚Ð¸Ð·Ð¸ Ñ‡Ð¸ Ð²Ð½ÑƒÑ‚Ñ€Ñ–ÑˆÐ½ÑŒÐ¾Ð³Ð¾ Ð¿Ð¾Ð³Ð¾Ð´Ð¶ÐµÐ½Ð½Ñ.</p>
-              <div class="guide-points">
-                <div class="guide-point">
-                  <strong>Ð“Ð¾Ñ‚Ð¾Ð²Ð¸Ð¹ Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚</strong>
-                  <span>ÐžÐ´Ð¸Ð½ ÐºÐ¾Ð¼Ð¿Ð»ÐµÐºÑ‚ Ñ„Ð°Ð¹Ð»Ñ–Ð² Ð´Ð»Ñ Ð´Ñ€ÑƒÐºÑƒ, Ð°Ñ€Ñ…Ñ–Ð²Ñƒ Ñ‚Ð° Ð¾Ð±Ð¼Ñ–Ð½Ñƒ Ð· ÐºÐ¾Ð»ÐµÐ³Ð°Ð¼Ð¸.</span>
-                </div>
-                <div class="guide-point">
-                  <strong>Ð”Ð°Ð»Ñ–</strong>
-                  <span>Ð¯ÐºÑ‰Ð¾ Ð¿Ð¾Ñ‚Ñ€Ñ–Ð±Ð½Ð° Ð´Ð¾Ð²Ñ–Ð´ÐºÐ° Ð°Ð±Ð¾ Ð´ÐµÐ¼Ð¾, ÑÐºÐ¾Ñ€Ð¸ÑÑ‚Ð°Ð¹Ñ‚ÐµÑÑ Ñ‡Ð°Ñ‚Ð¾Ð¼ Ð¿Ñ–Ð´Ñ‚Ñ€Ð¸Ð¼ÐºÐ¸ Ð½Ð¸Ð¶Ñ‡Ðµ.</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="guide-controls">
-          <div class="guide-progress">
-            <button class="guide-progress-dot active" type="button" aria-label="ÐšÑ€Ð¾Ðº 1" onclick="setGuideSlide(0)"></button>
-            <button class="guide-progress-dot" type="button" aria-label="ÐšÑ€Ð¾Ðº 2" onclick="setGuideSlide(1)"></button>
-            <button class="guide-progress-dot" type="button" aria-label="ÐšÑ€Ð¾Ðº 3" onclick="setGuideSlide(2)"></button>
-          </div>
-          <div class="guide-nav">
-            <button class="btn btn-outline" type="button" onclick="changeGuideSlide(-1)">ÐÐ°Ð·Ð°Ð´</button>
-            <button class="btn" type="button" onclick="changeGuideSlide(1)">Ð’Ð¿ÐµÑ€ÐµÐ´</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="contact" style="margin-top: 60px; background: #0f1222; border-radius: 40px; padding: 32px 30px; border: 1px solid #293544;">
-      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px;">
+    <section id="download" class="container">
+      <div class="download-panel">
         <div>
-          <h3 style="font-size: 1.7rem;">Потрібне корпоративне рішення?</h3>
-          <p style="color:#a3afc4; max-width: 500px;">Надамо консультацію, зробимо демо та розрахуємо спеціальну пропозицію для вашої команди.</p>
+          <div class="eyebrow"><span class="status-dot"></span> Стабільний реліз</div>
+          <h2>UBC Desktop для Windows</h2>
+          <p>Версія 1.0.48. Інсталятор оновлено 11.05.2026. Розмір файлу близько 400 МБ.</p>
+          <div class="download-meta">
+            <span class="pill">Windows installer</span>
+            <span class="pill">Перевірка VirusTotal</span>
+            <span class="pill">Підтримка DBN 2026</span>
+          </div>
         </div>
-        <a href="mailto:contact@ubcost.com" class="btn btn-outline" style="background:#2563eb; border:none;">Написати менеджеру →</a>
+        <div class="hero-actions">
+          <a class="btn" href="https://github.com/bondju/ubcweb/raw/refs/heads/main/Ukraine%20Building%20Cost%20Setup%201.0.48.exe">Завантажити .exe</a>
+          <a class="btn secondary" href="#guide">Інструкція</a>
+          <a class="btn ghost" href="https://t.me/ubc_support_bot">Підтримка</a>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <div class="footer">
-      <div>
-        <strong style="font-size: 1.2rem; color:#cbd5e1;">UBC</strong><br>
-        Ukraine Building Cost<br>
-        © 2026 — Всі права захищені
+    <section id="guide" class="container">
+      <div class="section-head">
+        <div>
+          <h2>Інструкція користувача</h2>
+          <p>Покроковий гайд зі скріншотами допоможе встановити UBC і активувати програму без здогадок.</p>
+        </div>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 6px;">
+      <div class="guide-shell">
+        <div class="guide-slide">
+          <div class="guide-media"><img id="guideImage" src="img/sc_pre.png" alt=""></div>
+          <div class="guide-copy">
+            <span class="pill" id="guideCount">Крок 01 / 06</span>
+            <h3 id="guideTitle">Отримайте ключ активації</h3>
+            <p id="guideText">Заповніть форму в блоці тарифів, щоб отримати безкоштовний ключ для запуску UBC.</p>
+          </div>
+        </div>
+        <div class="guide-controls">
+          <div class="dots" id="guideDots" aria-label="Перемикання кроків"></div>
+          <div class="hero-actions" style="margin:0">
+            <button class="btn secondary" type="button" id="guidePrev">Назад</button>
+            <button class="btn" type="button" id="guideNext">Вперед</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="section-head">
+        <div>
+          <h2>Партнери</h2>
+          <p>UBC розвивається разом із фахівцями будівельної галузі та практичним досвідом реальних проєктів.</p>
+        </div>
+      </div>
+      <div class="partners">
+        <article class="partner">
+          <img src="villorum.jpg" alt="Логотип партнера VILLORUM">
+          <div>
+            <h3>LCC "VILLORUM"</h3>
+            <p>Інженерний консультант і партнер з практичного впровадження.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="container">
+      <div class="contact">
+        <div>
+          <h2>Потрібне корпоративне рішення?</h2>
+          <p>Напишіть команді UBC, якщо потрібна консультація, демонстрація, навчання або окремі умови для організації.</p>
+        </div>
+        <a class="btn" href="mailto:contact@ubcost.com">Написати менеджеру</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <strong style="color: var(--text); font-size: 1.1rem;">UBC</strong>
+        <p>Ukraine Building Cost<br>© 2026 - усі права захищені</p>
+      </div>
+      <div>
         <a href="license.txt">Політика конфіденційності</a>
-        <a href="#">Ліцензійна угода</a>
+        <a href="LICENSE">Ліцензійна угода</a>
         <a href="mailto:contact@ubcost.com">Технічна підтримка</a>
       </div>
       <div>
-        <p>Київ, Україна<br>
-        contact@ubcost.com<br>
-        +38 (066) 820 22 44</p>
+        <p>Київ, Україна<br>contact@ubcost.com<br>+38 (066) 820 22 44</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <div class="modal">
+      <div class="modal-head">
+        <div>
+          <h2 id="authTitle">Вхід в акаунт</h2>
+          <p id="authSubtitle">Увійдіть або створіть локальний профіль для цього браузера.</p>
+        </div>
+        <button class="close" type="button" data-close-auth aria-label="Закрити">×</button>
+      </div>
+      <form id="authForm">
+        <div class="field">
+          <label for="emailInput">Електронна пошта</label>
+          <input id="emailInput" name="email" type="email" placeholder="name@example.com" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="passwordInput">Пароль</label>
+          <input id="passwordInput" name="password" type="password" placeholder="••••••••" autocomplete="current-password" required>
+        </div>
+        <div class="captcha">
+          <canvas id="captchaCanvas" width="420" height="78" title="Натисніть, щоб оновити код"></canvas>
+          <div class="captcha-row">
+            <input id="captchaInput" type="text" placeholder="Код безпеки" autocomplete="off" maxlength="8">
+            <button class="btn secondary" type="button" id="refreshCaptcha">Оновити</button>
+          </div>
+        </div>
+        <div class="error" id="formError"></div>
+        <button class="btn" style="width:100%" type="submit" id="authSubmit">Увійти</button>
+      </form>
+      <div class="auth-divider">АБО</div>
+      <div class="social-login">
+        <button class="social-btn" type="button" id="googleBtn" aria-label="Увійти через Google">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Google
+        </button>
+        <button class="social-btn" type="button" id="discordBtn" aria-label="Увійти через Discord">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.317 4.37a19.8 19.8 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.3 18.3 0 0 0-5.487 0c-.164-.386-.399-.875-.608-1.25a.077.077 0 0 0-.079-.037A19.8 19.8 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106a13.1 13.1 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128c.125-.094.252-.19.372-.287a.074.074 0 0 1 .076-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.247.194.372.287a.077.077 0 0 1-.006.128a13.1 13.1 0 0 1-1.873.892a.077.077 0 0 0-.041.106c.353.698.765 1.363 1.226 1.994a.076.076 0 0 0 .084.028a19.9 19.9 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.057c.5-5.177-.838-9.674-3.549-13.66a.06.06 0 0 0-.031-.027zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.42 2.157-2.42c1.21 0 2.176 1.096 2.157 2.42c0 1.334-.956 2.419-2.157 2.419zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.42 2.157-2.42c1.21 0 2.176 1.096 2.157 2.42c0 1.334-.946 2.419-2.157 2.419z"/></svg>
+          Discord
+        </button>
+      </div>
+      <div class="switch">
+        <span id="switchText">Немає акаунта?</span>
+        <button type="button" id="switchMode">Зареєструватися</button>
       </div>
     </div>
   </div>
-</div>
-<div class="toast" id="toastMsg">Повідомлення</div>
 
-<script>
-  const GOOGLE_CLIENT_ID = '992395032391-cojjbkgo7iaennech1ng6ephvr91n7t9.apps.googleusercontent.com';
-  const DISCORD_CLIENT_ID = '1492162869909913740';
-  const GUIDE_SLIDES = [
-    {
-      title: 'Отримайте ключ активації',
-      description: 'Заповніть форму за <a onclick="showMainContent(); scrollToSection(\'pricing\')" style="color: #d3dadb; text-decoration: underline;">посиланням</a>, щоб отримати безкоштовний ключ активації для UBC.',
-      cardTitle: 'Спочатку отримайте ключ активації',
-      cardText: '',
-      image: 'img/sc_pre.png',
-      imageAlt: 'Спершу чергу отримайте ключ активації',
-    },
-    {
-      title: 'Завантажте та відкрийте файл',
-      description: 'Після встановлення запустіть програму та відкрийте інсталятор, який ви завантажили. Це ініціює процес встановлення та налаштування UBC на вашому комп\'ютері.',
-      cardTitle: 'Завантажте та відкрийте файл',
-      cardText: '',
-      image: 'img/sc1.png',
-      imageAlt: 'Завантажте та відкрийте файл',
-    },
-    {
-      title: 'Windows SmartScreen може спрацювати',
-      description: 'Натисніть "Додатково" та потім перейдіть до наступного кроку.',
-      cardTitle: 'Windows SmartScreen може спрацювати',
-      cardText: '',
-      image: 'img/sc2.png',
-      imageAlt: 'Windows SmartScreen може спрацювати',
-    },
-    {
-      title: 'Натисніть "Запустити все одно"',
-      description: 'Якщо з\'явиться попередження від Windows SmartScreen, виберіть "Додатково" та потім "Запустити все одно". Це стандартна процедура для програм, які ще не набрали достатньої кількості завантажень для автоматичного підтвердження безпеки.',
-      cardTitle: 'Натисніть "Запустити все одно"',
-      cardText: '',
-      image: 'img/sc3.png',
-      imageAlt: 'Натисніть "Запустити все одно"',
-    },
-    {
-      title: 'Зачекайте на завершення встановлення',
-      description: 'Після цього розпочнеться процес встановлення. Зачекайте, поки він завершиться. Це може зайняти кілька хвилин, залежно від швидкості вашого комп\'ютера.',
-      cardTitle: 'Зачекайте на завершення встановлення',
-      cardText: '',
-      image: 'img/sc4.png',
-      imageAlt: 'Зачекайте на завершення встановлення',
-    },
-    {
-      title: 'Активуйте програму своїм ключем активації',
-      description: 'Після встановлення відкрийте програму та введіть ключ активації разом з вашим email, ключ це той самий, який ви отримали після заповнення форми. Це дозволить вам розпочати роботу з UBC та отримати доступ до програми.',
-      cardTitle: 'Активуйте програму своїм ключем активації',
-      cardText: '',
-      image: 'img/sc5.png',
-      imageAlt: 'Активуйте програму своїм ключем активації',
-    },
-  ];
-  
-  let currentCaptchaCode = '';
-  let failedAttempts = 0;
-  let currentGuideSlide = 0;
-  
-  function generateAdvancedCaptcha() {
-    const canvas = document.getElementById('captchaCanvas');
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    const width = canvas.width = 400;
-    const height = canvas.height = 90;
-    
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789';
-    let code = '';
-    for (let i = 0; i < 7; i++) {
-      code += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    currentCaptchaCode = code;
-    
-    const gradient = ctx.createLinearGradient(0, 0, width, height);
-    gradient.addColorStop(0, '#0f172a');
-    gradient.addColorStop(1, '#1e293b');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, width, height);
-    
-    for (let i = 0; i < 300; i++) {
-      ctx.fillStyle = `rgba(${Math.random() * 100 + 100}, ${Math.random() * 100 + 100}, 255, ${Math.random() * 0.3})`;
-      ctx.fillRect(Math.random() * width, Math.random() * height, 1, 1);
-    }
-    
-    for (let i = 0; i < 6; i++) {
-      ctx.beginPath();
-      const startY = Math.random() * height;
-      ctx.moveTo(0, startY);
-      for (let x = 0; x < width; x += 10) {
-        const y = startY + Math.sin(x * 0.02 + Math.random()) * 8;
-        ctx.lineTo(x, y);
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const guideSlides = [
+      {
+        title: 'Отримайте ключ активації',
+        text: 'Заповніть форму в блоці тарифів, щоб отримати безкоштовний ключ для запуску UBC.',
+        image: 'img/sc_pre.png',
+        alt: 'Форма активації UBC'
+      },
+      {
+        title: 'Завантажте інсталятор',
+        text: 'Натисніть кнопку завантаження, дочекайтесь завершення й відкрийте файл інсталятора.',
+        image: 'img/sc1.png',
+        alt: 'Завантажений файл інсталятора UBC'
+      },
+      {
+        title: 'Перейдіть через SmartScreen',
+        text: 'Якщо Windows показує попередження, натисніть "Додатково", щоб побачити наступну дію.',
+        image: 'img/sc2.png',
+        alt: 'Windows SmartScreen з кнопкою додатково'
+      },
+      {
+        title: 'Запустіть встановлення',
+        text: 'Оберіть "Запустити все одно", якщо довіряєте інсталятору та перевірили файл.',
+        image: 'img/sc3.png',
+        alt: 'Кнопка запуску інсталятора після SmartScreen'
+      },
+      {
+        title: 'Дочекайтесь завершення',
+        text: 'Встановлення може тривати кілька хвилин залежно від швидкості комп\'ютера.',
+        image: 'img/sc4.png',
+        alt: 'Процес встановлення UBC'
+      },
+      {
+        title: 'Активуйте UBC',
+        text: 'Відкрийте програму, введіть email і ключ активації, який ви отримали після заповнення форми.',
+        image: 'img/sc5.png',
+        alt: 'Активація UBC ключем'
       }
-      ctx.strokeStyle = `rgba(59, 130, 246, ${0.1 + Math.random() * 0.3})`;
-      ctx.lineWidth = 1 + Math.random() * 2;
-      ctx.stroke();
+    ];
+
+    let currentGuide = 0;
+    let loginMode = true;
+    let captchaCode = '';
+    const GOOGLE_CLIENT_ID = '992395032391-cojjbkgo7iaennech1ng6ephvr91n7t9.apps.googleusercontent.com';
+    const DISCORD_CLIENT_ID = '1492162869909913740';
+
+    const $ = (selector) => document.querySelector(selector);
+    const $$ = (selector) => Array.from(document.querySelectorAll(selector));
+
+    function showToast(message, isError = false) {
+      const toast = $('#toast');
+      toast.textContent = message;
+      toast.style.borderColor = isError ? 'rgba(239, 68, 68, 0.7)' : 'var(--line)';
+      toast.classList.add('visible');
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => toast.classList.remove('visible'), 2600);
     }
-    
-    for (let i = 0; i < 15; i++) {
-      ctx.beginPath();
-      ctx.ellipse(
-        Math.random() * width,
-        Math.random() * height,
-        Math.random() * 8 + 2,
-        Math.random() * 8 + 2,
-        0,
-        0,
-        Math.PI * 2
-      );
-      ctx.fillStyle = `rgba(96, 165, 250, ${Math.random() * 0.2})`;
-      ctx.fill();
+
+    function renderGuide() {
+      const slide = guideSlides[currentGuide];
+      $('#guideImage').src = slide.image;
+      $('#guideImage').alt = slide.alt;
+      $('#guideTitle').textContent = slide.title;
+      $('#guideText').textContent = slide.text;
+      $('#guideCount').textContent = `Крок ${String(currentGuide + 1).padStart(2, '0')} / ${String(guideSlides.length).padStart(2, '0')}`;
+      $$('.dot').forEach((dot, index) => dot.classList.toggle('active', index === currentGuide));
     }
-    
-    for (let i = 0; i < code.length; i++) {
-      const char = code[i];
-      const x = 25 + i * 52;
-      const y = 52 + Math.sin(i * 0.8 + Date.now() * 0.002) * 6;
-      const rotation = (Math.sin(i) * 0.2) + (Math.random() - 0.5) * 0.2;
-      
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.rotate(rotation);
-      
-      const fontSize = 32 + Math.sin(i) * 4;
-      ctx.font = `bold ${fontSize}px "Courier New", "Monaco", monospace`;
-      
-      const hue = 200 + Math.random() * 60;
-      ctx.fillStyle = `hsl(${hue}, 70%, 60%)`;
-      
-      ctx.shadowBlur = 2;
-      ctx.shadowColor = 'rgba(0,0,0,0.5)';
-      
-      ctx.fillText(char, 0, 0);
-      
-      ctx.shadowBlur = 0;
-      ctx.restore();
+
+    function setGuide(index) {
+      currentGuide = (index + guideSlides.length) % guideSlides.length;
+      renderGuide();
     }
-    
-    for (let i = 0; i < 8; i++) {
-      ctx.beginPath();
-      ctx.moveTo(Math.random() * width, Math.random() * height);
-      ctx.lineTo(Math.random() * width, Math.random() * height);
-      ctx.strokeStyle = `rgba(59, 130, 246, 0.2)`;
-      ctx.lineWidth = 0.5;
-      ctx.stroke();
-    }
-    
-    // Draw "noise" dots overlay
-    for (let i = 0; i < 200; i++) {
-      ctx.fillStyle = `rgba(255, 255, 255, ${Math.random() * 0.15})`;
-      ctx.fillRect(Math.random() * width, Math.random() * height, 1.5, 1.5);
-    }
-    
-    ctx.strokeStyle = '#3b82f6';
-    ctx.lineWidth = 1;
-    ctx.strokeRect(0, 0, width, height);
-  }
-  
-  function refreshCaptcha() {
-    generateAdvancedCaptcha();
-    const captchaInput = document.getElementById('captchaInput');
-    if (captchaInput) {
-      captchaInput.value = '';
-      captchaInput.classList.remove('shake');
-    }
-    const captchaError = document.getElementById('captchaError');
-    if (captchaError) captchaError.innerText = '';
-  }
-  
-  function validateCaptcha() {
-    const input = document.getElementById('captchaInput').value.trim();
-    const captchaError = document.getElementById('captchaError');
-    
-    if (!input) {
-      captchaError.innerText = 'Введіть код безпеки';
-      shakeElement('captchaInput');
-      return false;
-    }
-    
-    if (input !== currentCaptchaCode) {
-      failedAttempts++;
-      captchaError.innerText = `Невірний код! Спробуйте ще раз (спроба ${failedAttempts}/3)`;
-      shakeElement('captchaInput');
-      refreshCaptcha();
-      
-      if (failedAttempts >= 3) {
-        captchaError.innerText = 'Багато невдалих спроб. Спробуйте пізніше.';
-        document.getElementById('submitBtn').disabled = true;
-        setTimeout(() => {
-          document.getElementById('submitBtn').disabled = false;
-          failedAttempts = 0;
-        }, 30000);
+
+    function generateCaptcha() {
+      const canvas = $('#captchaCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const width = canvas.width;
+      const height = canvas.height;
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      captchaCode = Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+
+      ctx.clearRect(0, 0, width, height);
+      const gradient = ctx.createLinearGradient(0, 0, width, height);
+      gradient.addColorStop(0, '#111827');
+      gradient.addColorStop(1, '#172033');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, width, height);
+
+      for (let i = 0; i < 80; i++) {
+        ctx.fillStyle = `rgba(180, 200, 255, ${Math.random() * 0.22})`;
+        ctx.fillRect(Math.random() * width, Math.random() * height, 1.5, 1.5);
       }
-      return false;
-    }
-    
-    failedAttempts = 0;
-    return true;
-  }
-  
-  function shakeElement(elementId) {
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.classList.add('shake');
-      setTimeout(() => {
-        element.classList.remove('shake');
-      }, 300);
-    }
-  }
-  
-  function showToast(message, isError = false) {
-    const toast = document.getElementById('toastMsg');
-    toast.textContent = message;
-    toast.style.background = isError ? '#7f1a1ae6' : '#1f2937e6';
-    toast.style.borderLeftColor = isError ? '#ef4444' : '#3b82f6';
-    toast.style.opacity = '1';
-    setTimeout(() => {
-      toast.style.opacity = '0';
-    }, 3000);
-  }
 
-  function openModal(id) {
-    const modal = document.getElementById(id);
-    if (modal) modal.classList.add('active');
-    refreshCaptcha();
-  }
-
-  function closeModal(id) {
-    const modal = document.getElementById(id);
-    if (modal) modal.classList.remove('active');
-  }
-  
-  function showMainContent() {
-    document.getElementById('profilePage').classList.remove('active');
-    document.getElementById('mainContent').classList.remove('hidden');
-    document.getElementById('mainContent').style.display = 'block';
-  }
-  
-  function showProfilePage() {
-    const currentUser = getCurrentUser();
-    if (!currentUser) {
-      showToast('Будь ласка, увійдіть в акаунт', true);
-      openAuthModal('login');
-      return;
-    }
-    updateProfilePage(currentUser);
-    document.getElementById('mainContent').style.display = 'none';
-    document.getElementById('profilePage').classList.add('active');
-  }
-  
-  function updateProfilePage(user) {
-    const avatarUrl = user.avatar || `https://ui-avatars.com/api/?background=3b82f6&color=fff&name=${encodeURIComponent(user.username.charAt(0))}&size=100`;
-    document.getElementById('profileAvatar').src = avatarUrl;
-    document.getElementById('profileName').textContent = user.username;
-    document.getElementById('profileEmail').textContent = user.email;
-    document.getElementById('profileId').textContent = user.id;
-    
-    let providerText = 'Email';
-    if (user.provider === 'google') providerText = 'Google';
-    else if (user.provider === 'discord') providerText = 'Discord';
-    else providerText = 'Email / Пароль';
-    document.getElementById('profileProvider').textContent = providerText;
-    
-    const users = JSON.parse(localStorage.getItem('ubc_users') || '{}');
-    const userData = users[user.email];
-    if (userData && userData.createdAt) {
-      const date = new Date(userData.createdAt);
-      document.getElementById('profileDate').textContent = date.toLocaleDateString('uk-UA');
-    } else {
-      document.getElementById('profileDate').textContent = new Date().toLocaleDateString('uk-UA');
-    }
-  }
-  
-  function scrollToSection(sectionId) {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
-
-  function renderGuideShell() {
-    const guide = document.getElementById('guide');
-    if (!guide) return;
-
-    guide.innerHTML = `
-      <h2>Інструкція користувача</h2>
-      <div class="guide-shell">
-        <div class="guide-topbar">
-          <div class="guide-title-wrap">
-            <span class="guide-label">User Guide</span>
-            <h3 id="guideSlideTitle"></h3>
-            <p id="guideSlideDescription"></p>
-          </div>
-          <div class="guide-step-badge">
-            <span class="guide-step-label">Крок</span>
-            <span class="guide-step-count" id="guideStepCount"></span>
-          </div>
-        </div>
-        <div class="guide-stage">
-          <div class="guide-visual">
-            <img id="guideImage" class="guide-image" src="" alt="">
-            <div id="guideImageFallback" class="guide-image-fallback">
-              <div class="guide-fallback-box">
-                <strong id="guideFallbackTitle"></strong>
-                <span>Додайте свій скрін і змініть шлях у <code>GUIDE_SLIDES</code>.</span>
-                <code id="guideFallbackPath"></code>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="guide-controls">
-          <div id="guideProgress" class="guide-progress"></div>
-          <div class="guide-nav">
-            <button class="btn btn-outline" type="button" onclick="changeGuideSlide(-1)">Назад</button>
-            <button class="btn" type="button" onclick="changeGuideSlide(1)">Вперед</button>
-          </div>
-        </div>
-      </div>
-    `;
-
-    const progress = document.getElementById('guideProgress');
-    GUIDE_SLIDES.forEach((slide, index) => {
-      const dot = document.createElement('button');
-      dot.type = 'button';
-      dot.className = 'guide-progress-dot';
-      dot.setAttribute('aria-label', `Крок ${index + 1}`);
-      dot.addEventListener('click', () => setGuideSlide(index));
-      progress.appendChild(dot);
-    });
-  }
-
-  function updateGuideSlider() {
-    if (!GUIDE_SLIDES.length) return;
-
-    const slide = GUIDE_SLIDES[currentGuideSlide];
-    const titleEl = document.getElementById('guideSlideTitle');
-    const descriptionEl = document.getElementById('guideSlideDescription');
-    const stepCountEl = document.getElementById('guideStepCount');
-    const imageEl = document.getElementById('guideImage');
-    const fallbackEl = document.getElementById('guideImageFallback');
-    const fallbackTitleEl = document.getElementById('guideFallbackTitle');
-    const fallbackPathEl = document.getElementById('guideFallbackPath');
-    const dots = document.querySelectorAll('.guide-progress-dot');
-
-    if (!titleEl || !descriptionEl || !stepCountEl || !imageEl || !fallbackEl || !fallbackTitleEl || !fallbackPathEl) {
-      return;
-    }
-
-    titleEl.textContent = slide.title;
-    descriptionEl.innerHTML = slide.description;
-    stepCountEl.textContent = `${String(currentGuideSlide + 1).padStart(2, '0')} / ${String(GUIDE_SLIDES.length).padStart(2, '0')}`;
-
-    fallbackTitleEl.textContent = slide.title;
-    fallbackPathEl.textContent = slide.image;
-    imageEl.alt = slide.imageAlt || slide.title;
-    imageEl.classList.remove('is-hidden');
-    fallbackEl.classList.remove('is-visible');
-
-    imageEl.onerror = () => {
-      imageEl.classList.add('is-hidden');
-      fallbackEl.classList.add('is-visible');
-    };
-
-    imageEl.onload = () => {
-      imageEl.classList.remove('is-hidden');
-      fallbackEl.classList.remove('is-visible');
-    };
-
-    if (!slide.image) {
-      imageEl.removeAttribute('src');
-      imageEl.classList.add('is-hidden');
-      fallbackEl.classList.add('is-visible');
-    } else {
-      imageEl.src = slide.image;
-    }
-
-    dots.forEach((dot, index) => {
-      dot.classList.toggle('active', index === currentGuideSlide);
-    });
-  }
-
-  function setGuideSlide(index) {
-    if (!GUIDE_SLIDES.length) return;
-    currentGuideSlide = ((index % GUIDE_SLIDES.length) + GUIDE_SLIDES.length) % GUIDE_SLIDES.length;
-    updateGuideSlider();
-  }
-
-  function changeGuideSlide(direction) {
-    setGuideSlide(currentGuideSlide + direction);
-  }
-
-  function bindGuideLink() {
-    const downloadSection = document.getElementById('download');
-    if (!downloadSection) return;
-
-    const guideLink = Array.from(downloadSection.querySelectorAll('a')).find((link) => link.textContent.includes('Ð†Ð½ÑÑ‚Ñ€ÑƒÐºÑ†Ñ–Ñ') || link.textContent.includes('Інструкція'));
-    if (!guideLink) return;
-
-    guideLink.setAttribute('href', '#guide');
-    guideLink.setAttribute('onclick', "scrollToSection('guide')");
-  }
-
-  // ============ GOOGLE OAUTH ============
-  function initGoogleSignIn() {
-    if (typeof google === 'undefined') {
-      setTimeout(initGoogleSignIn, 500);
-      return;
-    }
-    
-    google.accounts.id.initialize({
-      client_id: GOOGLE_CLIENT_ID,
-      callback: handleGoogleCredential,
-      auto_select: false,
-      cancel_on_tap_outside: true
-    });
-    
-    google.accounts.id.renderButton(
-      document.getElementById('googleBtn'),
-      { theme: 'filled_black', size: 'large', width: '100%', text: 'continue_with', shape: 'pill' }
-    );
-  }
-  
-  window.handleGoogleCredential = function(response) {
-    const credential = response.credential;
-    const payload = parseJwt(credential);
-    
-    if (payload) {
-      const user = {
-        id: payload.sub,
-        username: payload.name,
-        email: payload.email,
-        avatar: payload.picture,
-        provider: 'google'
-      };
-      saveUserToLocalStorage(user);
-      showToast(`Ласкаво просимо, ${user.username}!`);
-      updateAuthUI();
-      closeModal('authModal');
-    } else {
-      showToast('Помилка авторизації Google', true);
-    }
-  };
-  
-  function parseJwt(token) {
-    try {
-      const base64Url = token.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join(''));
-      return JSON.parse(jsonPayload);
-    } catch (e) {
-      return null;
-    }
-  }
-  
-  function loginWithGoogle() {
-    if (typeof google !== 'undefined' && google.accounts) {
-      google.accounts.id.prompt();
-    } else {
-      showToast('Завантаження Google API...', true);
-    }
-  }
-  
-  // ============ DISCORD OAUTH ============
-  function loginWithDiscord() {
-    const protocol = window.location.protocol;
-    if (protocol === 'file:') {
-      showToast('Будь ласка, запустіть сторінку через локальний сервер', true);
-      return;
-    }
-    const redirectUri = window.location.origin + window.location.pathname;
-    const authUrl = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=token&scope=identify%20email`;
-    window.location.href = authUrl;
-  }
-  
-  function handleDiscordCallback() {
-    const hash = window.location.hash.substring(1);
-    const params = new URLSearchParams(hash);
-    const accessToken = params.get('access_token');
-    
-    if (accessToken) {
-      fetch('https://discord.com/api/users/@me', {
-        headers: { 'Authorization': `Bearer ${accessToken}` }
-      })
-      .then(res => res.json())
-      .then(userData => {
-        if (userData.id) {
-          const user = {
-            id: userData.id,
-            username: userData.username,
-            email: userData.email || `${userData.username}@discord.com`,
-            avatar: userData.avatar ? `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png` : null,
-            provider: 'discord'
-          };
-          saveUserToLocalStorage(user);
-          showToast(`Ласкаво просимо, ${user.username}!`);
-          updateAuthUI();
-          window.history.replaceState({}, document.title, window.location.pathname);
-        }
-      })
-      .catch(err => {
-        showToast('Помилка отримання даних користувача', true);
+      ctx.font = '700 34px Inter, sans-serif';
+      ctx.textBaseline = 'middle';
+      [...captchaCode].forEach((char, index) => {
+        ctx.save();
+        ctx.translate(42 + index * 58, height / 2);
+        ctx.rotate((Math.random() - 0.5) * 0.22);
+        ctx.fillStyle = index % 2 ? '#dbeafe' : '#93c5fd';
+        ctx.fillText(char, 0, 0);
+        ctx.restore();
       });
+
+      for (let i = 0; i < 4; i++) {
+        ctx.beginPath();
+        ctx.moveTo(0, Math.random() * height);
+        ctx.bezierCurveTo(width * 0.25, Math.random() * height, width * 0.75, Math.random() * height, width, Math.random() * height);
+        ctx.strokeStyle = `rgba(91, 143, 246, ${0.22 + Math.random() * 0.2})`;
+        ctx.lineWidth = 1.4;
+        ctx.stroke();
+      }
     }
-  }
-  
-  // ============ LOCAL STORAGE ============
-  function saveUserToLocalStorage(user) {
-    localStorage.setItem('ubc_current_user', JSON.stringify(user));
-    const users = JSON.parse(localStorage.getItem('ubc_users') || '{}');
-    if (!users[user.email]) {
-      users[user.email] = {
-        id: user.id,
-        email: user.email,
-        name: user.username,
-        provider: user.provider,
-        avatar: user.avatar,
-        createdAt: new Date().toISOString()
-      };
+
+    function openAuth() {
+      $('#authModal').classList.add('active');
+      $('#formError').textContent = '';
+      generateCaptcha();
+    }
+
+    function closeAuth() {
+      $('#authModal').classList.remove('active');
+    }
+
+    function setAuthMode(isLogin) {
+      loginMode = isLogin;
+      $('#authTitle').textContent = isLogin ? 'Вхід в акаунт' : 'Створення акаунта';
+      $('#authSubtitle').textContent = isLogin ? 'Увійдіть у локальний профіль цього браузера.' : 'Створіть локальний профіль для швидкого доступу.';
+      $('#authSubmit').textContent = isLogin ? 'Увійти' : 'Зареєструватися';
+      $('#switchText').textContent = isLogin ? 'Немає акаунта?' : 'Вже маєте акаунт?';
+      $('#switchMode').textContent = isLogin ? 'Зареєструватися' : 'Увійти';
+      $('#formError').textContent = '';
+      generateCaptcha();
+    }
+
+    function getUsers() {
+      try {
+        return JSON.parse(localStorage.getItem('ubc_users') || '{}');
+      } catch {
+        return {};
+      }
+    }
+
+    function saveUsers(users) {
       localStorage.setItem('ubc_users', JSON.stringify(users));
     }
-  }
-  
-  function getCurrentUser() {
-    const user = localStorage.getItem('ubc_current_user');
-    return user ? JSON.parse(user) : null;
-  }
-  
-  function logout() {
-    if (typeof google !== 'undefined' && google.accounts) {
-      google.accounts.id.disableAutoSelect();
-    }
-    localStorage.removeItem('ubc_current_user');
-    showToast('Ви вийшли з акаунту');
-    updateAuthUI();
-    showMainContent();
-  }
-  
-  function validateEmail(email) {
-    return /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(email);
-  }
-  
-  function updateAuthUI() {
-    const currentUser = getCurrentUser();
-    const authButtonsContainer = document.getElementById('authButtons');
-    
-    if (currentUser) {
-      const avatarUrl = currentUser.avatar || `https://ui-avatars.com/api/?background=3b82f6&color=fff&name=${encodeURIComponent(currentUser.username.charAt(0))}`;
-      authButtonsContainer.innerHTML = `
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <img src="${avatarUrl}" class="user-avatar" alt="avatar" onclick="showProfilePage()"
-               onerror="this.src='https://ui-avatars.com/api/?background=3b82f6&color=fff&name=${currentUser.username.charAt(0)}'">
-          <span class="user-name" onclick="showProfilePage()">${currentUser.username}</span>
-          <button id="logoutBtn" class="btn-login" style="border-color: #ef4444; color: #ef4444;" onclick="logout()">Вийти</button>
-        </div>
-      `;
-    } else {
-      authButtonsContainer.innerHTML = `
-        <button class="btn-login" id="openLoginBtn">Увійти</button>
-        <button class="btn-reg" id="openRegBtn">Реєстрація</button>
-      `;
-      document.getElementById('openLoginBtn')?.addEventListener('click', () => openAuthModal('login'));
-      document.getElementById('openRegBtn')?.addEventListener('click', () => openAuthModal('register'));
-    }
-  }
-  
-  const modal = document.getElementById('authModal');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalSub = document.getElementById('modalSub');
-  const submitBtn = document.getElementById('submitBtn');
-  const switchBtn = document.getElementById('switchBtn');
-  const authForm = document.getElementById('authForm');
-  const emailInput = document.getElementById('emailInput');
-  const passwordInput = document.getElementById('passwordInput');
-  const formError = document.getElementById('formError');
-  
-  let isLoginMode = true;
-  
-  function openAuthModal(mode) {
-    isLoginMode = mode === 'login';
-    if (isLoginMode) {
-      modalTitle.innerText = 'Вхід в акаунт';
-      modalSub.innerText = 'Ласкаво просимо! Введіть ваші дані.';
-      submitBtn.innerText = 'Увійти';
-      switchBtn.innerText = 'Зареєструватися';
-    } else {
-      modalTitle.innerText = 'Створення акаунту';
-      modalSub.innerText = 'Зареєструйтесь, щоб отримати доступ до повного функціоналу.';
-      submitBtn.innerText = 'Зареєструватися';
-      switchBtn.innerText = 'Вже маєте акаунт? Увійти';
-    }
-    formError.innerText = '';
-    emailInput.value = '';
-    passwordInput.value = '';
-    failedAttempts = 0;
-    refreshCaptcha();
-    modal.classList.add('active');
-  }
-  
-  document.getElementById('closeModalBtn')?.addEventListener('click', () => modal.classList.remove('active'));
-  modal?.addEventListener('click', (e) => {
-    if (e.target === modal) modal.classList.remove('active');
-  });
-  
-  switchBtn?.addEventListener('click', () => {
-    if (isLoginMode) openAuthModal('register');
-    else openAuthModal('login');
-  });
-  
-  authForm?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    if (!validateCaptcha()) return;
-    
-    const email = emailInput.value.trim();
-    const password = passwordInput.value.trim();
-    
-    if (!email || !password) {
-      formError.innerText = 'Заповніть обидва поля.';
-      return;
-    }
-    if (!validateEmail(email)) {
-      formError.innerText = 'Введіть коректну електронну пошту.';
-      return;
-    }
-    if (password.length < 4) {
-      formError.innerText = 'Пароль має містити щонайменше 4 символи.';
-      return;
-    }
-    formError.innerText = '';
-    
-    if (isLoginMode) {
-      const users = JSON.parse(localStorage.getItem('ubc_users') || '{}');
-      if (users[email] && users[email].password === password) {
-        const currentUser = {
-          id: users[email].id,
-          username: users[email].name,
-          email: email,
-          avatar: users[email].avatar,
-          provider: users[email].provider || 'email'
-        };
-        localStorage.setItem('ubc_current_user', JSON.stringify(currentUser));
-        showToast(`Ласкаво просимо, ${users[email].name || email}!`);
-        modal.classList.remove('active');
-        updateAuthUI();
-      } else {
-        formError.innerText = 'Невірна пошта або пароль.';
+
+    function getCurrentUser() {
+      try {
+        return JSON.parse(localStorage.getItem('ubc_current_user') || 'null');
+      } catch {
+        return null;
       }
-    } else {
-      let users = JSON.parse(localStorage.getItem('ubc_users') || '{}');
+    }
+
+    function saveOauthUser(user) {
+      const normalizedUser = {
+        id: user.id,
+        email: user.email,
+        name: user.name || user.username || user.email.split('@')[0],
+        avatar: user.avatar || null,
+        provider: user.provider,
+        createdAt: new Date().toISOString()
+      };
+      localStorage.setItem('ubc_current_user', JSON.stringify(normalizedUser));
+
+      const users = getUsers();
+      if (!users[normalizedUser.email]) {
+        users[normalizedUser.email] = normalizedUser;
+        saveUsers(users);
+      }
+
+      updateAuthUI();
+      closeAuth();
+      showToast(`Вітаємо, ${normalizedUser.name}!`);
+    }
+
+    function logout() {
+      if (window.google?.accounts?.id) {
+        google.accounts.id.disableAutoSelect();
+      }
+      localStorage.removeItem('ubc_current_user');
+      updateAuthUI();
+      showToast('Ви вийшли з акаунта.');
+    }
+
+    function updateAuthUI() {
+      const button = $('[data-open-auth]');
+      if (!button) return;
+      const user = getCurrentUser();
+
+      if (!user) {
+        button.textContent = 'Увійти';
+        button.onclick = openAuth;
+        return;
+      }
+
+      button.textContent = user.name || user.email;
+      button.onclick = logout;
+    }
+
+    function parseJwt(token) {
+      try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map((char) => {
+          return '%' + ('00' + char.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload);
+      } catch {
+        return null;
+      }
+    }
+
+    function handleGoogleCredential(response) {
+      const payload = parseJwt(response.credential);
+      if (!payload?.email) {
+        showToast('Помилка авторизації Google.', true);
+        return;
+      }
+
+      saveOauthUser({
+        id: payload.sub,
+        email: payload.email,
+        name: payload.name,
+        avatar: payload.picture,
+        provider: 'google'
+      });
+    }
+
+    function initGoogleSignIn() {
+      if (!window.google?.accounts?.id) {
+        window.setTimeout(initGoogleSignIn, 350);
+        return;
+      }
+
+      google.accounts.id.initialize({
+        client_id: GOOGLE_CLIENT_ID,
+        callback: handleGoogleCredential,
+        auto_select: false,
+        cancel_on_tap_outside: true
+      });
+    }
+
+    function loginWithGoogle() {
+      if (!window.google?.accounts?.id) {
+        showToast('Google API ще завантажується. Спробуйте ще раз.', true);
+        initGoogleSignIn();
+        return;
+      }
+      google.accounts.id.prompt((notification) => {
+        if (notification.isNotDisplayed?.() || notification.isSkippedMoment?.()) {
+          showToast('Google не показав вікно входу. Перевірте Client ID та домен.', true);
+        }
+      });
+    }
+
+    function loginWithDiscord() {
+      if (window.location.protocol === 'file:') {
+        showToast('Discord OAuth працює через локальний або публічний сервер, не через file://.', true);
+        return;
+      }
+
+      const redirectUri = window.location.origin + window.location.pathname;
+      const authUrl = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=token&scope=identify%20email`;
+      window.location.href = authUrl;
+    }
+
+    function handleDiscordCallback() {
+      const hash = window.location.hash.slice(1);
+      if (!hash.includes('access_token=')) return;
+
+      const params = new URLSearchParams(hash);
+      const accessToken = params.get('access_token');
+      if (!accessToken) return;
+
+      fetch('https://discord.com/api/users/@me', {
+        headers: { Authorization: `Bearer ${accessToken}` }
+      })
+        .then((response) => response.json())
+        .then((userData) => {
+          if (!userData?.id) {
+            throw new Error('Discord profile missing');
+          }
+
+          saveOauthUser({
+            id: userData.id,
+            email: userData.email || `${userData.username}@discord.local`,
+            name: userData.global_name || userData.username,
+            avatar: userData.avatar ? `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png` : null,
+            provider: 'discord'
+          });
+          window.history.replaceState({}, document.title, window.location.pathname);
+        })
+        .catch(() => showToast('Не вдалося отримати профіль Discord.', true));
+    }
+
+    function handleAuth(event) {
+      event.preventDefault();
+      const email = $('#emailInput').value.trim().toLowerCase();
+      const password = $('#passwordInput').value.trim();
+      const enteredCaptcha = $('#captchaInput').value.trim().toUpperCase();
+      const error = $('#formError');
+
+      if (enteredCaptcha !== captchaCode) {
+        error.textContent = 'Невірний код безпеки.';
+        generateCaptcha();
+        return;
+      }
+
+      if (password.length < 4) {
+        error.textContent = 'Пароль має містити щонайменше 4 символи.';
+        return;
+      }
+
+      const users = getUsers();
+      if (loginMode) {
+        if (!users[email] || users[email].password !== password) {
+          error.textContent = 'Невірна пошта або пароль.';
+          return;
+        }
+        localStorage.setItem('ubc_current_user', JSON.stringify(users[email]));
+        showToast(`Вітаємо, ${users[email].name}!`);
+        updateAuthUI();
+        closeAuth();
+        return;
+      }
+
       if (users[email]) {
-        formError.innerText = 'Користувач з такою поштою вже існує.';
-      } else {
-        const newUser = {
-          id: Date.now().toString(),
-          email: email,
-          password: password,
-          name: email.split('@')[0],
-          provider: 'email',
-          avatar: null,
-          createdAt: new Date().toISOString()
-        };
-        users[email] = newUser;
-        localStorage.setItem('ubc_users', JSON.stringify(users));
-        const currentUser = {
-          id: newUser.id,
-          username: newUser.name,
-          email: email,
-          avatar: null,
-          provider: 'email'
-        };
-        localStorage.setItem('ubc_current_user', JSON.stringify(currentUser));
-        showToast(`Реєстрація успішна! Ласкаво просимо, ${newUser.name}!`);
-        modal.classList.remove('active');
-        updateAuthUI();
+        error.textContent = 'Користувач з такою поштою вже існує.';
+        return;
       }
+
+      users[email] = {
+        id: Date.now().toString(),
+        email,
+        password,
+        name: email.split('@')[0],
+        createdAt: new Date().toISOString()
+      };
+      saveUsers(users);
+      localStorage.setItem('ubc_current_user', JSON.stringify(users[email]));
+      showToast('Акаунт створено.');
+      updateAuthUI();
+      closeAuth();
     }
-  });
-  
-  const canvas = document.getElementById('captchaCanvas');
-  if (canvas) {
-    canvas.addEventListener('click', refreshCaptcha);
-  }
-  
-  handleDiscordCallback();
-  setTimeout(initGoogleSignIn, 100);
-  generateAdvancedCaptcha();
-  renderGuideShell();
-  bindGuideLink();
-  updateGuideSlider();
-  
-  document.getElementById('googleBtn')?.addEventListener('click', loginWithGoogle);
-  document.getElementById('discordBtn')?.addEventListener('click', loginWithDiscord);
-  
-  updateAuthUI();
-</script>
+
+    function initEffects() {
+      const revealTargets = $$('section, .card, .step, .price-card, .download-panel, .guide-shell, .partner, .contact');
+      revealTargets.forEach((element) => element.classList.add('reveal'));
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+      revealTargets.forEach((element) => observer.observe(element));
+
+      const frame = $('.product-frame');
+      if (!frame) return;
+
+      frame.addEventListener('pointermove', (event) => {
+        const rect = frame.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width;
+        const y = (event.clientY - rect.top) / rect.height;
+        const rotateY = (x - 0.5) * 10;
+        const rotateX = (0.5 - y) * 8;
+        frame.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-3px)`;
+        frame.style.setProperty('--shine-x', `${x * 100}%`);
+        frame.style.setProperty('--shine-y', `${y * 100}%`);
+      }, { passive: true });
+
+      frame.addEventListener('pointerleave', () => {
+        frame.style.transform = '';
+      });
+    }
+
+    function initIntro() {
+      const intro = $('#intro');
+      if (!intro) return;
+
+      let isIntroOpen = true;
+      let progress = 0;
+      let targetProgress = 0;
+      let isLocked = true;
+      const wheelSensitivity = 1250;
+
+      const clamp = (value) => Math.min(1, Math.max(0, value));
+
+      const applyProgress = (nextProgress) => {
+        progress = clamp(nextProgress);
+        targetProgress = progress;
+        intro.style.setProperty('--intro-progress', progress.toFixed(4));
+
+        if (progress < 1 && intro.classList.contains('is-hidden')) {
+          intro.classList.remove('is-hidden');
+        }
+
+        if (progress >= 1) {
+          isIntroOpen = false;
+          if (!intro.classList.contains('is-hidden')) {
+            intro.classList.add('is-hidden');
+          }
+          if (isLocked) {
+            document.body.classList.remove('intro-lock');
+            isLocked = false;
+          }
+        } else {
+          isIntroOpen = true;
+          if (!isLocked) {
+            document.body.classList.add('intro-lock');
+            isLocked = true;
+          }
+        }
+      };
+
+      const setProgress = (nextProgress) => {
+        applyProgress(nextProgress);
+      };
+
+      const onWheel = (event) => {
+        if (isIntroOpen) {
+          event.preventDefault();
+          setProgress(targetProgress + event.deltaY / wheelSensitivity);
+        }
+      };
+
+      let touchStartY = 0;
+      window.addEventListener('touchstart', (event) => {
+        touchStartY = event.touches[0]?.clientY || 0;
+      }, { passive: true });
+      window.addEventListener('touchmove', (event) => {
+        const currentY = event.touches[0]?.clientY || touchStartY;
+        const delta = touchStartY - currentY;
+
+        if (isIntroOpen) {
+          setProgress(targetProgress + delta / 850);
+          touchStartY = currentY;
+        }
+      }, { passive: true });
+
+      window.addEventListener('wheel', onWheel, { passive: false });
+      window.addEventListener('keydown', (event) => {
+        if (isIntroOpen && ['ArrowDown', 'PageDown', ' ', 'Enter'].includes(event.key)) {
+          event.preventDefault();
+          setProgress(1);
+        }
+      });
+    }
+
+    function init() {
+      initIntro();
+      const dots = $('#guideDots');
+      guideSlides.forEach((_, index) => {
+        const dot = document.createElement('button');
+        dot.className = 'dot';
+        dot.type = 'button';
+        dot.setAttribute('aria-label', `Крок ${index + 1}`);
+        dot.addEventListener('click', () => setGuide(index));
+        dots.appendChild(dot);
+      });
+      renderGuide();
+
+      $('#guidePrev').addEventListener('click', () => setGuide(currentGuide - 1));
+      $('#guideNext').addEventListener('click', () => setGuide(currentGuide + 1));
+      $('[data-close-auth]').addEventListener('click', closeAuth);
+      $('#authModal').addEventListener('click', (event) => {
+        if (event.target.id === 'authModal') closeAuth();
+      });
+      $('#switchMode').addEventListener('click', () => setAuthMode(!loginMode));
+      $('#authForm').addEventListener('submit', handleAuth);
+      $('#refreshCaptcha').addEventListener('click', generateCaptcha);
+      $('#captchaCanvas').addEventListener('click', generateCaptcha);
+      $('#googleBtn').addEventListener('click', loginWithGoogle);
+      $('#discordBtn').addEventListener('click', loginWithDiscord);
+      generateCaptcha();
+      initEffects();
+      initGoogleSignIn();
+      handleDiscordCallback();
+      updateAuthUI();
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
 </body>
 </html>
