@@ -911,6 +911,96 @@
       background: #fff;
     }
 
+    .creators-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .creator-card {
+      display: flex;
+      min-height: 100%;
+      flex-direction: column;
+      gap: 16px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(47, 111, 237, 0.13), transparent 44%),
+        var(--panel);
+      transition: transform 0.28s ease, border-color 0.28s ease, background 0.28s ease, box-shadow 0.28s ease;
+    }
+
+    .creator-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(91, 143, 246, 0.55);
+      background:
+        linear-gradient(135deg, rgba(47, 111, 237, 0.18), transparent 48%),
+        rgba(21, 27, 37, 0.96);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.22);
+    }
+
+    .creator-top {
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .creator-avatar {
+      display: grid;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      border: 1px solid rgba(91, 143, 246, 0.42);
+      border-radius: 8px;
+      background: rgba(91, 143, 246, 0.13);
+      color: #dbe6ff;
+      font-weight: 800;
+      font-size: 1.05rem;
+    }
+
+    .creator-role {
+      display: block;
+      margin-top: 3px;
+      color: var(--amber);
+      font-size: 0.84rem;
+      font-weight: 800;
+    }
+
+    .creator-card p {
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    .creator-socials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: auto;
+    }
+
+    .creator-socials a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--soft);
+      text-decoration: none;
+      font-size: 0.84rem;
+      font-weight: 800;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .creator-socials a:hover {
+      transform: translateY(-2px);
+      border-color: rgba(91, 143, 246, 0.65);
+      background: #151d2a;
+    }
+
     .contact {
       display: grid;
       grid-template-columns: 1fr auto;
@@ -1378,7 +1468,8 @@
 
       .feature-grid,
       .pricing,
-      .partners {
+      .partners,
+      .creators-grid {
         grid-template-columns: 1fr;
       }
 
@@ -1467,6 +1558,7 @@
         <a href="#pricing">Тарифи</a>
         <a href="#download">Завантажити</a>
         <a href="#guide">Інструкція</a>
+        <a href="/creators" data-route="creators">Розробники</a>
       </nav>
       <div class="nav-actions">
         <button class="btn ghost" type="button" data-open-auth>Увійти</button>
@@ -1685,6 +1777,76 @@
           <p>Напишіть команді UBC, якщо потрібна консультація, демонстрація, навчання або окремі умови для організації.</p>
         </div>
         <a class="btn" href="mailto:contact@ubcost.com">Написати менеджеру</a>
+      </div>
+    </section>
+
+    <section id="creators" class="container">
+      <div class="section-head">
+        <div>
+          <h2>Розробники</h2>
+          <p>Команда, яка створює Ukraine Building Cost, підтримує продукт і допомагає користувачам швидко запускати роботу з кошторисами.</p>
+        </div>
+      </div>
+      <div class="creators-grid">
+        <article class="creator-card">
+          <div class="creator-top">
+            <div class="creator-avatar" aria-hidden="true"><img src="img/photo_yura.png" alt="Юрій Б." width="55" height="55" style="border-radius: 6px;"></div>
+            <div>
+              <h3>Юрій Бондарев</h3>
+              <span class="creator-role">Куратор проєкту</span>
+            </div>
+          </div>
+          <p>Відповідальний за нові ідеї, підтримку та фінансування проєкту.</p>
+          <div class="creator-socials" aria-label="Соціальні мережі">
+            <a href="https://github.com/bondju">GitHub</a>
+            <a href="mailto:contact@ubcost.com">Email</a>
+            <a href="https://t.me/Bondarev_Y">Telegram</a>
+          </div>
+        </article>
+
+        <article class="creator-card">
+          <div class="creator-top">
+            <div class="creator-avatar" aria-hidden="true">BP</div>
+            <div>
+              <h3>Bondpley</h3>
+              <span class="creator-role">Головний Розробник</span>
+            </div>
+          </div>
+          <p>Відповідає за архітектуру сайту, кабінет користувача, інтерфейс програми та релізіи все інше що зв'язане з кодом.</p>
+          <div class="creator-socials" aria-label="Соціальні мережі">
+            <a href="https://guns.lol/bondpley">Соціальні мережі</a>
+          </div>
+        </article>
+
+        <article class="creator-card">
+          <div class="creator-top">
+            <div class="creator-avatar" aria-hidden="true"><img src="img/photo_igor.jpg" alt="Ігор Т." width="55" height="55" style="border-radius: 6px;"></div>
+            <div>
+              <h3>Ігор Ткачук</h3>
+              <span class="creator-role">Тестер проєкту</span>
+            </div>
+          </div>
+          <p>Відповідальний тестування програми та сайту також придумує ідеї для покращення програми.</p>
+          <div class="creator-socials" aria-label="Соціальні мережі">
+            <a href="mailto:tkachuk_i@ukr.net">Email</a>
+            <a href="https://t.me/+380672263577">Telegram</a>
+          </div>
+        </article>
+
+        <article class="creator-card">
+          <div class="creator-top">
+            <div class="creator-avatar" aria-hidden="true">XN</div>
+            <div>
+              <h3>Xenitt</h3>
+              <span class="creator-role">Тестер проєкту</span>
+            </div>
+          </div>
+          <p>Відповідальний тестування програми та сайту.</p>
+          <div class="creator-socials" aria-label="Соціальні мережі">
+            <a href="mailto:kafileksaut@gmail.com">Email</a>
+          </div>
+        </article>
+
       </div>
     </section>
   </main>
@@ -2103,7 +2265,7 @@
     }
 
     function initEffects() {
-      const revealTargets = $$('section, .card, .step, .price-card, .download-panel, .guide-shell, .partner, .contact');
+      const revealTargets = $$('section, .card, .step, .price-card, .download-panel, .guide-shell, .partner, .creator-card, .contact');
       revealTargets.forEach((element) => element.classList.add('reveal'));
 
       const observer = new IntersectionObserver((entries) => {
@@ -2139,6 +2301,12 @@
     function initIntro() {
       const intro = $('#intro');
       if (!intro) return;
+
+      if (isCreatorsRoute()) {
+        intro.classList.add('is-hidden');
+        document.body.classList.remove('intro-lock');
+        return;
+      }
 
       let isIntroOpen = true;
       let progress = 0;
@@ -2209,6 +2377,58 @@
       });
     }
 
+    function isCreatorsRoute() {
+      return window.location.pathname.replace(/\/$/, '').endsWith('/creators') || window.location.hash === '#creators';
+    }
+
+    function getCreatorsPath() {
+      const path = window.location.pathname;
+      if (path.replace(/\/$/, '').endsWith('/creators')) return path;
+
+      const basePath = path.endsWith('/') ? path : path.replace(/\/[^/]*$/, '/');
+      return `${basePath.replace(/\/$/, '')}/creators`;
+    }
+
+    function openCreatorsRoute(shouldPush = true) {
+      const creators = $('#creators');
+      if (!creators) return;
+
+      if (shouldPush && !isCreatorsRoute() && window.location.protocol !== 'file:') {
+        window.history.pushState({ route: 'creators' }, '', getCreatorsPath());
+      }
+
+      $('#intro')?.classList.add('is-hidden');
+      document.body.classList.remove('intro-lock');
+      creators.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function initRoutes() {
+      $$('[data-route="creators"]').forEach((link) => {
+        link.addEventListener('click', (event) => {
+          event.preventDefault();
+          openCreatorsRoute();
+        });
+      });
+
+      window.addEventListener('popstate', () => {
+        if (isCreatorsRoute()) {
+          openCreatorsRoute(false);
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+
+      if (sessionStorage.getItem('ubc_route') === 'creators') {
+        sessionStorage.removeItem('ubc_route');
+        if (window.location.protocol !== 'file:') {
+          window.history.replaceState({ route: 'creators' }, '', getCreatorsPath());
+        }
+        window.requestAnimationFrame(() => openCreatorsRoute(false));
+      } else if (isCreatorsRoute()) {
+        window.requestAnimationFrame(() => openCreatorsRoute(false));
+      }
+    }
+
     function init() {
       initIntro();
       const dots = $('#guideDots');
@@ -2239,6 +2459,7 @@
       initGoogleSignIn();
       handleDiscordCallback();
       updateAuthUI();
+      initRoutes();
     }
 
     document.addEventListener('DOMContentLoaded', init);
