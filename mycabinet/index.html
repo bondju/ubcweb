@@ -344,6 +344,8 @@ body {
                 <div class="card">
                     <h2>Ліцензія</h2>
                     <div id="licenseInfo">Завантаження...</div>
+                    <br>
+                    <button onclick="generateKeyFile()">Завантажити .key</button>
                 </div>
             </div>
 
@@ -378,6 +380,7 @@ body {
     <script>
         let sessionToken = localStorage.getItem('sessionToken');
         let currentEmail = null;
+        let AppKey = null;
         const API_BASE = 'https://api.ubcost.com';
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -443,6 +446,49 @@ body {
                 showMessage('loginMessage', 'Помилка з\'єднання', 'error');
             }
         }
+
+        // Source - https://stackoverflow.com/a/1349426
+        // Posted by csharptest.net, modified by community. See post 'Timeline' for change history
+        // Retrieved 2026-05-24, License - CC BY-SA 4.0
+
+        function makeid(length) {
+            var result           = '';
+            var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for ( var i = 0; i < length; i++ ) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
+        }
+
+        function generateKeyFile() {
+
+            const decryptKey = makeid(16);
+            const activationKey = AppKey;
+            const email = currentEmail;
+
+            if (!decryptKey || !activationKey || !email) {
+                return;
+            }
+
+            const decryptKeyBase64 = btoa(decryptKey);
+            const activationKeyBase64 = btoa(activationKey);
+
+            const fileContent =
+                decryptKeyBase64 + "  " +
+                activationKeyBase64 + "  " +
+                email;
+
+            const blob = new Blob([fileContent], { type: "text/plain" });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "license.key";
+            a.click();
+
+            URL.revokeObjectURL(url);
+        }  
 
         function showTOTPSetup(data) {
             const modal = document.getElementById('totpModal');
@@ -547,12 +593,14 @@ body {
                 });
                 
                 const data = await res.json();
-                
+
                 if (data.has_license && data.licenses.length > 0) {
                     const lic = data.licenses[0];
                     document.getElementById('statActivations').textContent = lic.activations_count || 0;
                     document.getElementById('statRemaining').textContent = lic.remaining_activations || 0;
                     
+                    AppKey = lic.key;
+
                     document.getElementById('licenseInfo').innerHTML = `
                         <div class="license-box">
                             <div class="license-key">${escapeHtml(lic.key)}</div>
