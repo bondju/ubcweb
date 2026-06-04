@@ -713,7 +713,7 @@
     .pricing {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
+      gap: 28px;
     }
 
     .price-card {
@@ -731,6 +731,9 @@
     .price-card.featured {
       border-color: rgba(91, 143, 246, 0.72);
       box-shadow: inset 0 0 0 1px rgba(91, 143, 246, 0.2);
+      transform: scale(1.08);
+      padding: 32px;
+      gap: 20px;
     }
 
     .price-card ul {
@@ -1248,6 +1251,10 @@
       transform: translateY(0);
     }
 
+    .reveal.is-visible.price-card.featured {
+      transform: translateY(0) scale(1.08);
+    }
+
     @keyframes heroRise {
       from {
         opacity: 0;
@@ -1698,16 +1705,6 @@
         </div>
       </div>
       <div class="pricing">
-        <article class="price-card featured">
-          <h3>Basic</h3>
-          <div class="price">Безкоштовно</div>
-          <ul>
-            <li>Базові кошторисні функції</li>
-            <li>Активація через ключ</li>
-            <li>Оновлення інсталятора</li>
-          </ul>
-          <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfHoh4ilTzYa5slGztFn_tsYsYk3jBGvRn640lv_CX2G3LDBA/viewform">Отримати ключ</a>
-        </article>
         <article class="price-card">
           <h3>Professional</h3>
           <div class="price" style="color: #b2a854;">У розробці</div>
@@ -1717,6 +1714,16 @@
             <li>Пріоритетна підтримка</li>
           </ul>
           <!-- <a class="btn secondary" href="#contact">Повідомити про інтерес</a> -->
+        </article>
+        <article class="price-card featured">
+          <h3>Basic</h3>
+          <div class="price">Безкоштовно</div>
+          <ul>
+            <li>Базові кошторисні функції</li>
+            <li>Активація через ключ</li>
+            <li>Оновлення інсталятора</li>
+          </ul>
+          <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfHoh4ilTzYa5slGztFn_tsYsYk3jBGvRn640lv_CX2G3LDBA/viewform">Отримати ключ</a>
         </article>
         <article class="price-card">
           <h3>Enterprise</h3>
