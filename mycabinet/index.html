@@ -268,6 +268,49 @@
         .hidden {
             display: none;
         }
+
+        .licenses-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .license-selector {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .license-selector:hover {
+            border-color: #007bff;
+            background: #f0f7ff;
+        }
+
+        .license-selector.active {
+            border-color: #007bff;
+            background: #e7f3ff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
+        .license-selector-key {
+            font-family: monospace;
+            font-size: 12px;
+            color: #007bff;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .license-selector-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+        }
+
 .beta-banner {
     position: fixed;
     left: 0;
@@ -331,19 +374,23 @@ body {
             </div>
 
             <div id="statusTab">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-value" id="statActivations">0</div>
-                        <div class="stat-label">Активацій</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="statRemaining">0</div>
-                        <div class="stat-label">Доступно</div>
-                    </div>
+                <div class="card">
+                    <h2>Мої ліцензії</h2>
+                    <div id="licensesList" class="licenses-list">Завантаження...</div>
                 </div>
                 <div class="card">
-                    <h2>Ліцензія</h2>
-                    <div id="licenseInfo">Завантаження...</div>
+                    <h2>Вибрана ліцензія</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="statActivations">0</div>
+                            <div class="stat-label">Активацій</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="statRemaining">0</div>
+                            <div class="stat-label">Доступно</div>
+                        </div>
+                    </div>
+                    <div id="licenseInfo">Виберіть ліцензію</div>
                     <br>
                     <button onclick="generateKeyFile()">Завантажити .key</button>
                 </div>
@@ -381,6 +428,8 @@ body {
         let sessionToken = localStorage.getItem('sessionToken');
         let currentEmail = null;
         let AppKey = null;
+        let allLicenses = [];
+        let selectedLicenseIndex = 0;
         const API_BASE = 'https://api.ubcost.com';
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -595,25 +644,58 @@ body {
                 const data = await res.json();
 
                 if (data.has_license && data.licenses.length > 0) {
-                    const lic = data.licenses[0];
-                    document.getElementById('statActivations').textContent = lic.activations_count || 0;
-                    document.getElementById('statRemaining').textContent = lic.remaining_activations || 0;
-                    
-                    AppKey = lic.key;
-
-                    document.getElementById('licenseInfo').innerHTML = `
-                        <div class="license-box">
-                            <div class="license-key">${escapeHtml(lic.key)}</div>
-                            <p>Макс: ${lic.max_activations} | Використано: ${lic.activations_count}</p>
-                            <p>Створено: ${new Date(lic.created_at).toLocaleDateString()}</p>
-                        </div>
-                    `;
+                    allLicenses = data.licenses;
+                    displayLicensesList();
+                    selectLicense(0);
                 } else {
+                    document.getElementById('licensesList').innerHTML = '<div class="alert alert-info">Немає ліцензій</div>';
                     document.getElementById('licenseInfo').innerHTML = '<div class="alert alert-info">Немає ліцензії</div>';
                 }
             } catch (error) {
                 console.error('Load status error:', error);
+                document.getElementById('licensesList').innerHTML = '<div class="alert alert-error">Помилка завантаження</div>';
                 document.getElementById('licenseInfo').innerHTML = '<div class="alert alert-error">Помилка завантаження</div>';
+            }
+        }
+
+        function displayLicensesList() {
+            const container = document.getElementById('licensesList');
+            container.innerHTML = '';
+            
+            allLicenses.forEach((lic, index) => {
+                const div = document.createElement('div');
+                div.className = 'license-selector' + (index === selectedLicenseIndex ? ' active' : '');
+                div.onclick = () => selectLicense(index);
+                div.innerHTML = `
+                    <div class="license-selector-key">${escapeHtml(lic.key)}</div>
+                    <div class="license-selector-info">
+                        <span>Активацій: ${lic.activations_count}/${lic.max_activations}</span>
+                        <span>${new Date(lic.created_at).toLocaleDateString()}</span>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function selectLicense(index) {
+            if (index >= 0 && index < allLicenses.length) {
+                selectedLicenseIndex = index;
+                const lic = allLicenses[index];
+                
+                AppKey = lic.key;
+                document.getElementById('statActivations').textContent = lic.activations_count || 0;
+                document.getElementById('statRemaining').textContent = lic.remaining_activations || 0;
+                
+                document.getElementById('licenseInfo').innerHTML = `
+                    <div class="license-box">
+                        <div class="license-key">${escapeHtml(lic.key)}</div>
+                        <p>Макс: ${lic.max_activations} | Використано: ${lic.activations_count}</p>
+                        <p>Створено: ${new Date(lic.created_at).toLocaleDateString()}</p>
+                    </div>
+                `;
+                
+                displayLicensesList();
+                loadDevices();
             }
         }
 
@@ -622,14 +704,15 @@ body {
             container.innerHTML = '<div class="loading">Завантаження...</div>';
             
             try {
-                const res = await fetch(API_BASE + '/v1/my-licenses', {
-                    headers: { 'session-token': sessionToken }
-                });
+                if (allLicenses.length === 0) {
+                    container.innerHTML = '<div class="alert alert-info">Немає пристроїв</div>';
+                    return;
+                }
                 
-                const data = await res.json();
+                const selectedLic = allLicenses[selectedLicenseIndex];
                 
-                if (data.has_license && data.licenses[0] && data.licenses[0].activations.length > 0) {
-                    const activations = data.licenses[0].activations;
+                if (selectedLic && selectedLic.activations && selectedLic.activations.length > 0) {
+                    const activations = selectedLic.activations;
                     container.innerHTML = '';
                     
                     activations.forEach(device => {
@@ -639,7 +722,7 @@ body {
                                     <div class="device-name">${escapeHtml(device.device_name)}</div>
                                     <div class="device-details">ID: ${escapeHtml(device.device_id)}<br>${new Date(device.activated_at).toLocaleString()}</div>
                                 </div>
-                                <button class="deactivate-btn" onclick="deactivate('${data.licenses[0].key}', '${device.device_id}')">Видалити</button>
+                                <button class="deactivate-btn" onclick="deactivate('${selectedLic.key}', '${device.device_id}')">Видалити</button>
                             </div>
                         `;
                     });
