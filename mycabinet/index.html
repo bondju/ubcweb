@@ -534,10 +534,10 @@ body {
 
         <div id="loginView">
             <div id="purchaseWarning" class="card" style="display: none; border-left: 4px solid #2f6fed;">
-                <h2 style="color: #2f6fed; margin-top: 0;">Оплата підписки</h2>
+                <h2 style="color: #2f6fed; margin-top: 0;">Оплата покупки</h2>
                 <p style="margin-bottom: 20px;">Для завершення покупки необхідно спочатку зареєструватися або увійти в профіль.</p>
                 <div class="card" style="background: #f0f7ff; border: 1px solid #2f6fed; margin-bottom: 15px;">
-                    <strong style="color: #2f6fed;">План:</strong> <span id="warningPlanName">Professional</span><br>
+                    <strong style="color: #2f6fed;">Покупка:</strong> <span id="warningPlanName">Professional</span><br>
                     <strong style="color: #2f6fed;">Ціна:</strong> <span id="warningPrice">299</span> ₴
                 </div>
                 <p style="color: #666; font-size: 13px; margin-bottom: 15px;">Авторизуйтесь нижче, щоб продовжити оплату:</p>
@@ -620,7 +620,7 @@ body {
             </div>
 
             <div class="purchase-info">
-                <div class="purchase-plan">Тип підписки:</div>
+                <div class="purchase-plan">Тип покупки:</div>
                 <div class="purchase-plan-name" id="purchasePlanName">Professional</div>
                 <div class="purchase-plan" style="margin-top: 15px;">Ціна:</div>
                 <div class="purchase-price-group" style="margin-top: 5px;">
@@ -632,6 +632,8 @@ body {
             <div class="payment-methods" style="margin-bottom: 0;">
                 <label class="payment-methods-label">Ваша електронна пошта:</label>
                 <input type="email" id="purchaseEmail" placeholder="your@email.com" style="width: 100%; padding: 12px; border: 1px solid #26313f; border-radius: 6px; background: #151b25; color: #f6f8fb; font-size: 14px; margin-bottom: 20px;" required>
+                <label class="payment-methods-label">Ім'я та прізвище:</label>
+                <input type="text" id="purchaseFullName" placeholder="Іван Петренко" autocomplete="name" style="width: 100%; padding: 12px; border: 1px solid #26313f; border-radius: 6px; background: #151b25; color: #f6f8fb; font-size: 14px; margin-bottom: 20px;" required>
                 <button class="pay-button" onclick="proceedWithEmail()">Продовжити</button>
             </div>
         </div>
@@ -647,8 +649,14 @@ body {
 
         function proceedWithEmail() {
             const emailInput = document.getElementById('purchaseEmail').value.trim();
+            const fullNameInput = document.getElementById('purchaseFullName').value.trim();
             if (!emailInput) {
                 alert('Введіть вашу електронну пошту');
+                return;
+            }
+
+            if (!fullNameInput || fullNameInput.split(/\s+/).length < 2) {
+                alert("Введіть ім'я та прізвище");
                 return;
             }
 
@@ -667,7 +675,7 @@ body {
             const random = Math.random().toString(36).substr(2, 8).toUpperCase();
             const transactionId = `UBC${timestamp}${random}`;
 
-            const buyUrl = `/#buy?e=${encodeURIComponent(emailInput)}&id=${transactionId}&price=${pendingPurchaseData.price}&plan=${pendingPurchaseData.planType}`;
+            const buyUrl = `/#buy?e=${encodeURIComponent(emailInput)}&fullName=${encodeURIComponent(fullNameInput)}&id=${transactionId}&price=${pendingPurchaseData.price}&plan=${pendingPurchaseData.planType}`;
             window.location.href = buyUrl;
         }
 
@@ -690,7 +698,6 @@ body {
                     document.getElementById('purchaseEmail').value = userEmail;
                     document.getElementById('purchaseEmail').disabled = true;
                     document.getElementById('purchaseOverlay').classList.add('active');
-                    proceedWithEmail()
                 } else {
                     document.getElementById('warningPlanName').textContent = pendingPurchaseData.planName;
                     document.getElementById('warningPrice').textContent = price;

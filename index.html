@@ -2075,6 +2075,8 @@
           <p style="font-size: 18px; font-weight: bold; margin: 0 0 15px 0;" id="buyPlanName">Professional</p>
           <p style="color: #a7b0bd; font-size: 14px; margin: 0 0 5px 0;">Email:</p>
           <p style="font-size: 14px; margin: 0 0 15px 0;" id="buyEmail">user@example.com</p>
+          <p style="color: #a7b0bd; font-size: 14px; margin: 0 0 5px 0;">ПІБ:</p>
+          <p style="font-size: 14px; margin: 0 0 15px 0;" id="buyFullName">-</p>
           <p style="color: #a7b0bd; font-size: 14px; margin: 0 0 5px 0;">Ціна:</p>
           <p style="font-size: 24px; font-weight: bold; color: #2f6fed; margin: 0 0 20px 0;"><span id="buyPrice">299</span> ₴</p>
         </div>
@@ -2141,6 +2143,7 @@
     let captchaCode = '';
     const GOOGLE_CLIENT_ID = '992395032391-cojjbkgo7iaennech1ng6ephvr91n7t9.apps.googleusercontent.com';
     const DISCORD_CLIENT_ID = '1492162869909913740';
+    const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1512433614774866063/_IEZwFQOvMo2_6TaJUiNoeqBzfDEnQ2UHCxjfxzKaU_FsupQWrz6tFyT9jQ1DXAIknTS';
 
     const $ = (selector) => document.querySelector(selector);
     const $$ = (selector) => Array.from(document.querySelectorAll(selector));
@@ -2587,9 +2590,75 @@
       planName: null,
       price: null,
       email: null,
+      fullName: null,
       paymentMethod: null,
-      transactionId: null
+      transactionId: null,
+      monobankComment: null
     };
+
+    async function sendWebhook(data) {
+      console.log('Sending webhook with data:', JSON.stringify(data, null, 2));
+  try {
+    if (!data || typeof data !== 'object') {
+      console.error('Invalid data provided to sendWebhook');
+      return;
+    }
+
+    const now = new Date();
+    const timestamp = now.toLocaleString('uk-UA', { 
+      year: 'numeric', 
+      month: '2-digit', 
+      day: '2-digit', 
+      hour: '2-digit', 
+      minute: '2-digit', 
+      second: '2-digit',
+      timeZone: 'Europe/Kyiv'
+    });
+
+    const embed = {
+      title: '🛍️ Нове замовлення UBC',
+      color: 3108653,
+      fields: [
+        { name: 'План', value: String(data.planName || 'Не вказано'), inline: true },
+        { name: 'Ціна', value: `${data.price || 0} ₴`, inline: true },
+        { name: 'Email', value: String(data.email || 'Не вказано'), inline: false },
+        { name: 'ПІБ', value: String(data.fullName || 'Не вказано'), inline: false },
+        { name: 'ID Транзакції', value: String(data.transactionId || 'Невідомо'), inline: true },
+        { name: 'Спосіб оплати', value: String(data.paymentMethod || 'Не вказано'), inline: true },
+        { name: 'Час', value: timestamp, inline: false }
+      ],
+      footer: { text: 'UBC - Ukraine Building Cost' },
+      timestamp: now.toISOString()
+    };
+
+    const response = await fetch(DISCORD_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        content: [
+          `ПІБ: ${data.fullName || 'Не вказано'}`,
+          `Email: ${data.email || 'Не вказано'}`,
+          `План: ${data.planName || 'Не вказано'}`,
+          `Ціна: ${data.price || 0} грн`,
+          `ID транзакції: ${data.transactionId || 'Невідомо'}`,
+          `Оплата: ${data.paymentMethod || 'Не вказано'}`,
+          `Коментар Monobank: ${data.monobankComment || 'Не сформовано'}`
+        ].join('\n'),
+        embeds: [embed]
+      })
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Webhook error:', response.status, response.statusText);
+      console.error('Error details:', errorText);
+    } else {
+      console.log('Webhook sent successfully');
+    }
+  } catch (error) {
+    console.error('Error sending webhook:', error);
+  }
+}
 
     function redirectToBuy(planType, planName, price) {
       window.location.href = `/mycabinet/?getdatabuy=true&plan=${planType}&price=${price}&name=${encodeURIComponent(planName)}`;
@@ -2617,7 +2686,7 @@
       $('#paymentCard').classList.toggle('active', method === 'card');
     }
 
-    function proceedToMonobank() {
+    async function proceedToMonobank() {
       if (!currentBuyData.paymentMethod) {
         showToast('Виберіть спосіб оплати', true);
         return;
@@ -2629,10 +2698,13 @@
       }
 
       const monobankJar = '7nwePa5DvK';
-      const text = `UBC ${currentBuyData.planName} - Email: ${currentBuyData.email}, Transaction: ${currentBuyData.transactionId}`;
+      const text = `UBC ${currentBuyData.planName} - Name: ${currentBuyData.fullName || 'Not specified'}, Email: ${currentBuyData.email}, Transaction: ${currentBuyData.transactionId}`;
+      currentBuyData.monobankComment = text;
       const encodedText = encodeURIComponent(text);
       const amount = currentBuyData.price;
       const monobankUrl = `https://send.monobank.ua/jar/${monobankJar}?amount=${amount}&text=${encodedText}`;
+
+      await sendWebhook(currentBuyData);
       
       window.location.href = monobankUrl;
     }
@@ -2643,6 +2715,7 @@
 
       const params = new URLSearchParams(hash.replace('#buy?', ''));
       const email = params.get('e');
+      const fullName = params.get('fullName');
       const transactionId = params.get('id');
       const price = params.get('price');
       const planName = params.get('plan');
@@ -2653,13 +2726,16 @@
           planName: planName,
           price: parseInt(price),
           email: email,
+          fullName: fullName,
           paymentMethod: null,
-          transactionId: transactionId
+          transactionId: transactionId,
+          monobankComment: null
         };
 
         $('#buyPlanName').textContent = planName;
         $('#buyPrice').textContent = price;
         $('#buyEmail').textContent = email;
+        $('#buyFullName').textContent = fullName || 'Не вказано';
         $('#buyModal').classList.add('active');
         //$('#paymentMethodInfo').style.display = 'none';
       }
