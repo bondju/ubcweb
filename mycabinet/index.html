@@ -652,7 +652,6 @@ body {
                 return;
             }
 
-            // Email validation
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(emailInput)) {
                 alert('Введіть коректну електронну пошту');
@@ -664,12 +663,10 @@ body {
                 return;
             }
 
-            // Generate transaction ID
             const timestamp = Date.now();
             const random = Math.random().toString(36).substr(2, 8).toUpperCase();
             const transactionId = `UBC${timestamp}${random}`;
 
-            // Redirect back to main page with email and transaction data
             const buyUrl = `/#buy?e=${encodeURIComponent(emailInput)}&id=${transactionId}&price=${pendingPurchaseData.price}&plan=${pendingPurchaseData.planType}`;
             window.location.href = buyUrl;
         }
@@ -677,7 +674,6 @@ body {
         function initPurchaseFlow(userEmail = null) {
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.has('getdatabuy')) {
-                // Get plan data from URL parameters or default
                 const planType = urlParams.get('plan') || 'pro_license';
                 const price = urlParams.get('price') || '299';
                 const planName = urlParams.get('name') || 'Professional';
@@ -688,15 +684,14 @@ body {
                     price: parseInt(price)
                 };
 
-                // If user email provided, auto-fill it and show purchase overlay
                 if (userEmail) {
                     document.getElementById('purchasePlanName').textContent = pendingPurchaseData.planName;
                     document.getElementById('purchasePrice').textContent = price;
                     document.getElementById('purchaseEmail').value = userEmail;
                     document.getElementById('purchaseEmail').disabled = true;
                     document.getElementById('purchaseOverlay').classList.add('active');
+                    proceedWithEmail()
                 } else {
-                    // No user email, show warning on login page
                     document.getElementById('warningPlanName').textContent = pendingPurchaseData.planName;
                     document.getElementById('warningPrice').textContent = price;
                     document.getElementById('purchaseWarning').style.display = 'block';
