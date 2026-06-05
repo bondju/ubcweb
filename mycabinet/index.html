@@ -337,6 +337,185 @@ body {
     padding-top: 40px;
     padding-bottom: 40px;
 }
+
+/* ===== PURCHASE MODAL STYLES ===== */
+.purchase-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 20px;
+    display: none;
+}
+
+.purchase-overlay.active {
+    display: flex;
+}
+
+.purchase-modal {
+    background: #10151d;
+    border: 1px solid #26313f;
+    border-radius: 12px;
+    max-width: 600px;
+    width: 100%;
+    padding: 40px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.purchase-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.purchase-header h2 {
+    font-size: 28px;
+    color: #f6f8fb;
+    margin: 0;
+}
+
+.purchase-close {
+    background: none;
+    border: none;
+    color: #a7b0bd;
+    font-size: 32px;
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.purchase-close:hover {
+    color: #f6f8fb;
+}
+
+.purchase-info {
+    background: #151b25;
+    border: 1px solid #26313f;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.purchase-plan {
+    font-size: 14px;
+    color: #a7b0bd;
+    margin-bottom: 8px;
+}
+
+.purchase-plan-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #f6f8fb;
+    margin-bottom: 20px;
+}
+
+.purchase-price-group {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.purchase-price {
+    font-size: 40px;
+    font-weight: bold;
+    color: #2f6fed;
+}
+
+.purchase-currency {
+    font-size: 18px;
+    color: #a7b0bd;
+}
+
+.payment-methods {
+    margin-bottom: 30px;
+}
+
+.payment-methods-label {
+    font-size: 14px;
+    color: #a7b0bd;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.payment-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.payment-btn {
+    padding: 15px;
+    border: 2px solid #26313f;
+    background: transparent;
+    color: #a7b0bd;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.payment-btn:hover {
+    border-color: #2f6fed;
+    color: #f6f8fb;
+}
+
+.payment-btn.active {
+    border-color: #2f6fed;
+    background: rgba(47, 111, 237, 0.1);
+    color: #2f6fed;
+}
+
+.payment-info {
+    background: rgba(47, 111, 237, 0.05);
+    border: 1px solid #2f6fed;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 13px;
+    color: #a7b0bd;
+    margin-bottom: 20px;
+    display: none;
+}
+
+.payment-info.show {
+    display: block;
+}
+
+.pay-button {
+    width: 100%;
+    padding: 15px;
+    background: #2f6fed;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.pay-button:hover {
+    background: #5b8ff6;
+}
+
+.pay-button:disabled {
+    background: #a7b0bd;
+    cursor: not-allowed;
+}
     </style>
 </head>
 <body>
@@ -354,6 +533,15 @@ body {
         </div>
 
         <div id="loginView">
+            <div id="purchaseWarning" class="card" style="display: none; border-left: 4px solid #2f6fed;">
+                <h2 style="color: #2f6fed; margin-top: 0;">Оплата підписки</h2>
+                <p style="margin-bottom: 20px;">Для завершення покупки необхідно спочатку зареєструватися або увійти в профіль.</p>
+                <div class="card" style="background: #f0f7ff; border: 1px solid #2f6fed; margin-bottom: 15px;">
+                    <strong style="color: #2f6fed;">План:</strong> <span id="warningPlanName">Professional</span><br>
+                    <strong style="color: #2f6fed;">Ціна:</strong> <span id="warningPrice">299</span> ₴
+                </div>
+                <p style="color: #666; font-size: 13px; margin-bottom: 15px;">Авторизуйтесь нижче, щоб продовжити оплату:</p>
+            </div>
             <div class="card">
                 <h2>Вхід</h2>
                 <form id="loginForm">
@@ -424,6 +612,105 @@ body {
         </div>
     </div>
 
+    <div id="purchaseOverlay" class="purchase-overlay">
+        <div class="purchase-modal">
+            <div class="purchase-header">
+                <h2>Введіть email</h2>
+                <button class="purchase-close" onclick="closePurchaseModal()">×</button>
+            </div>
+
+            <div class="purchase-info">
+                <div class="purchase-plan">Тип підписки:</div>
+                <div class="purchase-plan-name" id="purchasePlanName">Professional</div>
+                <div class="purchase-plan" style="margin-top: 15px;">Ціна:</div>
+                <div class="purchase-price-group" style="margin-top: 5px;">
+                    <span class="purchase-price" id="purchasePrice">299</span>
+                    <span class="purchase-currency">₴</span>
+                </div>
+            </div>
+
+            <div class="payment-methods" style="margin-bottom: 0;">
+                <label class="payment-methods-label">Ваша електронна пошта:</label>
+                <input type="email" id="purchaseEmail" placeholder="your@email.com" style="width: 100%; padding: 12px; border: 1px solid #26313f; border-radius: 6px; background: #151b25; color: #f6f8fb; font-size: 14px; margin-bottom: 20px;" required>
+                <button class="pay-button" onclick="proceedWithEmail()">Продовжити</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let pendingPurchaseData = null;
+
+        function closePurchaseModal() {
+            document.getElementById('purchaseOverlay').classList.remove('active');
+            window.location.href = './?tab=status';
+        }
+
+        function proceedWithEmail() {
+            const emailInput = document.getElementById('purchaseEmail').value.trim();
+            if (!emailInput) {
+                alert('Введіть вашу електронну пошту');
+                return;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput)) {
+                alert('Введіть коректну електронну пошту');
+                return;
+            }
+
+            if (!pendingPurchaseData) {
+                alert('Помилка: дані покупки не знайдені');
+                return;
+            }
+
+            // Generate transaction ID
+            const timestamp = Date.now();
+            const random = Math.random().toString(36).substr(2, 8).toUpperCase();
+            const transactionId = `UBC${timestamp}${random}`;
+
+            // Redirect back to main page with email and transaction data
+            const buyUrl = `/#buy?e=${encodeURIComponent(emailInput)}&id=${transactionId}&price=${pendingPurchaseData.price}&plan=${pendingPurchaseData.planType}`;
+            window.location.href = buyUrl;
+        }
+
+        function initPurchaseFlow(userEmail = null) {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('getdatabuy')) {
+                // Get plan data from URL parameters or default
+                const planType = urlParams.get('plan') || 'pro_license';
+                const price = urlParams.get('price') || '299';
+                const planName = urlParams.get('name') || 'Professional';
+
+                pendingPurchaseData = {
+                    planType: planType,
+                    planName: decodeURIComponent(planName),
+                    price: parseInt(price)
+                };
+
+                // If user email provided, auto-fill it and show purchase overlay
+                if (userEmail) {
+                    document.getElementById('purchasePlanName').textContent = pendingPurchaseData.planName;
+                    document.getElementById('purchasePrice').textContent = price;
+                    document.getElementById('purchaseEmail').value = userEmail;
+                    document.getElementById('purchaseEmail').disabled = true;
+                    document.getElementById('purchaseOverlay').classList.add('active');
+                } else {
+                    // No user email, show warning on login page
+                    document.getElementById('warningPlanName').textContent = pendingPurchaseData.planName;
+                    document.getElementById('warningPrice').textContent = price;
+                    document.getElementById('purchaseWarning').style.display = 'block';
+                }
+            }
+        }
+
+        // Initialize on page load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initPurchaseFlow);
+        } else {
+            initPurchaseFlow();
+        }
+    </script>
     <script>
         let sessionToken = localStorage.getItem('sessionToken');
         let currentEmail = null;
@@ -620,6 +907,13 @@ body {
             document.getElementById('appView').style.display = 'block';
             document.getElementById('header').style.display = 'flex';
             document.getElementById('userEmail').textContent = currentEmail;
+            
+            // Check if we need to show purchase overlay
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('getdatabuy')) {
+                // Show purchase overlay with auto-filled email
+                initPurchaseFlow(currentEmail);
+            }
         }
 
         function switchTab(tabName) {
