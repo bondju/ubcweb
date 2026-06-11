@@ -1620,6 +1620,7 @@ body {
                         <label>Email</label>
                         <input type="email" id="loginEmail" required placeholder="your@email.com">
                     </div>
+                    <div class="cf-turnstile" data-sitekey="0x4AAAAAADi1hav7mHYrkTfQ"></div>
                     <button type="submit">Увійти</button>
                 </form>
                 <div id="loginMessage"></div>
@@ -2187,5 +2188,10 @@ body {
             initPurchaseFlow();
         }
     </script>
+    <script
+        src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+        async
+        defer
+    ></script>
 </body>
 </html>
