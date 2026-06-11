@@ -2807,5 +2807,15 @@
 
     document.addEventListener('DOMContentLoaded', init);
   </script>
+  <script>
+  const fpPromise = import('https://openfpcdn.io/fingerprintjs/v5')
+    .then(FingerprintJS => FingerprintJS.load());
+
+  (async () => {
+    const fp = await fpPromise
+    const result = await fp.get()
+    console.log(result.visitorId)
+  })()
+</script>
 </body>
 </html>
