@@ -1810,9 +1810,13 @@ body {
         async function handleLogin(e) {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value;
+            const turnstileResponse = window.turnstile.getResponse();
             
             showMessage('loginMessage', 'Завантаження...', 'info');
-            
+            if (!turnstileResponse) {
+                showMessage('loginMessage', 'Будь ласка, підтвердіть, що ви не робот', 'error');
+                return;
+            }
             try {
                 const res = await fetch(API_BASE + '/v1/login', {
                     method: 'POST',
